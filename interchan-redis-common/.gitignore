@@ -1,0 +1,6 @@
+/.settings/
+/target/
+/interchan-redis-common.iml
+*.project
+.classpath
+/bin/
