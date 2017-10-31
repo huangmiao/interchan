@@ -1,0 +1,10 @@
+/.classpath
+/.project
+/.settings 
+/.settings/
+/bin/
+/interchan.iml
+/.idea/
+/.metadata/
+/logs/
+/target/

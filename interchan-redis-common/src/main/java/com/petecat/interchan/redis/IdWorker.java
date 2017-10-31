@@ -162,19 +162,19 @@ public class IdWorker {
 
     public static void main(String[] args) {
     	int i = 0;
-    	while(true){
-    		if(++i>100){
-    			return;
-    		}
+//    	while(true){
+//    		if(++i>100){
+//    			return;
+//    		}
     		
-    		System.out.println(new IdWorker().nextId());
+//    		System.out.println(new IdWorker().nextId());
     		IdWorker idWorker = new IdWorker(31,31);
-            System.out.println("idWorker="+idWorker.nextId());
-            IdWorker id = new IdWorker();
-            System.out.println("id="+id.nextId());
-            System.out.println(id.datacenterId);
-            System.out.println(id.workerId);
-    	}
+//            System.out.println("idWorker="+idWorker.nextId());
+//            IdWorker id = new IdWorker();
+//            System.out.println("id="+id.nextId());
+//            System.out.println(id.datacenterId);
+            System.out.println(String.valueOf(idWorker.nextId()).length());
+//    	}
         
     }
 }
