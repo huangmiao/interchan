@@ -3,6 +3,7 @@ package com.petecat.interchan.wechat.wechat.common.pool;
 import java.util.concurrent.ExecutorService;
 
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Component;
 
 import com.petecat.interchan.wechat.spring.SpringContextUtil;
 

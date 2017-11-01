@@ -3,6 +3,8 @@ package com.petecat.interchan.wechat.wechat.common.pool;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutorService;
 
+import org.springframework.stereotype.Component;
+
 import com.petecat.interchan.wechat.common.execute.JDKExecute;
 import com.petecat.interchan.wechat.common.execute.SpringExecute;
 import com.petecat.interchan.wechat.wechat.common.pool.service.ExecuteService;
@@ -22,6 +24,7 @@ import lombok.Setter;
  * @since 1.0.0
  * @group skiper-opensource
  */
+@Component
 public class ExecutorEventWechat {
 
 	@Setter
