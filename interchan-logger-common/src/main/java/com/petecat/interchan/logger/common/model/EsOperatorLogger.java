@@ -6,8 +6,7 @@ import java.util.Date;
 //import org.springframework.data.elasticsearch.annotations.Document;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.mhuang.elk.common.source.crud.annoation.EsTable;
-import com.petecat.interchan.logger.common.Global;
+import com.petecat.interchan.logger.common.LoggerGlobal;
 
 import lombok.Data;
 
@@ -19,7 +18,6 @@ import lombok.Data;
  * @date:   2017年8月3日 上午10:58:13
  */
 @Data
-@EsTable(index = "user_operator_logger",type = "user_operator_logger")
 public class EsOperatorLogger {
 
 //	@Id
@@ -61,6 +59,6 @@ public class EsOperatorLogger {
 	private Integer status = 0;//状态(0 代表执行中，1代表成功，2代表异常）
 	
 	public EsOperatorLogger(){
-		this.setSystemType(Global.getSystemType());
+		this.setSystemType(LoggerGlobal.getSystemType());
 	}
 }

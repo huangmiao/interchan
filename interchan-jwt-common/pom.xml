@@ -5,7 +5,7 @@
     <parent>
         <artifactId>interchan</artifactId>
         <groupId>com.petecat</groupId>
-        <version>0.0.1.final</version>
+        <version>0.0.3.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>interchan-jwt-common</artifactId>
@@ -22,14 +22,9 @@
 		  <groupId>org.slf4j</groupId>
 		  <artifactId>slf4j-api</artifactId>
 		</dependency>
-		<dependency>
-		  <groupId>org.springframework.boot</groupId>
-		  <artifactId>spring-boot</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
+		 <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-web</artifactId>
+	    </dependency>
 	</dependencies>
 </project>

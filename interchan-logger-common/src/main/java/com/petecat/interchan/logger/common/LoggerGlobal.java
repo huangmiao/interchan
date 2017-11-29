@@ -7,7 +7,7 @@ package com.petecat.interchan.logger.common;
  * @author: mhuang
  * @date:   2017年8月3日 下午3:22:07
  */
-public class Global {
+public class LoggerGlobal {
 
 	protected static String jwtHeaderName = "global_header";//JWT全局header
 	protected static boolean jwtHeader = true;
@@ -34,6 +34,6 @@ public class Global {
 	}
 
 	public static void setSystemType(String systemType) {
-		Global.systemType = systemType;
+		LoggerGlobal.systemType = systemType;
 	}
 }

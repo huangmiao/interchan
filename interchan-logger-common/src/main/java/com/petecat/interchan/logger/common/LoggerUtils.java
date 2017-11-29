@@ -11,6 +11,8 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.mhuang.common.util.IpUtils;
 import com.petecat.interchan.logger.common.annotation.LogLogger;
 import com.petecat.interchan.logger.common.model.EsOperatorLogger;
 
@@ -94,15 +96,15 @@ public class LoggerUtils {
 	}
 	
 	public static void packAuthData(HttpServletRequest request,EsOperatorLogger esLogger){
-		if(Global.getJwtHeader()){
+		if(LoggerGlobal.getJwtHeader()){
 			esLogger.setHeaderData(
 				StringEscapeUtils.unescapeJson(
-					request.getHeader(Global.getJwtHeaderName())
+					request.getHeader(LoggerGlobal.getJwtHeaderName())
 				)
 			);
 			if(StringUtils.isNotBlank(esLogger.getHeaderData())){
-				GlobalHeader globalHeader = JSON.parseObject(esLogger.getHeaderData(),GlobalHeader.class);
-				esLogger.setUserId(globalHeader.getUserId());
+				JSONObject obj  = JSON.parseObject(esLogger.getHeaderData());
+				esLogger.setUserId(obj.getString("userId"));
 			}
 		}
 	} 

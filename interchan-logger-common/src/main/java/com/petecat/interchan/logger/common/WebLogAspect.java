@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -13,6 +14,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -42,9 +44,15 @@ public class WebLogAspect {
 	
 	@Autowired
 	private EsLoggerDao esLoggerDao;
+	
+	@Value("${spring.application.name}")
+	private String application;
+	
 	@Before("webLog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
-		
+		if(StringUtils.isBlank(application)){
+			application =  "user_operator_logger";
+		}
 		logger.debug("===es日志====正在写入数据===");
 		EsOperatorLogger eslogger = null;
 		 // 接收到请求，记录请求内容
@@ -55,9 +63,9 @@ public class WebLogAspect {
         }else{
         	eslogger = LoggerUtils.getEsLogger(joinPoint);
         }
-       
+        
         eslogger.setId(
-    		esLoggerDao.insert(eslogger)
+    		esLoggerDao.insert(eslogger,application,application)
 		);
         tLocal.set(eslogger);
         logger.debug("===es日志====数据写入完毕===");
@@ -65,18 +73,24 @@ public class WebLogAspect {
 	
 	@AfterReturning(returning = "ret", pointcut = "webLog()")
     public void doAfterReturning(Object ret) throws Throwable {
+		if(StringUtils.isBlank(application)){
+			application =  "user_operator_logger";
+		}
 		logger.debug("===es日志====正在写入返回数据===");
 		EsOperatorLogger esLogger = tLocal.get();
 		esLogger.setEndDate(new Date());
 		esLogger.setStatus(1);
 		esLogger.setRestData(JSON.toJSONString(ret));
-		esLoggerDao.update(esLogger, esLogger.getId());
+		esLoggerDao.update(esLogger,application,application, esLogger.getId());
 		tLocal.remove();
 		logger.debug("===es日志====返回数据写入完毕===");
     }
 	
 	@AfterThrowing(value = "webLog()",throwing = "ex")  
 	public void doAfterThrowingAdvice(JoinPoint joinPoint,Throwable ex){ 
+		if(StringUtils.isBlank(application)){
+			application =  "user_operator_logger";
+		}
 		logger.debug("===es日志====正在写入异常数据===");
 		EsOperatorLogger esLogger = tLocal.get();
 		esLogger.setEndDate(new Date());
@@ -94,7 +108,7 @@ public class WebLogAspect {
 			}
 		}
 		esLogger.setEDetailMsg(errDetailMsg.toString());
-		esLoggerDao.update(esLogger, esLogger.getId());
+		esLoggerDao.update(esLogger,application,application, esLogger.getId());
 		tLocal.remove();
 		logger.debug("===es日志====异常数据写入完毕===");
 	}  

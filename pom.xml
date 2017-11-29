@@ -4,13 +4,12 @@
 
   <groupId>com.petecat</groupId>
   <artifactId>interchan</artifactId>
-  <version>0.0.1.final</version>
+  <version>0.0.3.1</version>
   <packaging>pom</packaging>
   <name>interchan</name>
   <url>http://maven.apache.org</url>
   <properties>
   		<java.version>1.8</java.version>
-  		<hryx.version>1.0.2</hryx.version>
   		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   		<project.repository.url>http://192.168.1.200:8081</project.repository.url>
         <!--<project.repository.url>http://petecat.cn:8081</project.repository.url>-->
