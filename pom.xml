@@ -4,7 +4,7 @@
 
   <groupId>com.petecat</groupId>
   <artifactId>interchan</artifactId>
-  <version>0.0.3.1</version>
+  <version>0.0.3.2</version>
   <packaging>pom</packaging>
   <name>interchan</name>
   <url>http://maven.apache.org</url>
@@ -114,7 +114,7 @@
 		<dependency>
 			<groupId>com.petecat.common</groupId>
 			<artifactId>elk</artifactId>
-			<version>0.0.4</version>
+			<version>0.0.3.2</version>
 		</dependency>
 		<dependency>
 		 	<groupId>com.mhuang.common</groupId>
@@ -129,7 +129,7 @@
 		<dependency>
 			<groupId>com.mhuang.common</groupId>
  			<artifactId>kafka</artifactId>
-			<version>0.0.1</version>
+			<version>0.0.3.2</version>
 		</dependency>
 	</dependencies>
  </dependencyManagement>
@@ -171,6 +171,7 @@
    		<module>interchan-logger-common</module>
    		<module>interchan-auth-common</module>
    		<module>interchan-wechat-common</module>
+    	<module>interchan-redis-kafka-middle-common</module>
   </modules>
 
 	<repositories>

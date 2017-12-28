@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -15,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -32,9 +32,10 @@ import com.petecat.interchan.logger.common.model.EsOperatorLogger;
  */
 @Component
 @Aspect
+@Order(0)
 public class WebLogAspect {
 
-	@Pointcut("execution(public * com.petecat.interchan..*Controller.*(..)) || @annotation(com.petecat.interchan.logger.common.annotation.LogLogger)")
+	@Pointcut("execution(public * com.petecat..*Controller.*(..)) || @annotation(com.petecat.interchan.logger.common.annotation.LogLogger)")
 	private void webLog() { }  
 
 	//临时存放对象
@@ -50,19 +51,24 @@ public class WebLogAspect {
 	
 	@Before("webLog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
-		if(StringUtils.isBlank(application)){
-			application =  "user_operator_logger";
-		}
 		logger.debug("===es日志====正在写入数据===");
 		EsOperatorLogger eslogger = null;
 		 // 接收到请求，记录请求内容
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if(attributes != null){
-        	 HttpServletRequest request = attributes.getRequest();
-             eslogger = LoggerUtils.getEsLogger(request,joinPoint);
-        }else{
-        	eslogger = LoggerUtils.getEsLogger(joinPoint);
-        }
+		try{
+			if (Class.forName("org.springframework.web.context.request.RequestContextHolder") != null){
+				ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+				if(attributes != null){
+		        	 HttpServletRequest request = attributes.getRequest();
+		             eslogger = LoggerUtils.getEsLogger(request,joinPoint);
+		        }
+			}
+		}catch(Exception e){
+			
+		}
+		
+		
+		if(eslogger == null)
+			eslogger = LoggerUtils.getEsLogger(joinPoint);
         
         eslogger.setId(
     		esLoggerDao.insert(eslogger,application,application)
@@ -73,9 +79,6 @@ public class WebLogAspect {
 	
 	@AfterReturning(returning = "ret", pointcut = "webLog()")
     public void doAfterReturning(Object ret) throws Throwable {
-		if(StringUtils.isBlank(application)){
-			application =  "user_operator_logger";
-		}
 		logger.debug("===es日志====正在写入返回数据===");
 		EsOperatorLogger esLogger = tLocal.get();
 		esLogger.setEndDate(new Date());
@@ -88,9 +91,6 @@ public class WebLogAspect {
 	
 	@AfterThrowing(value = "webLog()",throwing = "ex")  
 	public void doAfterThrowingAdvice(JoinPoint joinPoint,Throwable ex){ 
-		if(StringUtils.isBlank(application)){
-			application =  "user_operator_logger";
-		}
 		logger.debug("===es日志====正在写入异常数据===");
 		EsOperatorLogger esLogger = tLocal.get();
 		esLogger.setEndDate(new Date());

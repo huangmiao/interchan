@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Implementation-Title: interchan-protocol-common
-Implementation-Version: 0.0.3.1
+Implementation-Version: 0.0.3.2
 Built-By: mhuang
 Implementation-Vendor-Id: com.petecat
 Build-Jdk: 1.8.0_131

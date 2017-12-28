@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.petecat</groupId>
+    <artifactId>interchan</artifactId>
+    <version>0.0.3.2</version>
+  </parent>
+  <artifactId>interchan-redis-kafka-middle-common</artifactId>
+  <name>interchan-redis-kafka-middle-common</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+	<dependency>
+	    <groupId>org.projectlombok</groupId>
+	    <artifactId>lombok</artifactId>
+	</dependency>
+	<dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+    </dependency>
+     <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+    </dependency>
+	 <dependency>
+	    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-lang3</artifactId>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>fastjson</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>commons-io</groupId>
+		<artifactId>commons-io</artifactId>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+	<dependency>
+	    <groupId>org.aspectj</groupId>
+	    <artifactId>aspectjrt</artifactId>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+	<dependency>
+	  <groupId>org.slf4j</groupId>
+	  <artifactId>slf4j-api</artifactId>
+	</dependency>
+	<dependency>
+	 	<groupId>com.mhuang.common</groupId>
+	  	<artifactId>util</artifactId>
+	</dependency>
+	<dependency>
+	 	<groupId>com.mhuang.common</groupId>
+	  	<artifactId>kafka</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>com.petecat</groupId>
+		<artifactId>interchan-redis-common</artifactId>
+		<version>${project.version}</version>
+	</dependency>
+  </dependencies>
+</project>
