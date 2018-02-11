@@ -130,5 +130,8 @@ public abstract class BaseServiceImpl<T extends Serializable,Id> implements Base
 	public List<T> page(Page<T> page){
 		return baseMapper.page(page);
 	}
-	
+	@Override
+	public int pageCount(Page<T> page) {
+	    return baseMapper.pageCount(page);
+	}
 }

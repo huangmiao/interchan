@@ -143,6 +143,7 @@ public interface BaseMapper<T extends Serializable,Id>{
 	 */
 	List<T> page(Page<T> page);
 	
+	int pageCount(Page<T> page);
 	/**
 	 * 
 	 * @Title: insertInto   

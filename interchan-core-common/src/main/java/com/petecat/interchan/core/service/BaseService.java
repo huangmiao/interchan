@@ -97,4 +97,6 @@ public interface BaseService <T extends Serializable,Id>{
 	int count(T t);
 	
 	public List<T> page(Page<T> page);
+	
+	public int pageCount(Page<T> page);
 }
