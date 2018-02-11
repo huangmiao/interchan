@@ -100,7 +100,7 @@ public class DistributedLockHandler {
             if (StringUtils.isEmpty(lock.getName()) || StringUtils.isEmpty(lock.getValue())) {
                 return false;
             }
-            long startTime = System.currentTimeMillis();
+//            long startTime = System.currentTimeMillis();
             do{
                 if (!template.hasKey(lock.getName())) {
                     ValueOperations<String, String> ops = template.opsForValue();
@@ -111,9 +111,9 @@ public class DistributedLockHandler {
                 } else {//存在锁
                     logger.debug("lock is exist!！！");
                 }
-                if (System.currentTimeMillis() - startTime > timeout) {//尝试超过了设定值之后直接跳出循环
-                    return false;
-                }
+//                if (System.currentTimeMillis() - startTime > timeout) {//尝试超过了设定值之后直接跳出循环
+//                    return false;
+//                }
                 Thread.sleep(tryInterval);
             }
             while (template.hasKey(lock.getName()));
@@ -132,17 +132,4 @@ public class DistributedLockHandler {
             template.delete(lock.getName());
         }
     }
-    
-    public static void main(String[] args) {
-    	/*
-    	 * 调用例子 
-    	@Autowired
-		DistributedLockHandler distributedLockHandler; 
-    	Lock lock=new Lock("lockk","sssssssss");
-		if(distributedLockHandler.tryLock(lock){
-		    doSomething();
-		    distributedLockHandler.releaseLock();
-		}
-		*/
-	}
 }

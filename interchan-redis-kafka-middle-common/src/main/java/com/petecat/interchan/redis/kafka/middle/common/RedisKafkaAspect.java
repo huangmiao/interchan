@@ -16,6 +16,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.mhuang.kafka.common.bean.KafkaMsg;
 import com.mhuang.kafka.common.exception.JKafkaException;
 import com.petecat.interchan.redis.commands.RedisExtCommands;
@@ -65,7 +66,6 @@ public class RedisKafkaAspect {
 		Lock lock = new Lock();
 		try{
 			Boolean notRepeat = getMethodByRemark((MethodSignature) joinPoint.getSignature());
-			//TODO Redis 分布式锁。（会重试当前线程。）
 			lock.setName(kafkaMsg.getTopic() + LOCK + kafkaMsg.getOffset());
 			lock.setValue(kafkaMsg.getMsg().toString());
 			if(distributedLockHandler.tryLock(lock,notRepeat)){
@@ -73,12 +73,12 @@ public class RedisKafkaAspect {
 				if(StringUtils.isEmpty(value)){
 					redisExtCommands.hset(kafkaMsg.getTopic() + CONSUMER, ""+kafkaMsg.getOffset(), kafkaMsg.getMsg());
 				}else{
+				    logger.error("数据为：{}",JSON.toJSONString(kafkaMsg));
 					throw new JKafkaException("kafka这条消息已经处理过了！");
 				}
 			}
 		}finally {
 			distributedLockHandler.releaseLock(lock);
 		}
-		System.out.println(joinPoint);
 	}
 }

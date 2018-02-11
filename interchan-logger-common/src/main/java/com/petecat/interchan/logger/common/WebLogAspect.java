@@ -52,6 +52,8 @@ public class WebLogAspect {
 	@Before("webLog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
 		logger.debug("===es日志====正在写入数据===");
+		
+		//TODO 改为异步处理
 		EsOperatorLogger eslogger = null;
 		 // 接收到请求，记录请求内容
 		try{

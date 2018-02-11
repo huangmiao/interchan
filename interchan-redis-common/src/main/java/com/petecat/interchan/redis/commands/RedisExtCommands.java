@@ -55,13 +55,17 @@ public class RedisExtCommands extends AbsRedisCommands{
 	
 	@Override
 	public <T> List<T> hgetList(String key, String field, Class<T> clazz) {
-		String value = hget(key, field);
-		if(StringUtils.isEmpty(value)){
-			return null;
-		}
-		return JSON.parseArray(value, clazz);
+	    return hgetList(defaultDbIndex,key, field,clazz);
 	}
 
+	@Override
+    public <T> List<T> hgetList(int dbIndex,String key, String field, Class<T> clazz) {
+        String value = hget(dbIndex,key, field);
+        if(StringUtils.isEmpty(value)){
+            return null;
+        }
+        return JSON.parseArray(value, clazz);
+    }
 	@Override
 	public <T> List<T> hvals(int index, String key, Class<T> clazz) {
 		List<String> value = hvals(index, key);

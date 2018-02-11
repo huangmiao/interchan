@@ -1,8 +1,0 @@
-com\petecat\interchan\protocol\InsertInto.class
-com\petecat\interchan\protocol\data\PageVO.class
-com\petecat\interchan\protocol\GlobalHeader.class
-com\petecat\interchan\protocol\data\Page.class
-com\petecat\interchan\protocol\data\NewPageDTO.class
-com\petecat\interchan\protocol\BaseApiIgnore.class
-com\petecat\interchan\protocol\data\PageDTO.class
-com\petecat\interchan\protocol\Result.class

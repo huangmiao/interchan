@@ -61,6 +61,8 @@ public interface IRedisExtCommands extends IRedisHashCommands, IRedisListCommand
 	 */
 	<T> List<T> hgetList(String key,String field,Class<T> clazz);
 	
+	<T> List<T> hgetList(int dbIndex,String key,String field,Class<T> clazz);
+	
 	<T> Map<String, T> hgetAll(int index,String key,Class<T> clazz);
 	/**
 	 * 

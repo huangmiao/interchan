@@ -85,6 +85,25 @@ public interface BaseMapper<T extends Serializable,Id>{
 	
 	/**
 	 * 
+	 * @Title: delete   
+	 * @Description: 删除
+	 * @param t
+	 * @return
+	 * @return int
+	 */
+	int delete(T t);
+	
+	/**
+	 * 
+	 * @Title: delete   
+	 * @Description: 删除
+	 * @param id
+	 * @return
+	 * @return int
+	 */
+	int delete(Id id);
+	/**
+	 * 
 	 * @Title: count   
 	 * @Description: 查询条数
 	 * @param t
@@ -95,11 +114,42 @@ public interface BaseMapper<T extends Serializable,Id>{
 	 */
 	int count(T t);
 	
+	/**
+	 * 
+	 * @Title: query   
+	 * @Description: 查询 
+	 * @param t
+	 * @return
+	 * @return List<T>
+	 */
 	List<T> query(T t);
 	
+	/**
+	 * 
+	 * @Title: queryAll   
+	 * @Description: 查询
+	 * @return
+	 * @return List<T>
+	 */
 	List<T> queryAll();
 	
+	/**
+	 * 
+	 * @Title: page   
+	 * @Description: 分页
+	 * @param page
+	 * @return
+	 * @return List<T>
+	 */
 	List<T> page(Page<T> page);
 	
+	/**
+	 * 
+	 * @Title: insertInto   
+	 * @Description: 历史
+	 * @param insertInto
+	 * @return
+	 * @return int
+	 */
 	int insertInto(InsertInto<Id> insertInto);
 }
