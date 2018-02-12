@@ -50,7 +50,6 @@ public interface BaseService <T extends Serializable,Id>{
 	 */
 	int save(T t);
 	
-	int insert(T t);
 	/**
 	 * 
 	 * @Title: update   

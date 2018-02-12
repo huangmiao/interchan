@@ -125,10 +125,7 @@ public abstract class BaseServiceImpl<T extends Serializable,Id> implements Base
 	public int count(T t) {
 		return baseMapper.count(t);
 	}
-	@Override
-	public int insert(T t) {
-	    return baseMapper.insert(t);
-	}
+	
 	@Override
 	public List<T> page(Page<T> page){
 		return baseMapper.page(page);
