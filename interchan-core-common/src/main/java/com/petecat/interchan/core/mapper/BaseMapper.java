@@ -153,4 +153,6 @@ public interface BaseMapper<T extends Serializable,Id>{
 	 * @return int
 	 */
 	int insertInto(InsertInto<Id> insertInto);
+
+	int insert(T t);
 }

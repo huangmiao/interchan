@@ -50,6 +50,7 @@ public interface BaseService <T extends Serializable,Id>{
 	 */
 	int save(T t);
 	
+	int insert(T t);
 	/**
 	 * 
 	 * @Title: update   
@@ -62,6 +63,7 @@ public interface BaseService <T extends Serializable,Id>{
 	 */
 	int update(T t);
 	
+	int delete(Id id);
 	/**
 	 * @Title: remove   
 	 * @Description: 删除单个实例   
@@ -99,4 +101,6 @@ public interface BaseService <T extends Serializable,Id>{
 	public List<T> page(Page<T> page);
 	
 	public int pageCount(Page<T> page);
+	
+	List<T> queryAll();
 }

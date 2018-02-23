@@ -11,20 +11,18 @@
   <properties>
   		<java.version>1.8</java.version>
   		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  		<project.repository.url>http://192.168.1.200:8081</project.repository.url>
-        <!--<project.repository.url>http://petecat.cn:8081</project.repository.url>-->
   </properties>
   	<parent>
     	<groupId>org.springframework.boot</groupId>
     	<artifactId>spring-boot-starter-parent</artifactId>
-    	 <version>1.5.6.RELEASE</version>
+    	 <version>1.5.9.RELEASE</version>
 	</parent>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 	           <groupId>org.springframework.cloud</groupId>
 	           <artifactId>spring-cloud-dependencies</artifactId>
-	           <version>Dalston.SR4</version>
+	           <version>Dalston.SR5 </version>
 	           <type>pom</type>
 	           <scope>import</scope>
 	    </dependency>
@@ -133,36 +131,6 @@
 		</dependency>
 	</dependencies>
  </dependencyManagement>
-  	<build>
-  	   <pluginManagement>
-  	     <plugins>
-  	      <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>1.5.4.RELEASE</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal><!--可以把依赖的包都打包到生成的Jar包中-->
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-			 
-            </plugins>
-  	   </pluginManagement>
-  	   <plugins>
-  	       <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<encoding>${project.build.sourceEncoding}</encoding> 
-				</configuration>
-		 </plugin>
-  	   </plugins>
-	</build>
   	<modules>
   		<module>interchan-redis-common</module>
   		<module>interchan-protocol-common</module>
@@ -173,82 +141,4 @@
    		<module>interchan-wechat-common</module>
     	<module>interchan-redis-kafka-middle-common</module>
   </modules>
-
-	<repositories>
-		<repository>
-			<id>nexus-release</id>
-			<url>${project.repository.url}/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</releases>
-		</repository>
-	   <repository>
-			<id>nexus-snapshots</id>
-			<url>${project.repository.url}/nexus/content/groups/public-snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-				<updatePolicy>always</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
-		</repository>
-
-		<repository>
-			<id>nexus-release-out</id>
-			<url>${project.repository.url}/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</releases>
-		</repository>
-
-		<repository>
-			<id>nexus-snapshots-out</id>
-			<url>${project.repository.url}/nexus/content/groups/public-snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-				<updatePolicy>always</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
-		</repository>
-	</repositories>
-
- <distributionManagement>
-	  <repository>
-	    <id>nexus-releases</id>
-	    <name>nexus-releases</name>
-	    <url>${project.repository.url}/nexus/content/repositories/releases/</url>
-	    <uniqueVersion>true</uniqueVersion>
-	  </repository>
-	  <snapshotRepository>
-	    <id>nexus-snapshots</id>
-	    <name>nexus-snapshots</name>
-	    <url>${project.repository.url}/nexus/content/repositories/snapshots/</url>
-	    <uniqueVersion>true</uniqueVersion>
-	  </snapshotRepository>
-	</distributionManagement>
-	
-	<profiles>  
-	    <profile>  
-	        <id>dev</id>  
-	        <activation>  
-	            <activeByDefault>true</activeByDefault>  
-	        </activation>  
-	        <properties>  
-	            <profileActive>dev</profileActive>  
-	        </properties>  
-	    </profile>  
-	    <profile>  
-	        <id>test</id>  
-	        <properties>  
-	            <profileActive>test</profileActive>  
-	        </properties>  
-	    </profile>  
-	</profiles>  
 </project>
