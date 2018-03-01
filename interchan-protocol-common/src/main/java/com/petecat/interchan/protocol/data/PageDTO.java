@@ -18,5 +18,4 @@ public class PageDTO {
 	
 	@ApiModelProperty(value="开始页数",required=true)
 	Integer start = 1;//条数
-	
 }
