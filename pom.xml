@@ -138,7 +138,7 @@
 		<module>interchan-jwt-common</module>
    		<module>interchan-logger-common</module>
    		<module>interchan-auth-common</module>
-   		<module>interchan-wechat-common</module>
     	<module>interchan-redis-kafka-middle-common</module>
+    	<module>interchan-wechat-common</module>
   </modules>
 </project>
