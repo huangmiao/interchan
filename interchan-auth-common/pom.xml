@@ -38,5 +38,13 @@
 	 	<groupId>com.mhuang.common</groupId>
 	  	<artifactId>util</artifactId>
 	</dependency>
+	
+	<dependency>
+	 	<groupId>com.petecat</groupId>
+	  	<artifactId>interchan-redis-common</artifactId>
+	  	<version>${project.version}</version>
+	</dependency>
+	
+	
   </dependencies>
 </project>
