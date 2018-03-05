@@ -64,7 +64,7 @@ public class Result<T> {
 	}
 	
 	public static Result<?> faild(String msg){
-		return new Result<>(msg);
+		return new Result<>(SYS_FAILD,msg);
 	}
 	
 	public static Result<?> ok(Object data){

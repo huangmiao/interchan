@@ -11,11 +11,12 @@
   <properties>
   		<java.version>1.8</java.version>
   		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  		<project.repository.url>http://192.168.1.200:8081</project.repository.url>
   </properties>
   	<parent>
     	<groupId>org.springframework.boot</groupId>
     	<artifactId>spring-boot-starter-parent</artifactId>
-    	 <version>1.5.9.RELEASE</version>
+    	 <version>1.5.6.RELEASE</version>
 	</parent>
 	<dependencyManagement>
 		<dependencies>
@@ -135,4 +136,63 @@
     	<module>interchan-redis-kafka-middle-common</module>
     	<module>interchan-wechat-common</module>
   </modules>
+  <repositories>
+		<repository>
+			<id>nexus-release</id>
+			<url>${project.repository.url}/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+		</repository>
+	   <repository>
+			<id>nexus-snapshots</id>
+			<url>${project.repository.url}/nexus/content/groups/public-snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>nexus-release-out</id>
+			<url>${project.repository.url}/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+		</repository>
+
+		<repository>
+			<id>nexus-snapshots-out</id>
+			<url>${project.repository.url}/nexus/content/groups/public-snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
+ <distributionManagement>
+	  <repository>
+	    <id>nexus-releases</id>
+	    <name>nexus-releases</name>
+	    <url>${project.repository.url}/nexus/content/repositories/releases/</url>
+	    <uniqueVersion>true</uniqueVersion>
+	  </repository>
+	  <snapshotRepository>
+	    <id>nexus-snapshots</id>
+	    <name>nexus-snapshots</name>
+	    <url>${project.repository.url}/nexus/content/repositories/snapshots/</url>
+	    <uniqueVersion>true</uniqueVersion>
+	  </snapshotRepository>
+	</distributionManagement>
 </project>
