@@ -171,14 +171,11 @@ public class OpAuthInterceptor implements HandlerInterceptor{
 						&& (url.startsWith(vo.getUrl()) || "*".equals(vo.getUrl())))).findFirst().isPresent();
 			}
 			if(!filterFlag){
-				String cacheKey = AuthConstant.USER_VIST_ONLY_URL_CACHEKEY;
-				List<String> values = repository.hgetList(cacheKey,userId,String.class);
-				if(!CollectionUtils.isEmpty(values)){
-					filterFlag =
-							values.parallelStream().filter(vo ->
-							(StringUtils.isNotBlank(vo)
-							&& (url.equals(vo)))).findFirst().isPresent();
-			}
+				String cacheKey = AuthConstant.USER_VIST_URL_CACHEKEY;
+				AuthUrl authUrl = repository.hget(cacheKey, userId.concat("-").concat(url),AuthUrl.class);
+			    if(authUrl!=null) {
+			    	filterFlag = true;
+			    }
 		}
 	  }
 	 return filterFlag;
