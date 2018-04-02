@@ -145,6 +145,10 @@ public abstract class BaseServiceImpl<T extends Serializable,Id> implements Base
 	}
 	
 	@Override
+	public List<T> query(T t) {
+		return baseMapper.query(t);
+	}
+	@Override
 	public int delete(Id id) {
 		return baseMapper.delete(id);
 	}

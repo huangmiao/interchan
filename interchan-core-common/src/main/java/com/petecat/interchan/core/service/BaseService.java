@@ -103,4 +103,6 @@ public interface BaseService <T extends Serializable,Id>{
 	public int pageCount(Page<T> page);
 	
 	List<T> queryAll();
+	
+	List<T> query(T t);
 }
