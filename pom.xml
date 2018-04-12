@@ -107,7 +107,7 @@
 		<dependency>
 		 	<groupId>com.mhuang.common</groupId>
 		  	<artifactId>util</artifactId>
-		  	<version>0.0.1</version>
+		  	<version>0.0.1.1</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.kafka</groupId>
@@ -117,7 +117,7 @@
 		<dependency>
 			<groupId>com.mhuang.common</groupId>
  			<artifactId>kafka</artifactId>
-			<version>0.0.3.2</version>
+			<version>0.0.3.3</version>
 		</dependency>
 		<dependency>
 		    <groupId>com.google.zxing</groupId>

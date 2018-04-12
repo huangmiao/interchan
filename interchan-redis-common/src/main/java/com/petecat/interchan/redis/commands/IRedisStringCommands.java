@@ -37,6 +37,47 @@ public interface IRedisStringCommands {
 	
 	/**
 	 * 
+	 * @Title: get   
+	 * @Description:获取
+	 * @param key
+	 * @return
+	 * @return String
+	 */
+	String get(String key);
+	
+	/**
+	 * 
+	 * @Title: get   
+	 * @Description: 
+	 * @param index
+	 * @param key
+	 * @return
+	 * @return String
+	 */
+	String get(int index,String key);
+	
+	/**
+	 * 
+	 * @Title: incr   
+	 * @Description: 原子追加
+	 * @param key
+	 * @return
+	 * @return Long
+	 */
+	Long incr(String key);
+	
+	/**
+	 * 
+	 * @Title: incr   
+	 * @Description: 原子追加
+	 * @param index
+	 * @param key
+	 * @return
+	 * @return Long
+	 */
+	Long incr(int index,String key);
+	/**
+	 * 
 	 * @Title: mset   
 	 * @Description: 设置多个值
 	 * @param map

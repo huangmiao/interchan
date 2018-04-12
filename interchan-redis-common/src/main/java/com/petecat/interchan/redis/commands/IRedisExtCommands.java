@@ -15,6 +15,28 @@ public interface IRedisExtCommands extends IRedisHashCommands, IRedisListCommand
 	
 	/**
 	 * 
+	 * @Title: get   
+	 * @Description: 获取
+	 * @param key
+	 * @param clazz
+	 * @return
+	 * @return T
+	 */
+	<T> T get(String key,Class<T> clazz);
+	
+	/**
+	 * 
+	 * @Title: get   
+	 * @Description: 获取
+	 * @param dbIndex
+	 * @param key
+	 * @param clazz
+	 * @return
+	 * @return T
+	 */
+	<T> T get(int dbIndex,String key,Class<T> clazz);
+	/**
+	 * 
 	 * @Title: hset   
 	 * @Description: 设置hash过期时间   
 	 * @param key

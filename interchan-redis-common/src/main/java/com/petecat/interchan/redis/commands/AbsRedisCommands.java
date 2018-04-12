@@ -68,6 +68,15 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
 	}
 
 	@Override
+	public Long incr(String key) {
+		return incr(defaultDbIndex,key);
+	}
+	@Override
+	public String get(String key) {
+		return get(defaultDbIndex,key);
+	}
+	
+	@Override
 	public boolean mset(Map<String, Object> map) {
 		return mset(defaultDbIndex,map);
 	}
@@ -84,7 +93,7 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
 
 	@Override
 	public long append(int index, String key, Object value) {
-		return 0;
+		return 0L;
 	}
 	
 	/**
@@ -198,6 +207,14 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
 	}
 
 	@Override
+	public Long incr(int index, String key) {
+		return baseTempalte.execute((RedisConnection connection)->{
+			connection.select(index);
+			RedisSerializer<String> serializer = baseTempalte.getStringSerializer();
+			return connection.incr(serializer.serialize(key));
+		});
+	}
+	@Override
 	public boolean set(int index,String key, Object value, long expireTime) {
 		return baseTempalte.execute((RedisConnection connection)->{
 			connection.select(index);
@@ -207,6 +224,16 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
 		});
 	}
 
+	@Override
+	public String get(int index,String key) {
+		return baseTempalte.execute((RedisConnection connection)->{
+			connection.select(index);
+			RedisSerializer<String> serializer = baseTempalte.getStringSerializer();
+			byte[] value = connection.get(serializer.serialize(key));
+			return serializer.deserialize(value);
+		});
+	}
+	
 	@Override
 	public boolean mset(int index,Map<String, Object> map) {
 		if(CollectionUtils.isEmpty(map))

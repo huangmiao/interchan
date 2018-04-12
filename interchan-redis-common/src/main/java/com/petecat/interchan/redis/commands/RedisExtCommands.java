@@ -87,4 +87,22 @@ public class RedisExtCommands extends AbsRedisCommands{
 		});
 		return result;
 	}
+	
+	@Override
+	public <T> T get(String key, Class<T> clazz) {
+		String value = get(key);
+		if(StringUtils.isEmpty(value)){
+			return null;
+		}
+		return JSON.parseObject(value, clazz);
+	}
+
+	@Override
+	public <T> T get(int dbIndex, String key, Class<T> clazz) {
+		String value = get(dbIndex,key);
+		if(StringUtils.isEmpty(value)){
+			return null;
+		}
+		return JSON.parseObject(value, clazz);
+	}
 }

@@ -20,9 +20,4 @@ public class Page<T> extends PageDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private T record;
-	
-	@Override
-	public Integer getStart() {
-		return this.start;
-	}
 }
