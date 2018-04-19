@@ -1,4 +1,4 @@
-package com.petecat.interchan.core.controller;
+﻿package com.petecat.interchan.core.controller;
 
 
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +33,7 @@ public abstract class BaseController {
 	   		 }catch(Exception e){
 	   		 }
 		}
-    	if( header == null || StringUtils.isBlank(header.getUserId() ) && nullThrowException){
+    	if( (header == null || StringUtils.isBlank(header.getUserId() )) && nullThrowException){
     		throw new  BusinessException(Result.tokenValid().getCode(),
     				Result.tokenValid().getMessage());
     	}
