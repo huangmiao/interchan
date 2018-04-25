@@ -15,7 +15,7 @@ public class Global {
 	public static final String COMPANY_ID = "companyId";
 	public static final String USER = "user";
 	public static final String GLOBAL_HEADER = "global_header";
-	
+	public static final String GLOBAL_AUTHORIZATION = "Authorization";
 	public static final int COMMON_DB_INDEX = 0;
 	
 	public static final int COMMON_MEMBER_DB_INDEX = 12;

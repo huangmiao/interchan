@@ -1,7 +1,0 @@
-*.project
-/bin/
-*.classpath
-/target/
-*.iml
-*.factorypath
-/.settings/

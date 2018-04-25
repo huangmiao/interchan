@@ -3,6 +3,7 @@ package com.petecat.interchan.core.service;
 import java.io.Serializable;
 import java.util.List;
 
+import com.petecat.interchan.protocol.InsertInto;
 import com.petecat.interchan.protocol.data.Page;
 
 /**
@@ -105,4 +106,6 @@ public interface BaseService <T extends Serializable,Id>{
 	List<T> queryAll();
 	
 	List<T> query(T t);
+	
+	int insertInto(InsertInto<Id> into);
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.petecat.interchan.core.mapper.BaseMapper;
 import com.petecat.interchan.core.service.BaseService;
+import com.petecat.interchan.protocol.InsertInto;
 import com.petecat.interchan.protocol.data.Page;
 
 /**
@@ -151,5 +152,10 @@ public abstract class BaseServiceImpl<T extends Serializable,Id> implements Base
 	@Override
 	public int delete(Id id) {
 		return baseMapper.delete(id);
+	}
+	
+	@Override
+	public int insertInto(InsertInto<Id> into) {
+		return baseMapper.insertInto(into);
 	}
 }

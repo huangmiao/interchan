@@ -22,6 +22,7 @@ import com.mhuang.common.util.DataUtils;
 import com.mhuang.common.webmvc.WebRequestHeader;
 import com.petecat.interchan.core.constans.Global;
 import com.petecat.interchan.core.exception.BusinessException;
+import com.petecat.interchan.core.local.GlobalHeaderThreadLocal;
 import com.petecat.interchan.jwt.JwtHelper;
 import com.petecat.interchan.jwt.model.Jwt;
 import com.petecat.interchan.protocol.GlobalHeader;
@@ -71,33 +72,33 @@ public class AuthFilter implements Filter{
 							globalHeader.setType((String)claims.get("type"));
 							globalHeader.setCompanyId((String)claims.get(Global.COMPANY_ID));
 							globalHeader.setUserId((String) claims.get(Global.USERID));
+							GlobalHeaderThreadLocal.set(globalHeader);
 							httpRequest.putHeader(Global.GLOBAL_HEADER, JSON.toJSONString(globalHeader));
 						}else{
-							throw new BusinessException(Result.TOKEN_IS_VALID,JSON.toJSONString(Result.tokenValid()));
+							throw new BusinessException(Result.TOKEN_IS_VALID,Result.TOKEN_IS_VALID_MSG);
 						}
 					} catch(ExpiredJwtException e){
 	                	logger.error("token已过期:{}",e);
-	                	throw new BusinessException(Result.TOKEN_EXPIRED,JSON.toJSONString(Result.tokenExpired()));  
+	                	throw new BusinessException(Result.TOKEN_EXPIRED,Result.TOKEN_EXPIRED_MSG);  
 	                } catch (Exception e) {
 	                	logger.error("token异常:{}",e);
-	                	throw new BusinessException(Result.TOKEN_IS_VALID,JSON.toJSONString(Result.tokenValid()));  
+	                	throw new BusinessException(Result.TOKEN_IS_VALID,Result.TOKEN_IS_VALID_MSG);  
 					}
 				}else{
 					logger.error("token:{}无效，长度不一致",auth);
-					throw new BusinessException(Result.TOKEN_IS_VALID,JSON.toJSONString(Result.tokenValid()));   
+					throw new BusinessException(Result.TOKEN_IS_VALID,Result.TOKEN_IS_VALID_MSG);   
 				}
 				chain.doFilter(httpRequest, httpResponse);
 			}catch(BusinessException e){
 				Result<?> result = DataUtils.copyTo(e, Result.class);
 				response.getWriter().write(JSON.toJSONString(result));
 			}
-			
 		}
 	}
 
 	@Override
 	public void destroy() {
-		
+		GlobalHeaderThreadLocal.remove();
 	}
 	
 	private <T> T getMapper(Class<T> clazz,HttpServletRequest request)

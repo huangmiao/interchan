@@ -26,10 +26,10 @@ public class Result<T> {
     public static final int TOKEN_EXPIRED = 401;
     public static final int TOKEN_IS_VALID = 406;
 
-    private static final String SUCCESS_MSG = "操作成功";
+    public static final String SUCCESS_MSG = "操作成功";
     public static final String FAILD_MSG = "操作失败";
-	private static final String TOKEN_EXPIRED_MSG = "Token已经过期";
-	private static final String TOKEN_IS_VALID_MSG = "Token无效";
+    public static final String TOKEN_EXPIRED_MSG = "Token已经过期";
+	public static final String TOKEN_IS_VALID_MSG = "Token无效";
 
 	@ApiModelProperty(value = "返回状态")   
 	private int code; //状态码
