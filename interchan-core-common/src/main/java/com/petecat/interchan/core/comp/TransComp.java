@@ -72,7 +72,7 @@ public class TransComp implements InitializingBean{
 	 * @return T  返回的信息
 	 */
 	@SuppressWarnings("unchecked")
-	public  Result callMicService(
+	public  Result<?> callMicService(
 			HttpMethod method,
 			String serviceId,
 			String token,
@@ -83,7 +83,7 @@ public class TransComp implements InitializingBean{
 		if(StringUtils.isBlank(jsonStr) ){
 			throw new BusinessException(Result.SYS_RESULT_FAILD, "no result data");
 		}
-		Result result = JSON.parseObject(jsonStr, Result.class);
+		Result<Object> result = JSON.parseObject(jsonStr, Result.class);
 		if(cls == null ){
 			return result;
 		}
@@ -170,7 +170,7 @@ public class TransComp implements InitializingBean{
 			}else if(obj instanceof Collection){
 				@SuppressWarnings("rawtypes")
 				Collection tempData = (Collection)obj;
-				Collection realData = (Collection)obj.getClass().newInstance();
+				Collection<Object> realData = (Collection<Object>)obj.getClass().newInstance();
 				tempData.forEach((data)->{
 					try {
 						realData.add(analizeObjectProperty(data,propertyType));
@@ -210,7 +210,6 @@ public class TransComp implements InitializingBean{
 	 * @throws Exception
 	 * @return String     
 	 */
-	@SuppressWarnings("unchecked")
 	public String callMicService(
 			HttpMethod method,
 			String serviceId,
@@ -229,7 +228,7 @@ public class TransComp implements InitializingBean{
 	   if( method == HttpMethod.GET || method == HttpMethod.DELETE){
     	   MultiValueMap<String,String> value = new LinkedMultiValueMap<String,String>();
     	   if(params!=null && params instanceof Map){
-    		   Map tempData = (Map) params;
+    		   Map<?, ?> tempData = (Map<?, ?>) params;
     		   if(!CollectionUtils.isEmpty(tempData)){
     			   tempData.forEach((k,v)->{
         			   if(k!=null){
@@ -239,16 +238,16 @@ public class TransComp implements InitializingBean{
         	   }
     		   serviceContent = UriComponentsBuilder.fromHttpUrl(serviceContent).queryParams(value).build().toUriString();
     	   }
-    	   HttpEntity entity = new HttpEntity(headers);
+    	   HttpEntity<?> entity = new HttpEntity<>(headers);
     	   response = restTemplate.exchange(
     			  serviceContent, method, entity, String.class);
 		}else if(method == HttpMethod.PUT ||method == HttpMethod.POST){
 			 headers.setContentType(MediaType.APPLICATION_JSON);
-			 HttpEntity request = null;
+			 HttpEntity<Object> request = null;
 			 if(params != null){
-				request=new HttpEntity(params, headers);
+				request=new HttpEntity<Object>(params, headers);
 			 }else{
-				request=new HttpEntity(headers);
+				request=new HttpEntity<Object>(headers);
 			 }
 			 response = restTemplate.exchange(
 					 serviceContent,method, request, String.class);
