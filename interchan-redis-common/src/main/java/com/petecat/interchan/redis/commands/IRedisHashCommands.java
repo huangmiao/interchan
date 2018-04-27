@@ -136,5 +136,11 @@ public interface IRedisHashCommands {
 	List<String> hvals(int index,String key);
 	
 	Long hdel(int index,String key,Object field);
+	
 	Long hdel(String key,Object field);
+	
+	Long hincrby(String key,String field,Long incroment);
+	
+	Long hincrby(int index,String key,String field,Long incroment);
+	
 }

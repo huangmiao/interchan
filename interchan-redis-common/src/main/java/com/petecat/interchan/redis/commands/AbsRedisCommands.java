@@ -336,6 +336,19 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
 	}
 	
 	@Override
+	public Long hincrby(String key, String field, Long incroment) {
+		return hincrby(defaultDbIndex,key,field,incroment);
+	}
+	
+	@Override
+	public Long hincrby(int index, String key, String field, Long incroment) {
+		return baseTempalte.execute((RedisConnection connection)->{
+			connection.select(index);
+			RedisSerializer<String> serializer = baseTempalte.getStringSerializer();
+			return connection.hIncrBy(serializer.serialize(key), serializer.serialize(field), incroment);
+		});
+	}
+	@Override
 	public Long hdel(int index, String key, Object field) {
 		return baseTempalte.execute((RedisConnection connection)->{
 			connection.select(index);

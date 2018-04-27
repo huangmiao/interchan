@@ -1,5 +1,4 @@
-﻿package com.petecat.interchan.core.controller;
-
+package com.petecat.interchan.core.controller;
 
 import org.apache.commons.lang3.StringUtils;
 
