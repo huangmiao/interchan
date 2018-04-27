@@ -39,7 +39,7 @@ public class EsLoggerDao extends EsFactoryImpl<EsOperatorLogger, String> impleme
 	 
 	 private boolean neverBlock = true;
 	 
-	 private BlockingQueue<EsAsysLogModel> blockingQueue =  new ArrayBlockingQueue<>(DEFAULT_QUEUE_SIZE);
+	 private BlockingQueue<EsAsysLogModel> blockingQueue;
 	
 	/** 
 	 * 异步写入
@@ -184,9 +184,11 @@ public void afterPropertiesSet() throws Exception {
 		 if(StringUtils.isNotBlank(cacheSize)) {
 		    this.DEFAULT_QUEUE_SIZE=Integer.parseInt(cacheSize);
 		 }
+		 this.DEFAULT_QUEUE_SIZE= this.DEFAULT_QUEUE_SIZE<=0?512:this.DEFAULT_QUEUE_SIZE;
 	 }catch(Exception e) {
 		 
 	 }
+	 blockingQueue =  new ArrayBlockingQueue<>(this.DEFAULT_QUEUE_SIZE);
 	 String threadSizeStr = environment.getProperty("elk.logger.threadSize");
 	 int threadSize = 4;
 	 try {
