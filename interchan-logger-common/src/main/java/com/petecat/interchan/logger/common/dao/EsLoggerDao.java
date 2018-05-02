@@ -4,6 +4,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.LockSupport;
 
 import org.apache.commons.lang3.StringUtils;
@@ -115,12 +116,12 @@ public class EsLoggerDao extends EsFactoryImpl<EsOperatorLogger, String> impleme
 	        	EsLoggerDao parent = EsLoggerDao.this;
 	        	Thread.currentThread().setName("es异步写入线程"+workNum);
 	        	//一次处理20条时等待0.5s
-	        	int dealCount = 0;
+	        	AtomicInteger dealCount = new AtomicInteger(0);	
 	            while (true) {
 	            	EsAsysLogModel logModel =  null;
 	                try {
 	                    logModel = blockingQueue.take();
-	                    dealCount++;
+	                    dealCount.incrementAndGet();
 	                	if(logModel.getOpType()==EsAsysLogOpType.INSERT) {
 	                		parent.insert(logModel.getEsLogger(), logModel.getIndex(), logModel.getType());
 	                	}else if(logModel.getOpType()==EsAsysLogOpType.MOD) {
@@ -135,9 +136,9 @@ public class EsLoggerDao extends EsFactoryImpl<EsOperatorLogger, String> impleme
 	                	}
 	                }
 	                try {
-	                	if(dealCount!=0 && dealCount%20==0) {
+	                	if(dealCount.get()!=0 && dealCount.get()%20==0) {
 	                		  LockSupport.parkNanos(500000000);
-	                		  dealCount = 0;
+	                		  dealCount.set(0);
 	                	}
 	                } catch (Exception ie) {
 	                }

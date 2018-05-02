@@ -62,6 +62,7 @@ public class AuthFilter implements Filter{
 				Jwt jwt = getMapper(Jwt.class, request);
 				String auth = request.getHeader(jwt.getType());
 				if(StringUtils.isBlank(auth)){
+					GlobalHeaderThreadLocal.set(globalHeader);
 					httpRequest.putHeader(Global.GLOBAL_HEADER, JSON.toJSONString(globalHeader));
 				}else if(StringUtils.length(auth) > TOKEN_HEADER_LENGTH){
 					String token = StringUtils.substringAfter(auth, jwt.getHeaderName());
