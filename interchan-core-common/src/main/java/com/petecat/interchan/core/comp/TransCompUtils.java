@@ -1,4 +1,4 @@
-package com.petecat.interchan.core.model;
+package com.petecat.interchan.core.comp;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -27,7 +27,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.petecat.interchan.core.comp.PropertyType;
 import com.petecat.interchan.core.entity.RequestModel;
 import com.petecat.interchan.protocol.Result;
 
