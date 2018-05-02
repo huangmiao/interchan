@@ -80,27 +80,12 @@ public class RedisKafkaAspect {
 					throw new JKafkaException("kafka这条消息已经处理过了！");
 				}
 			}
+		}catch(Exception e){
+			if(!(e instanceof JKafkaException)) {
+				redisExtCommands.hdel(kafkaMsg.getTopic() + CONSUMER, ""+kafkaMsg.getOffset());
+			}
 		}finally {
 			distributedLockHandler.releaseLock(lock);
 		}
-	}
-	
-	public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		 MessageDigest digest = MessageDigest.getInstance("md5");
-         byte[] result = digest.digest("你好".getBytes());
-         StringBuffer buffer = new StringBuffer();
-         // 把每一个byte 做一个与运算 0xff;
-         for (byte b : result) {
-             // 与运算
-             int number = b & 0xff;// 加盐
-             String str = Integer.toHexString(number);
-             if (str.length() == 1) {
-                 buffer.append("0");
-             }
-             buffer.append(str);
-         }
-         
-         // 标准的md5加密后的结果
-         System.out.println(buffer.toString());
 	}
 }
