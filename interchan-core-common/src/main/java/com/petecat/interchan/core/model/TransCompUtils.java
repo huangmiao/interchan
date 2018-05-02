@@ -52,6 +52,22 @@ public class TransCompUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public  Result<?> callSimpleService(RequestModel model){
+		  return this.callSimpleService(model,false);
+	 }
+
+	
+
+	/**
+	 *
+	 * 功能描述:
+	 * @param model
+	 * @param headerAddBearer
+	 * @return: com.petecat.interchan.protocol.Result<?>
+	 * @auther: admin
+	 * @date: 2018/05/02 15:47
+	 */
+	@SuppressWarnings("unchecked")
+	public  Result<?> callSimpleService(RequestModel model,boolean headerAddBearer){
 		   if(restTemplate == null) {
 			   return Result.faild("未提供调用请求模板服务类！");
 		   }
@@ -63,7 +79,11 @@ public class TransCompUtils {
 		   Object params = model.getParams();
 		   HttpHeaders headers = new HttpHeaders();
 		  if(StringUtils.isNotBlank(authorization)){
-			   headers.set("Authorization", authorization);
+			  if(headerAddBearer) {
+				   headers.set("Authorization", "Bearer "+authorization);
+			  }else {
+			       headers.set("Authorization", authorization);
+			  }
 		   }
 		   if(StringUtils.isNotBlank(sufUrl)) {
 			   if(sufUrl.startsWith("/")) {
@@ -117,11 +137,8 @@ public class TransCompUtils {
 			return response.getBody();
 		}
 
-
-
-
 	/**
-	 * @Title: callMicService
+	 * @Title: callSimpleService
 	 * @Description: 调用微服务
 	 * @param model 方法参数
 	 * @param typeArrays 封装的对象如果里面还有属性是对象
@@ -130,11 +147,12 @@ public class TransCompUtils {
 	 * @return T  返回的信息
 	 */
 	@SuppressWarnings("unchecked")
-	public  Result callMicService(
+	public  Result callSimpleService(
 			RequestModel model,
 			Class<?> cls,
-			PropertyType[] typeArrays){
-		Result result = callSimpleService(model);
+			PropertyType[] typeArrays,
+			boolean headerAddBearer){
+		Result result = callSimpleService(model,headerAddBearer);
 		if(cls == null || result.getCode()!=Result.SUCCESS){
 			return result;
 		}
@@ -161,7 +179,6 @@ public class TransCompUtils {
 		}
 		return result;
 	}
-
 
 
 	/**
