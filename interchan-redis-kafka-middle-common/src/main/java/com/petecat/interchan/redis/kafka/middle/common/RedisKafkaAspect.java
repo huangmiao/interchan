@@ -52,6 +52,8 @@ public class RedisKafkaAspect {
 	@Autowired
 	private DistributedLockHandler distributedLockHandler; 
 	
+	private static final Integer REDIS_KAFKA_DB_INDEX = 15;
+	
 	@Pointcut("@annotation(com.petecat.interchan.redis.kafka.middle.common.annaotion.RedisKafka)")
 	private void kafkaMsgProcess() { }  
 
@@ -72,9 +74,9 @@ public class RedisKafkaAspect {
 			lock.setName(kafkaMsg.getTopic() + LOCK + kafkaMsg.getOffset());
 			lock.setValue(kafkaMsg.getMsg().toString());
 			if(distributedLockHandler.tryLock(lock,notRepeat)){
-				String value = redisExtCommands.hget(kafkaMsg.getTopic() + CONSUMER, ""+kafkaMsg.getOffset());
+				String value = redisExtCommands.hget(REDIS_KAFKA_DB_INDEX,kafkaMsg.getTopic() + CONSUMER, ""+kafkaMsg.getOffset());
 				if(StringUtils.isEmpty(value)){
-					redisExtCommands.hset(kafkaMsg.getTopic() + CONSUMER, ""+kafkaMsg.getOffset(), kafkaMsg.getMsg());
+					redisExtCommands.hset(REDIS_KAFKA_DB_INDEX,kafkaMsg.getTopic() + CONSUMER, ""+kafkaMsg.getOffset(), kafkaMsg.getMsg());
 				}else{
 				    logger.error("数据为：{}",JSON.toJSONString(kafkaMsg));
 					throw new JKafkaException("kafka这条消息已经处理过了！");
@@ -82,7 +84,7 @@ public class RedisKafkaAspect {
 			}
 		}catch(Exception e){
 			if(!(e instanceof JKafkaException)) {
-				redisExtCommands.hdel(kafkaMsg.getTopic() + CONSUMER, ""+kafkaMsg.getOffset());
+				redisExtCommands.hdel(REDIS_KAFKA_DB_INDEX,kafkaMsg.getTopic() + CONSUMER, ""+kafkaMsg.getOffset());
 			}
 		}finally {
 			distributedLockHandler.releaseLock(lock);
