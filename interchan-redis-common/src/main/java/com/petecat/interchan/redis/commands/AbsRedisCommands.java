@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -186,6 +187,28 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
   		});
 	}
 	
+	@Override
+	public List<String> hvals(String key) {
+		return hvals(defaultDbIndex, key);
+	}
+	
+	@Override
+	public List<String> hkeys(String key) {
+		return hkeys(defaultDbIndex,key);
+	}
+	@Override
+	public List<String> hkeys(int index, String key) {
+		return baseTempalte.execute((RedisConnection connection)->{
+			connection.select(index);
+			RedisSerializer<String> serializer = baseTempalte.getStringSerializer();
+    		
+    		Set<byte[]> valueList = connection.hKeys(serializer.serialize(key));
+    		
+    		return valueList.parallelStream().map(
+    			value-> serializer.deserialize(value)
+			).collect(Collectors.toList());
+		});
+	}
 	@Override
 	public List<String> hvals(int index, String key) {
 		return baseTempalte.execute((RedisConnection connection)->{

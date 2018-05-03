@@ -105,4 +105,45 @@ public class RedisExtCommands extends AbsRedisCommands{
 		}
 		return JSON.parseObject(value, clazz);
 	}
+
+	@Override
+	public <T> Map<String, T> hgetAll(String key, Class<T> clazz) {
+		Map<String,String> map = hgetall(key);
+		Map<String, T> result = new HashMap<>(map.size());
+		map.forEach((mapKey,mapValue)->{
+			result.put(mapKey, JSON.parseObject(mapValue,clazz));
+		});
+		return result;
+	}
+
+	@Override
+	public <T> Map<String, List<T>> hgetAllList(String key, Class<T> clazz) {
+		Map<String,String> map = hgetall(key);
+		Map<String, List<T>> result = new HashMap<>(map.size());
+		map.forEach((mapKey,mapValue)->{
+			result.put(mapKey, JSON.parseArray(mapValue,clazz));
+		});
+		return result;
+	}
+
+	@Override
+	public <T> Map<String, List<T>> hgetAllList(int index, String key, Class<T> clazz) {
+		Map<String,String> map = hgetall(index,key);
+		Map<String, List<T>> result = new HashMap<>(map.size());
+		map.forEach((mapKey,mapValue)->{
+			result.put(mapKey, JSON.parseArray(mapValue,clazz));
+		});
+		return result;
+	}
+	
+	@Override
+	public <T> List<T> hvals(String key, Class<T> clazz) {
+		List<String> value = hvals(key);
+		if(CollectionUtils.isEmpty(value)){
+			return null;
+		}
+		return value.parallelStream().map(
+			val -> JSON.parseObject(val,clazz)
+		).collect(Collectors.toList());
+	}
 }

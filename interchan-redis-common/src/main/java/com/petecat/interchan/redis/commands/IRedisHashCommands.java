@@ -124,6 +124,7 @@ public interface IRedisHashCommands {
 	 */
 	Map<String, String> hgetall(int index,String key);
 	
+	List<String> hvals(String key);
 	/**
 	 * 
 	 * @Title: hvals   
@@ -142,5 +143,9 @@ public interface IRedisHashCommands {
 	Long hincrby(String key,String field,Long incroment);
 	
 	Long hincrby(int index,String key,String field,Long incroment);
+	
+	List<String> hkeys(String key);
+	
+	List<String> hkeys(int index,String key);
 	
 }

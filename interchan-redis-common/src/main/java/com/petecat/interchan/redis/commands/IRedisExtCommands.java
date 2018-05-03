@@ -85,7 +85,13 @@ public interface IRedisExtCommands extends IRedisHashCommands, IRedisListCommand
 	
 	<T> List<T> hgetList(int dbIndex,String key,String field,Class<T> clazz);
 	
+	<T> Map<String, T> hgetAll(String key,Class<T> clazz);
+	
 	<T> Map<String, T> hgetAll(int index,String key,Class<T> clazz);
+	
+	<T> Map<String,List<T>> hgetAllList(String key,Class<T> clazz);
+	
+	<T> Map<String,List<T>> hgetAllList(int index,String key,Class<T> clazz);
 	/**
 	 * 
 	 * @Title: hvals   
@@ -96,4 +102,6 @@ public interface IRedisExtCommands extends IRedisHashCommands, IRedisListCommand
 	 * @return List<String>
 	 */
 	<T> List<T> hvals(int index,String key,Class<T> clazz);
+	
+	<T> List<T> hvals(String key,Class<T> clazz);
 }
