@@ -2,10 +2,7 @@ package com.petecat.interchan.redis.kafka.middle.common;
 
 
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
