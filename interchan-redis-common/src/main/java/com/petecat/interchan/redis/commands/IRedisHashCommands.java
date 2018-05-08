@@ -104,6 +104,9 @@ public interface IRedisHashCommands {
 	 */
 	boolean hmset(int index,String key,Map<String, Object> params);
 	
+	boolean hmsetList(String key,Map<String, List<Object>> params);
+	
+	boolean hmsetList(int index,String key,Map<String, List<Object>> params);
 	/**
 	 * 
 	 * @Title: hmget   

@@ -10,7 +10,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.Proxy;
+import java.net.Proxy.Type;
 import java.net.URL;
 import java.security.KeyStore;
 
@@ -114,7 +117,7 @@ public class CommonUtil {
 	 * @param outputStr 提交的数据
 	 * @return 返回微信服务器响应的信息
 	 */
-	public static String httpsRequest(String requestUrl, String requestMethod, String outputStr) {
+	public static String httpsRequest(String requestUrl, String requestMethod, String outputStr,String useProxy,String proxyHost,int proxyPort) {
 		try {
 			// 创建SSLContext对象，并使用我们指定的信任管理器初始化
 			TrustManager[] tm = { new MyX509TrustManager() };
@@ -123,7 +126,13 @@ public class CommonUtil {
 			// 从上述SSLContext对象中得到SSLSocketFactory对象
 			SSLSocketFactory ssf = sslContext.getSocketFactory();
 			URL url = new URL(requestUrl);
-			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+			HttpsURLConnection conn =  null;
+			if("1".equals(useProxy)){
+				Proxy proxy1=new Proxy(Type.HTTP, new InetSocketAddress(proxyHost, proxyPort));
+				conn = (HttpsURLConnection) url.openConnection(proxy1);
+			}else{
+				conn = (HttpsURLConnection) url.openConnection();
+			}
 			conn.setSSLSocketFactory(ssf);
 			conn.setDoOutput(true);
 			conn.setDoInput(true);

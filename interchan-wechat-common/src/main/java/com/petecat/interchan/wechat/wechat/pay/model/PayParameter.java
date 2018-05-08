@@ -50,4 +50,17 @@ public class PayParameter implements Serializable{
 	 * 用户代理
 	 */
 	private String userAgent;
+	
+	
+	/**
+	 * 订单号
+	 */
+	private String orderNo;
+	
+	
+	private String useProxy;
+	
+	private String proxyHost;
+	
+	private int proxyPort;
 }

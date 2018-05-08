@@ -131,6 +131,28 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
 	}
 
 	@Override
+	public boolean hmsetList(String key, Map<String, List<Object>> params) {
+		Map<String, Object> operaterMap = new HashMap<>(params.size());
+		if(CollectionUtils.isEmpty(params))
+			return false;
+		params.forEach((field,value)->{
+			operaterMap.put(field, value);
+		});
+		return hmset(key,operaterMap);
+	}
+
+	@Override
+	public boolean hmsetList(int index, String key, Map<String, List<Object>> params) {
+		Map<String, Object> operaterMap = new HashMap<>(params.size());
+		if(CollectionUtils.isEmpty(params))
+			return false;
+		params.forEach((field,value)->{
+			operaterMap.put(field, value);
+		});
+		return hmset(key,operaterMap);
+	}
+	
+	@Override
 	public boolean hmset(int index,String key, Map<String, Object> params) {
 		if(CollectionUtils.isEmpty(params))
 			return false;
@@ -242,7 +264,12 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
 		return baseTempalte.execute((RedisConnection connection)->{
 			connection.select(index);
 			RedisSerializer<String> serializer = baseTempalte.getStringSerializer();
-			connection.setEx(serializer.serialize(key), expireTime, serializer.serialize(JSON.toJSONString(value)));
+			if(value instanceof String){
+				connection.setEx(serializer.serialize(key), expireTime, serializer.serialize((String)value));
+			}else{
+				connection.setEx(serializer.serialize(key), expireTime, serializer.serialize(JSON.toJSONString(value)));	
+			}
+			
 			return true;
 		});
 	}
@@ -394,4 +421,5 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
 	public Long hdel(String key, Object field) {
 		return hdel(defaultDbIndex,key,field);
 	}
+	
 }

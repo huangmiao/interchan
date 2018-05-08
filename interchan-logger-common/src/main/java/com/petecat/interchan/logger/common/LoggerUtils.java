@@ -76,9 +76,13 @@ public class LoggerUtils {
 		Object[] args = jPoint.getArgs();
 		//组装传输对象数组
 		if(args != null && args.length>0){
-			String data = JSON.toJSONString(args);
-			data = StringEscapeUtils.unescapeJson(data);
-			esLogger.setSendData(data);
+			String data;
+			try{
+				data = JSON.toJSONString(args);
+				data = StringEscapeUtils.unescapeJson(data);
+				esLogger.setSendData(data);
+			}catch(Exception e){
+			}
 		}
 		
 		String clazz = jPoint.getTarget().getClass().getName();

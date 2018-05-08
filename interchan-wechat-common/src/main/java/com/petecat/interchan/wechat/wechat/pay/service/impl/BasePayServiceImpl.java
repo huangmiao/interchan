@@ -5,6 +5,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.petecat.interchan.wechat.wechat.common.config.WeConfig;
@@ -24,6 +26,8 @@ import com.petecat.interchan.wechat.wechat.pay.utils.PayUtils;
  */
 @Service("basePayService")
 public class BasePayServiceImpl implements BasePayService{
+    
+    private Logger logger  = LoggerFactory.getLogger(getClass());
 	/**
 	 * 微信JS支付 
 	 * @param request
@@ -40,7 +44,7 @@ public class BasePayServiceImpl implements BasePayService{
         parameters.put("mch_id", WeConfig.MCH_ID);
         parameters.put("nonce_str", PayCommonUtil.CreateNoncestr());
         parameters.put("body", payInfo.getTitle());
-        parameters.put("out_trade_no",UUID.randomUUID().toString().replaceAll("-", ""));
+        parameters.put("out_trade_no",payInfo.getOrderNo());
         parameters.put("total_fee", payInfo.getTotalFee());
         parameters.put("spbill_create_ip",payInfo.getRequestIP());
         parameters.put("notify_url", payInfo.getNotifyUrl());
@@ -50,7 +54,8 @@ public class BasePayServiceImpl implements BasePayService{
         parameters.put("sign", sign);
         MessageUtils<Map> utils = new MessageUtils<Map>();
         String requestXML = utils.fromObjectToXml(parameters);
-        String result =CommonUtil.httpsRequest(WechatUrl.UNIFIED_ORDER_URL, "POST", requestXML);
+        String result =CommonUtil.httpsRequest(WechatUrl.UNIFIED_ORDER_URL, "POST", requestXML,payInfo.getUseProxy(),payInfo.getProxyHost(),payInfo.getProxyPort());
+        logger.info("统一下单应答的消息是:{}",result);
         Map<String, String> map =  PayUtils.parseXml(result);
 		SortedMap<Object,Object> params = new TreeMap<Object,Object>();
         params.put("appId", WeConfig.APPID);

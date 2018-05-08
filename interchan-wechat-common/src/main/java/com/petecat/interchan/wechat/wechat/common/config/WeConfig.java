@@ -10,8 +10,6 @@ package com.petecat.interchan.wechat.wechat.common.config;
  */
 public class WeConfig {
 
-	public static long CONFIGID;//配置id
-	
 	public static String APPID; //微信appid
 	
 	public static String APPSECRET; //secret
