@@ -1,4 +1,4 @@
-package com.petecat.interchan.redis.commands;
+package com.petecat.interchan.redis.commands.key;
 
 /**
  * 
@@ -18,8 +18,7 @@ public interface IRedisKeyCommands {
 	 * @return
 	 * @return boolean
 	 */
-	boolean expire(String key,long seconds);
-	
+	Boolean expire(String key,long seconds);
 	/**
 	 * 
 	 * @Title: expireat   
@@ -30,7 +29,25 @@ public interface IRedisKeyCommands {
 	 * @return
 	 * @return boolean
 	 */
-	boolean expire(int index,String key,long seconds);
+	Boolean expire(int index,String key,long seconds);
 	
+	/**
+	 * 
+	 * @Title: exists   
+	 * @Description: 判断key是否存在
+	 * @param key
+	 * @return
+	 * @return Boolean
+	 */
+	Boolean exists(String key);
 	
+	/**
+	 * 
+	 * @Title: exists   
+	 * @Description: 判断key是否存在
+	 * @param key
+	 * @return
+	 * @return Boolean
+	 */
+	Boolean exists(int index,String key);
 }

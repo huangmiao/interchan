@@ -1,4 +1,4 @@
-package com.petecat.interchan.redis.commands;
+package com.petecat.interchan.redis.commands.hash;
 
 import java.util.Collection;
 import java.util.List;

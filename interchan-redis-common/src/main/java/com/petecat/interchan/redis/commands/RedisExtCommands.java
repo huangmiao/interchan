@@ -22,7 +22,7 @@ import com.alibaba.fastjson.JSON;
  * @date:   2017年8月31日 下午3:57:55
  */
 @Component("redisCommands")
-public class RedisExtCommands extends AbsRedisCommands{
+public class RedisExtCommands extends AbstractBaseRedisCommands{
 
 	@Autowired
 	public void setRedisTemplate(RedisTemplate<String, ?> redisTemplate) {

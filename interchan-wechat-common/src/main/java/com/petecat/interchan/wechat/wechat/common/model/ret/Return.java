@@ -18,7 +18,7 @@ public class Return implements Serializable{
 	private String returnCode;
 	
 	@JSONField(name=WechatConsts.RETURN_MSG)
-	@XStreamAlias(WechatConsts.RETURN_CODE)
+	@XStreamAlias(WechatConsts.RETURN_MSG)
 	private String returnMsg;
 	
 	public Return(){

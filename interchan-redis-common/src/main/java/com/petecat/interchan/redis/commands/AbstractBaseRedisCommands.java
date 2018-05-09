@@ -25,7 +25,7 @@ import lombok.Setter;
  * @author: mhuang
  * @date:   2017年8月31日 下午2:02:27
  */
-public abstract class AbsRedisCommands implements IRedisExtCommands{
+public abstract class AbstractBaseRedisCommands implements IRedisExtCommands{
 
 	@Setter
 	RedisTemplate<String, ?> baseTempalte;
@@ -362,7 +362,7 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
 	 * @return int
 	 */
 	@Override
-	public boolean expire(String key,long seconds){
+	public Boolean expire(String key,long seconds){
 		return expire(defaultDbIndex, key, seconds);
 	}
 	
@@ -377,7 +377,7 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
 	 * @return int
 	 */
 	@Override
-	public boolean expire(int index,String key,long seconds){
+	public Boolean expire(int index,String key,long seconds){
 		return baseTempalte.execute((RedisConnection connection)->{
 			connection.select(index);
 			RedisSerializer<String> serializer = baseTempalte.getStringSerializer();
@@ -422,4 +422,17 @@ public abstract class AbsRedisCommands implements IRedisExtCommands{
 		return hdel(defaultDbIndex,key,field);
 	}
 	
+	@Override
+	public Boolean exists(String key) {
+		return exists(defaultDbIndex,key);
+	}
+	
+	@Override
+	public Boolean exists(int index, String key) {
+		return baseTempalte.execute((RedisConnection connection)->{
+			connection.select(index);
+			RedisSerializer<String> serializer = baseTempalte.getStringSerializer();
+			return connection.exists(serializer.serialize(key));
+		});
+	}
 }

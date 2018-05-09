@@ -1,4 +1,4 @@
-package com.petecat.interchan.redis.commands;
+package com.petecat.interchan.redis.commands.sets.sorted;
 
 /**
  * 
