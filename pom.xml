@@ -4,7 +4,7 @@
 
   <groupId>com.petecat</groupId>
   <artifactId>interchan</artifactId>
-  <version>0.0.3.3.7</version>
+  <version>0.0.3.3.8</version>
   <packaging>pom</packaging>
   <name>interchan</name>
   <url>http://maven.apache.org</url>
@@ -107,7 +107,7 @@
 		<dependency>
 		 	<groupId>com.mhuang.common</groupId>
 		  	<artifactId>util</artifactId>
-		  	<version>0.0.1.2</version>
+		  	<version>0.0.1.3</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.kafka</groupId>
