@@ -147,5 +147,17 @@ public class RedisExtCommands extends AbstractBaseRedisCommands{
 		).collect(Collectors.toList());
 	}
 
+	/**   
+	 * <p>Title: executeRedisCommand</p>   
+	 * <p>Description: </p>   
+	 * @param redisCommand
+	 * @return   
+	 * @see com.petecat.interchan.redis.commands.IRedisExtCommands#executeRedisCommand(com.petecat.interchan.redis.commands.RedisCommand)   
+	 */  
+	@Override
+	public <T> T executeRedisCommand(RedisCommand<T> redisCommand) {
+		return redisCommand.executeCommand(this.baseTempalte);
+	}
+
 	
 }

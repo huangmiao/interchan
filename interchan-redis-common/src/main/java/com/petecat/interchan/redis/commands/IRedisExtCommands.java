@@ -21,4 +21,5 @@ public interface IRedisExtCommands extends
 	IRedisListCommands,
 	IRedisSortedSetCommands, 
 	IRedisKeyCommands {
+	 <T>T executeRedisCommand(RedisCommand<T> redisCommand);
 }
