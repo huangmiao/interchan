@@ -21,6 +21,6 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 public interface RedisCommand<T> {
 	
-  public T executeCommand(RedisTemplate template);
+  public T executeCommand(RedisTemplate<?, ?> template);
   
 }
