@@ -4,14 +4,14 @@
 
   <groupId>com.petecat</groupId>
   <artifactId>interchan</artifactId>
-  <version>0.0.3.3.8</version>
+  <version>0.0.3.3.9</version>
   <packaging>pom</packaging>
   <name>interchan</name>
   <url>http://maven.apache.org</url>
   <properties>
   		<java.version>1.8</java.version>
   		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  		<project.repository.url>http://192.168.1.200:8081</project.repository.url>
+  		<project.repository.url>http://192.168.1.210:8181</project.repository.url>
   </properties>
   	<parent>
     	<groupId>org.springframework.boot</groupId>
@@ -150,7 +150,7 @@
   <repositories>
 		<repository>
 			<id>nexus-release</id>
-			<url>${project.repository.url}/nexus/content/groups/public</url>
+			<url>${project.repository.url}/repository/maven-public</url>
 			<releases>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -158,7 +158,7 @@
 		</repository>
 	   <repository>
 			<id>nexus-snapshots</id>
-			<url>${project.repository.url}/nexus/content/groups/public-snapshots</url>
+			<url>${project.repository.url}/repository/maven-snapshots</url>
 			<releases>
 				<enabled>false</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -171,7 +171,7 @@
 
 		<repository>
 			<id>nexus-release-out</id>
-			<url>${project.repository.url}/nexus/content/groups/public</url>
+			<url>${project.repository.url}/repository/maven-public</url>
 			<releases>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -180,7 +180,7 @@
 
 		<repository>
 			<id>nexus-snapshots-out</id>
-			<url>${project.repository.url}/nexus/content/groups/public-snapshots</url>
+			<url>${project.repository.url}/repository/maven-snapshots</url>
 			<releases>
 				<enabled>false</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -196,13 +196,13 @@
 	  <repository>
 	    <id>nexus-releases</id>
 	    <name>nexus-releases</name>
-	    <url>${project.repository.url}/nexus/content/repositories/releases/</url>
+	    <url>${project.repository.url}/repository/maven-releases//</url>
 	    <uniqueVersion>true</uniqueVersion>
 	  </repository>
 	  <snapshotRepository>
 	    <id>nexus-snapshots</id>
 	    <name>nexus-snapshots</name>
-	    <url>${project.repository.url}/nexus/content/repositories/snapshots/</url>
+	    <url>${project.repository.url}/repository/maven-snapshots/</url>
 	    <uniqueVersion>true</uniqueVersion>
 	  </snapshotRepository>
 	</distributionManagement>

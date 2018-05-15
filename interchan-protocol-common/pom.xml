@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.8</version>
+    <version>0.0.3.3.9</version>
   </parent>
   <artifactId>interchan-protocol-common</artifactId>
   <name>interchan-protocol-common</name>

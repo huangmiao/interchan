@@ -51,7 +51,6 @@ public class AuthFilter implements Filter{
 	public void doFilter(ServletRequest req, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		if(req instanceof HttpServletRequest) {
-			
 			try{
 				HttpServletRequest request = (HttpServletRequest) req;
 				WebRequestHeader httpRequest = new WebRequestHeader(request);
@@ -65,11 +64,12 @@ public class AuthFilter implements Filter{
 					GlobalHeaderThreadLocal.set(globalHeader);
 					httpRequest.putHeader(Global.GLOBAL_HEADER, JSON.toJSONString(globalHeader));
 				}else if(StringUtils.length(auth) > TOKEN_HEADER_LENGTH){
+					logger.debug("当前调用的token:{}",auth);
 					String token = StringUtils.substringAfter(auth, jwt.getHeaderName());
 					try {
 						Claims claims = JwtHelper.parseJWT(token, jwt.getBase64Secret());
 						if(claims != null){
-							globalHeader.setToken(token);
+							globalHeader.setToken(token.trim());
 							globalHeader.setType((String)claims.get("type"));
 							globalHeader.setCompanyId((String)claims.get(Global.COMPANY_ID));
 							globalHeader.setUserId((String) claims.get(Global.USERID));
