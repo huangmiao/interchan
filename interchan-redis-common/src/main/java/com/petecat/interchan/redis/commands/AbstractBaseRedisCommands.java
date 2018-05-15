@@ -1,8 +1,11 @@
 package com.petecat.interchan.redis.commands;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -435,4 +438,42 @@ public abstract class AbstractBaseRedisCommands implements IRedisExtCommands{
 			return connection.exists(serializer.serialize(key));
 		});
 	}
+
+	/**   
+	 * <p>Title: zincrby</p>   
+	 * <p>Description: </p>   
+	 * @param index
+	 * @param key
+	 * @param score
+	 * @param member
+	 * @return   boolean 
+	 * @see com.petecat.interchan.redis.commands.sets.sorted.IRedisSortedSetCommands#zincrby(int, java.lang.String, double, java.lang.String)   
+	 */  
+	@Override
+	public double zIncrBy(int index, String key, double score, Object member) {
+		return baseTempalte.execute((RedisConnection connection)->{
+			connection.select(index);
+			RedisSerializer<String> serializer = baseTempalte.getStringSerializer();
+			String val = JSON.toJSONString(member);
+			return connection.zIncrBy(serializer.serialize(key), score, serializer.serialize(val));
+		});
+	}
+	
+	@Override
+	public  <T> List<T> zRevRange(int index, String key, long start,long end,Class<T> clz) {
+		return baseTempalte.execute((RedisConnection connection)->{
+			connection.select(index);
+			RedisSerializer<String> serializer = baseTempalte.getStringSerializer();
+			Set<byte[]> bytes=connection.zRevRange(serializer.serialize(key), start,end);
+			List<T> list = new ArrayList<>(); 
+			if(!CollectionUtils.isEmpty(bytes)) {
+				bytes.forEach(t->{
+					list.add(JSON.parseObject(serializer.deserialize(t), clz));
+				});
+			}
+			return list;
+		});
+	}
+	 
+	
 }

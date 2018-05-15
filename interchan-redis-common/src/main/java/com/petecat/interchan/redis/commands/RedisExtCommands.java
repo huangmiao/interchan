@@ -158,6 +158,5 @@ public class RedisExtCommands extends AbstractBaseRedisCommands{
 	public <T> T executeRedisCommand(RedisCommand<T> redisCommand) {
 		return redisCommand.executeCommand(this.baseTempalte);
 	}
-
 	
 }

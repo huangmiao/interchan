@@ -1,5 +1,7 @@
 package com.petecat.interchan.redis.commands.sets.sorted;
 
+import java.util.List;
+
 /**
  * 
  * @ClassName:  IRedisSortedSetCommands   
@@ -39,4 +41,31 @@ public interface IRedisSortedSetCommands {
 	 * @return boolean
 	 */
 	boolean zadd(int index,String key,double score,Object value);
+	
+	
+	/** 
+	 *   
+	 * @Title: zincrby
+	 * @param index
+	 * @param key
+	 * @param score
+	 * @param member
+	 * @return double     
+	 */
+	double zIncrBy(int index, String key, double score, Object member);
+
+	/** 
+	 * 最大的分数在前获取
+	 * @Title: zRevRange
+	 * @param index
+	 * @param key
+	 * @param start
+	 * @param end
+	 * @param clz
+	 * @return List<T>     
+	 */
+	<T>List<T> zRevRange(int index, String key, long start, long end, Class<T> clz);
+	
+	
+	
 }
