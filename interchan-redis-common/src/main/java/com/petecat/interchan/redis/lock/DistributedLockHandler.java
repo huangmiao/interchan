@@ -5,8 +5,12 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.ReturnType;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -124,12 +128,17 @@ public class DistributedLockHandler {
         return false;
     }
 
+    String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+    
     /**
      * 释放锁
      */
     public void releaseLock(Lock lock) {
         if (!StringUtils.isEmpty(lock.getName())) {
-            template.delete(lock.getName());
+            template.execute((RedisConnection connection)->{
+            	RedisSerializer<String> serializer = template.getStringSerializer();
+            	return connection.eval(serializer.serialize(script), ReturnType.BOOLEAN, 1, serializer.serialize(lock.getName()),serializer.serialize(lock.getValue()));
+            });
         }
     }
 }
