@@ -4,7 +4,7 @@
 
   <groupId>com.petecat</groupId>
   <artifactId>interchan</artifactId>
-  <version>0.0.3.3.10</version>
+  <version>0.0.3.3.11</version>
   <packaging>pom</packaging>
   <name>interchan</name>
   <url>http://maven.apache.org</url>
@@ -16,7 +16,7 @@
   	<parent>
     	<groupId>org.springframework.boot</groupId>
     	<artifactId>spring-boot-starter-parent</artifactId>
-    	 <version>1.5.10.RELEASE</version>
+    	 <version>1.5.13.RELEASE</version>
 	</parent>
 	<dependencyManagement>
 		<dependencies>
@@ -134,6 +134,49 @@
 		    <artifactId>jdom</artifactId>
 		    <version>1.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+	  <dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-databind</artifactId>
+		  <version>2.9.5</version>
+	  </dependency>
+	  <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+	  <dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-annotations</artifactId>
+		  <version>2.9.5</version>
+	  </dependency>
+	  <!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl -->
+	<dependency>
+	    <groupId>org.codehaus.jackson</groupId>
+	    <artifactId>jackson-mapper-asl</artifactId>
+	    <version>1.9.13</version>
+	</dependency>
+	<dependency>
+		<groupId>com.fasterxml.jackson.module</groupId>
+	    <artifactId>jackson-module-parameter-names</artifactId>
+	    <version>2.9.5</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.datatype </groupId>
+	    <artifactId>jackson-datatype-jdk8</artifactId>
+	    <version>2.9.5</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.datatype </groupId>
+	    <artifactId>jackson-datatype-jsr310</artifactId>
+	    <version>2.9.5</version>
+	</dependency>
+ 	<dependency>
+		<groupId>io.springfox</groupId>
+		<artifactId>springfox-swagger-ui</artifactId>
+		<version>2.2.2</version>
+	</dependency>
+	<dependency>
+		<groupId>io.springfox</groupId>
+		<artifactId>springfox-swagger2</artifactId>
+		<version>2.2.2</version>
+	</dependency>
 	</dependencies>
  </dependencyManagement>
   	<modules>
@@ -146,7 +189,8 @@
     	<module>interchan-redis-kafka-middle-common</module>
     	<module>interchan-wechat-common</module>
     	<module>interchan-pay-common</module>
-  </modules>
+    	<module>interchan-jackson-common</module>
+  	</modules>
   <distributionManagement>
 	  <repository>
 	    <id>nexus-releases</id>

@@ -35,7 +35,7 @@ import com.petecat.interchan.logger.common.model.EsOperatorLogger;
 @Order(0)
 public class WebLogAspect {
 
-	@Pointcut("execution(public * com.petecat..*Controller.*(..)) || @annotation(com.petecat.interchan.logger.common.annotation.LogLogger)")
+	@Pointcut("execution(public * com.petecat..*Controller.*(..))|| execution(public * com.petecat..*Client.*(..))|| @annotation(com.petecat.interchan.logger.common.annotation.LogLogger)")
 	private void webLog() { }  
 
 	//临时存放对象

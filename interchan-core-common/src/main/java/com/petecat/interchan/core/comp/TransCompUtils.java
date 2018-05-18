@@ -53,7 +53,8 @@ public class TransCompUtils {
 	public  Result<?> callSimpleService(RequestModel model){
 		  return this.callSimpleService(model,false);
 	 }
-
+	
+	
 	
 
 	/**
@@ -135,7 +136,14 @@ public class TransCompUtils {
 			}
 			return response.getBody();
 		}
+	
+	public Result callSimpleService(RequestModel model,Class<?> cls){
+		return callSimpleService(model,cls,false);
+	}
 
+	public Result callSimpleService(RequestModel model,Class<?> cls,boolean headerAddBearer){
+		return callSimpleService(model,cls,null,false);
+	}
 	/**
 	 * @Title: callSimpleService
 	 * @Description: 调用微服务
