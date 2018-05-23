@@ -1,11 +1,7 @@
 package com.petecat.interchan.pay.common.wechat.utils;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
+import java.util.*;
 
 public class PayCommonUtil {
 
@@ -39,7 +35,19 @@ public class PayCommonUtil {
         String mysign = MD5Util.MD5Encode(sb.toString(), characterEncoding).toLowerCase();  
         String tenpaySign = ((String)packageParams.get("sign")).toLowerCase();  
         return tenpaySign.equals(mysign);  
-    }  
+    }
+
+    private final static String CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    public static String CreateNoncestr() {
+        StringBuilder res = new StringBuilder("");
+        for (int i = 0; i < 16; i++) {
+            Random rd = new Random();
+            res.append(CHARS.charAt(rd.nextInt(CHARS.length() - 1)));
+        }
+        return res.toString();
+    }
+
     /**
      * sign签名
      * @Author  科帮网

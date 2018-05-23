@@ -29,8 +29,8 @@ public class WechatPayServer {
 	private final static List<String> SUPPORT_MODE_LIST = Stream.of(APP_MODE).collect(Collectors.toList());
 	public static Map<?, ?> payment(WechatPayDTO dto) throws Exception {
 		SortedMap<Object, Object> packageParams = createCommonParmas(dto.getAppId(),dto.getMchId());
-		if(SUPPORT_MODE_LIST.contains(dto.getMode())){
-			if(APP_MODE.equals(dto.getMode())){
+		if(SUPPORT_MODE_LIST.contains(dto.getMode().toUpperCase())){
+			if(APP_MODE.equals(dto.getMode().toUpperCase())){
 				return createAppPay(packageParams, dto.getTradeNo(), dto.getSubject(), dto.getAmount(), dto.getApiKey(), dto.getIp(), dto.getNotifyUrl());
 			}
 		}
@@ -61,7 +61,7 @@ public class WechatPayServer {
 		packageParams.put("spbill_create_ip", ip);// 发起人IP地址
 		packageParams.put("notify_url", notifyUrl);// 回调地址
 		packageParams.put("trade_type", APP_MODE);// 交易类型
-		
+		packageParams.put("nonce_str", PayCommonUtil.CreateNoncestr());
 		String sign = PayCommonUtil.createSign("UTF-8", packageParams, apiKey); //密匙
 		packageParams.put("sign", sign);// 签名
 		String requestXML = PayCommonUtil.getRequestXml(packageParams);

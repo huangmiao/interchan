@@ -3,10 +3,7 @@ package com.petecat.interchan.pay.common.wechat.utils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -78,4 +75,7 @@ public class XMLUtil {
 		return sb.toString();
 	}
 
+	public static void main(String[] args) {
+		System.out.println(UUID.randomUUID().toString().replaceAll("-",""));
+	}
 }

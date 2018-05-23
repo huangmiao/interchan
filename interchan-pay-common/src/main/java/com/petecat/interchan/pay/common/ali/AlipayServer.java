@@ -28,7 +28,10 @@ public class AlipayServer {
 	public static String payment(AliPayDTO dto) throws Exception {
 		AlipayClient client = getClient(dto.getMchId(),dto.getRsaPrivateKey(),dto.getRsaPublicKey());
 		if(APP_MODE.equals(dto.getMode())){
-			return createAppPay(client,dto.getBody(),dto.getSubject(),dto.getTradeNo(),dto.getTradeNo(),dto.getTimeout(),dto.getAmount(),dto.getNotifyUrl());
+			return createAppPay(client,
+					dto.getBody(),
+					dto.getSubject(),
+					dto.getTradeNo(),dto.getTimeout(),dto.getAmount(),dto.getNotifyUrl());
 		}
 		throw new InterchanPayException(500,"暂不支持支付"+dto.getMode()+"方式");
 	}
@@ -37,7 +40,10 @@ public class AlipayServer {
 		return createAppPay(alipayClient, body, subject, tradeNo, timeout,amount, PRODUCT_CODE,notifyUrl); 
 	}
 	
-	public static String createAppPay(AlipayClient alipayClient,String body,String subject,String tradeNo,String timeout,String amount,String productCode,String notifyUrl) throws AlipayApiException{
+	public static String createAppPay(AlipayClient alipayClient,
+									  String body,String subject,String tradeNo,
+									  String timeout,String amount,
+									  String productCode,String notifyUrl) throws AlipayApiException{
 		AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
 		AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
 		model.setBody(body);
@@ -45,7 +51,7 @@ public class AlipayServer {
 		model.setOutTradeNo(tradeNo);
 		model.setTimeoutExpress(timeout);
 		model.setTotalAmount(amount);
-		model.setProductCode(productCode);
+		model.setProductCode(PRODUCT_CODE);
 		request.setBizModel(model);
 		request.setNotifyUrl(notifyUrl);
         //这里和普通的接口调用不同，使用的是sdkExecute
