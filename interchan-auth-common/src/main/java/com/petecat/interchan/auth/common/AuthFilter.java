@@ -91,6 +91,7 @@ public class AuthFilter implements Filter{
 				}
 				chain.doFilter(httpRequest, httpResponse);
 			}catch(BusinessException e){
+				response.setContentType("text/json; charset=utf-8");
 				Result<?> result = DataUtils.copyTo(e, Result.class);
 				response.getWriter().write(JSON.toJSONString(result));
 			}
