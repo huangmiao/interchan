@@ -1,25 +1,15 @@
 package com.petecat.interchan.redis.commands;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import com.alibaba.fastjson.JSON;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.util.CollectionUtils;
 
-import com.alibaba.fastjson.JSON;
-
-import lombok.Setter;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 
@@ -186,8 +176,8 @@ public abstract class AbstractBaseRedisCommands implements IRedisExtCommands{
     		List<byte[]> collector = fields.parallelStream().map(
 				value -> serializer.serialize(value)
 			).collect(Collectors.toList());
-    		
-    		List<byte[]> valueList = connection.hMGet(serializer.serialize(key),(byte[][]) collector.toArray());
+
+    		List<byte[]> valueList = connection.hMGet(serializer.serialize(key), collector.stream().toArray(byte[][]::new));
     		
     		return valueList.parallelStream().map(
     			value-> serializer.deserialize(value)
@@ -358,9 +348,8 @@ public abstract class AbstractBaseRedisCommands implements IRedisExtCommands{
 	 * 
 	 * @Title: expireat   
 	 * @Description: 设置过期时间（
-	 * @param index
 	 * @param key
-	 * @param secords
+	 * @param seconds
 	 * @return
 	 * @return int
 	 */
@@ -447,7 +436,7 @@ public abstract class AbstractBaseRedisCommands implements IRedisExtCommands{
 	 * @param score
 	 * @param member
 	 * @return   boolean 
-	 * @see com.petecat.interchan.redis.commands.sets.sorted.IRedisSortedSetCommands#zincrby(int, java.lang.String, double, java.lang.String)   
+	 * @see com.petecat.interchan.redis.commands.sets.sorted.IRedisSortedSetCommands#zIncrBy(int, java.lang.String, double, java.lang.String)
 	 */  
 	@Override
 	public double zIncrBy(int index, String key, double score, Object member) {
