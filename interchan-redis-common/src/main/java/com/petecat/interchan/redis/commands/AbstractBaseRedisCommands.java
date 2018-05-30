@@ -176,7 +176,7 @@ public abstract class AbstractBaseRedisCommands implements IRedisExtCommands{
 	}
 
 	@Override
-	public Collection<String> hmget(int index,String key, Collection<String> fields) {
+	public List<String> hmget(int index,String key, Collection<String> fields) {
 		if(CollectionUtils.isEmpty(fields))
 			return Collections.emptyList();
 		return baseTempalte.execute((RedisConnection connection)->{

@@ -1,5 +1,6 @@
 package com.petecat.interchan.redis.commands;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 
 
 /**
@@ -158,5 +160,23 @@ public class RedisExtCommands extends AbstractBaseRedisCommands{
 	public <T> T executeRedisCommand(RedisCommand<T> redisCommand) {
 		return redisCommand.executeCommand(this.baseTempalte);
 	}
+
+	@Override
+	public <T> List<T> hmget(String key, Collection<String> fields, Class<T> clazz) {
+		return hmget(defaultDbIndex,key,fields,clazz);
+	}
+	
+	@Override
+	public <T>  List<T> hmget(int dbIndex, String key, Collection<String> fields, Class<T> clazz) {
+		List<String> value = hmget(dbIndex, key, fields);
+		if(CollectionUtils.isEmpty(value)){
+			return null;
+		}
+		return value.parallelStream().map(
+				val -> JSON.parseObject(val,clazz)
+			).collect(Collectors.toList());
+	}
+
+	
 	
 }

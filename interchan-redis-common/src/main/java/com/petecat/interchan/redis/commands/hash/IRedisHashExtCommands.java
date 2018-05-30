@@ -1,5 +1,6 @@
 package com.petecat.interchan.redis.commands.hash;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +49,32 @@ public interface IRedisHashExtCommands {
 	 * @return T
 	 */
 	<T> T hget(int dbIndex,String key,String field,Class<T> clazz);
+
+	/**
+	 * 
+	 * @Title: hmget   
+	 * @Description: 获取多个field的值
+	 * @param dbIndex
+	 * @param key
+	 * @param fields
+	 * @param clazz
+	 * @return
+	 * @return List<T>
+	 */
+	<T> List<T> hmget(String key, Collection<String> fields,Class<T> clazz);
+	
+	/**
+	 * 
+	 * @Title: hmget   
+	 * @Description: 获取多个field的值
+	 * @param dbIndex
+	 * @param key
+	 * @param fields
+	 * @param clazz
+	 * @return
+	 * @return List<T>
+	 */
+	<T> List<T> hmget(int dbIndex, String key, Collection<String> fields,Class<T> clazz);
 	/**
 	 * 
 	 * @Title: hgetList   
