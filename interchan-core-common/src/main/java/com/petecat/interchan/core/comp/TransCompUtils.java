@@ -49,7 +49,6 @@ public class TransCompUtils {
 	 * @auther: admin
 	 * @date: 2018/05/02 15:47
 	 */
-	@SuppressWarnings("unchecked")
 	public  Result<?> callSimpleService(RequestModel model){
 		  return this.callSimpleService(model,false);
 	 }
@@ -66,8 +65,10 @@ public class TransCompUtils {
 	 * @auther: admin
 	 * @date: 2018/05/02 15:47
 	 */
-	@SuppressWarnings("unchecked")
 	public  Result<?> callSimpleService(RequestModel model,boolean headerAddBearer){
+		return callSimpleService(model,headerAddBearer,MediaType.APPLICATION_JSON);
+	}
+	public  Result<?> callSimpleService(RequestModel model,boolean headerAddBearer,MediaType mediaType){
 		   if(restTemplate == null) {
 			   return Result.faild("未提供调用请求模板服务类！");
 		   }
@@ -116,16 +117,16 @@ public class TransCompUtils {
 		    	   response = restTemplate.exchange(
 		    			   url, method, entity, Result.class);
 			}else if(method == HttpMethod.PUT ||method == HttpMethod.POST){
-				 headers.setContentType(MediaType.APPLICATION_JSON);
+				 headers.setContentType(mediaType);
 				 HttpEntity request = null;
 				 if(params != null){
-					 if(params instanceof  String ||
-							 params.getClass().isPrimitive()){
-						 url = url.concat("/").concat(params.toString());
-						 request=new HttpEntity(headers);
-					 }else{
+//					 if(params instanceof  String ||
+//							 params.getClass().isPrimitive()){
+//						 url = url.concat("/").concat(params.toString());
+//						 request=new HttpEntity(headers);
+//					 }else{
 						 request=new HttpEntity(params, headers);
-					 }
+//					 }
 				 }else{
 					request=new HttpEntity(headers);
 				 }
@@ -136,30 +137,28 @@ public class TransCompUtils {
 			}
 			return response.getBody();
 		}
-	
 	public Result callSimpleService(RequestModel model,Class<?> cls){
 		return callSimpleService(model,cls,false);
 	}
 
-	public Result callSimpleService(RequestModel model,Class<?> cls,boolean headerAddBearer){
-		return callSimpleService(model,cls,null,false);
+	public Result callSimpleService(RequestModel model,Class<?> cls,MediaType mediaType){
+		return callSimpleService(model,cls,false,mediaType);
 	}
-	/**
-	 * @Title: callSimpleService
-	 * @Description: 调用微服务
-	 * @param model 方法参数
-	 * @param typeArrays 封装的对象如果里面还有属性是对象
-	 * @param cls 结果data转换的类
-	 * @throws Exception
-	 * @return T  返回的信息
-	 */
-	@SuppressWarnings("unchecked")
+	public Result callSimpleService(RequestModel model,Class<?> cls,boolean headerAddBearer){
+		return callSimpleService(model,cls,null,headerAddBearer);
+	}
+	
+	public Result callSimpleService(RequestModel model,Class<?> cls,boolean headerAddBearer,MediaType mediaType){
+		return callSimpleService(model,cls,null,headerAddBearer,mediaType);
+	}
+	
 	public  Result callSimpleService(
 			RequestModel model,
 			Class<?> cls,
 			PropertyType[] typeArrays,
-			boolean headerAddBearer){
-		Result result = callSimpleService(model,headerAddBearer);
+			boolean headerAddBearer,
+			MediaType mediaType){
+		Result result = callSimpleService(model,headerAddBearer,mediaType);
 		if(cls == null || result.getCode()!=Result.SUCCESS){
 			return result;
 		}
@@ -185,6 +184,23 @@ public class TransCompUtils {
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * @Title: callSimpleService
+	 * @Description: 调用微服务
+	 * @param model 方法参数
+	 * @param typeArrays 封装的对象如果里面还有属性是对象
+	 * @param cls 结果data转换的类
+	 * @throws Exception
+	 * @return T  返回的信息
+	 */
+	public  Result callSimpleService(
+			RequestModel model,
+			Class<?> cls,
+			PropertyType[] typeArrays,
+			boolean headerAddBearer){
+		return callSimpleService(model, cls, typeArrays, headerAddBearer, MediaType.APPLICATION_JSON);
 	}
 
 
