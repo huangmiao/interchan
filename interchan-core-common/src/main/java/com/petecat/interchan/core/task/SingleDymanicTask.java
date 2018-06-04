@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
@@ -19,9 +20,9 @@ import org.springframework.stereotype.Component;
  * @date:   2018年5月11日 上午10:33:45
  */
 @Component
-public class SingleDymanicTask {
+public class SingleDymanicTask implements ISingleDymanicTask{
 
-	@Autowired
+	@Autowired(required = false)
     private ThreadPoolTaskScheduler threadPoolTaskScheduler;
  
     private Map<String, SingleInterjob> interJobMap = new ConcurrentHashMap<>();
