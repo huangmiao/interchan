@@ -1,7 +1,8 @@
 package com.petecat.interchan.auth.common;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -11,6 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +45,10 @@ public class AuthFilter implements Filter{
 
 	private Logger logger  = LoggerFactory.getLogger(getClass());
 
+	@Setter
+	@Getter
+	private List<String> excludeUrl = new ArrayList<>();
+
 	private final int TOKEN_HEADER_LENGTH = 7;
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -60,7 +67,11 @@ public class AuthFilter implements Filter{
 				globalHeader.setIp(IpUtils.getIp(request));
 				Jwt jwt = getMapper(Jwt.class, request);
 				String auth = request.getHeader(jwt.getType());
+
 				if(StringUtils.isBlank(auth)){
+					GlobalHeaderThreadLocal.set(globalHeader);
+					httpRequest.putHeader(Global.GLOBAL_HEADER, JSON.toJSONString(globalHeader));
+				}else if(StringUtils.indexOf(auth,"Basic") == 0){
 					GlobalHeaderThreadLocal.set(globalHeader);
 					httpRequest.putHeader(Global.GLOBAL_HEADER, JSON.toJSONString(globalHeader));
 				}else if(StringUtils.length(auth) > TOKEN_HEADER_LENGTH){
