@@ -23,5 +23,5 @@ public class BasePayDTO {
 	
 	private String proxyIp;//代理ip
 	
-	private String proxyPort;//代理得端口
+	private int proxyPort;//代理得端口
 }

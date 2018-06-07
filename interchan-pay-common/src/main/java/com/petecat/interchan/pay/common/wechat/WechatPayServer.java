@@ -31,7 +31,7 @@ public class WechatPayServer {
 		SortedMap<Object, Object> packageParams = createCommonParmas(dto.getAppId(),dto.getMchId());
 		if(SUPPORT_MODE_LIST.contains(dto.getMode().toUpperCase())){
 			if(APP_MODE.equals(dto.getMode().toUpperCase())){
-				return createAppPay(packageParams, dto.getTradeNo(), dto.getSubject(), dto.getAmount(), dto.getApiKey(), dto.getIp(), dto.getNotifyUrl());
+				return createAppPay(packageParams, dto.getTradeNo(), dto.getSubject(), dto.getAmount(), dto.getApiKey(), dto.getIp(), dto.getNotifyUrl(),dto.getProxyIp(),dto.getProxyPort());
 			}
 		}
 		throw new InterchanPayException(500,"暂不支持支付"+dto.getMode()+"方式");
