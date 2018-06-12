@@ -2,13 +2,18 @@ package com.petecat.interchan.core.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.petecat.interchan.protocol.Result;
+
+import java.util.stream.Stream;
 
 /**
  * 
@@ -22,14 +27,17 @@ public class CommonExceptionHandler {
 	
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	
+
+	@Autowired
+	private Environment env;
+
 	@ResponseBody
     @ExceptionHandler(value = Exception.class)
     public Result<?> defaultErrorHandler(HttpServletRequest request, Exception e) {
 		
 		logger.error("---Exception Handler---Host {} invokes url {} ERROR: {}", request.getRemoteHost(), request.getRequestURL(), e.getMessage());
 		
-		Result<?> result = new Result<>();
+		Result result = new Result<>();
 		
 		if(e instanceof BusinessException){
 			BusinessException business = (BusinessException) e;
@@ -37,11 +45,18 @@ public class CommonExceptionHandler {
 			result.setMessage(business.getMessage());
 		}else{
 			result.setCode(Result.SYS_FAILD);
-			result.setMessage(e.getMessage());
-			e.printStackTrace();
+			Stream<String> stream = Stream.of(env.getActiveProfiles());
+			/**
+			 * 生产
+			 */
+			if(stream.filter(profile -> StringUtils.containsIgnoreCase("prod",profile)).count() > 0){
+				result.setMessage("服务器异常");
+			}else{
+				result.setMessage(e.getMessage()+" for " + env.getProperty("spring.application.name"));
+				StackTraceElement[] stes=e.getStackTrace();
+				result.setData(stes);
+			}
 		}
-		
-		
 		return result;
 	}
 }
