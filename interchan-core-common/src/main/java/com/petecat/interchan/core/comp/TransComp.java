@@ -14,8 +14,11 @@ package com.petecat.interchan.core.comp;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.io.File;
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -26,6 +29,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,9 +38,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -61,6 +68,64 @@ public class TransComp implements InitializingBean{
 	@Autowired
 	private Environment environment;
 	
+	public Result<?> uploadFile(String url,
+			Map<String,Object> params,
+			String fieldName,
+			File[] files,
+			Class<?> cls,
+			List<PropertyType> types) throws IOException{
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+		MultiValueMap<String, Object> form = new LinkedMultiValueMap<>();  
+		
+//		ByteArrayResource[] resources = new ByteArrayResource[files.length];
+		for(int i = 0;i<files.length; i++){
+			ByteArrayResource contentsAsResource = new ByteArrayResource(FileCopyUtils.copyToByteArray(files[0])){
+	            @Override
+	            public String getFilename(){
+	                return files[0].getName();
+	            }
+	        };
+//	        resources[i] = contentsAsResource;
+	        form.add(fieldName, contentsAsResource);
+		}
+		
+		
+		if(!CollectionUtils.isEmpty(params)){
+			params.forEach((key,value)->{
+				form.add(key, value);
+			});
+		}
+		
+		HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object>>(form, headers);
+		
+		ResponseEntity<String> responseBody = restTemplate.exchange(url,HttpMethod.POST, requestEntity, String.class);
+		String resultStr = responseBody.getBody();
+		Result result = JSON.parseObject(resultStr,Result.class);
+		if(cls == null ){
+			return result;
+		}
+	   if(result.getData() != null ){
+		 if(result.getData() instanceof JSONObject){
+			 if(CollectionUtils.isEmpty(types)){
+			     result.setData(JSON.toJavaObject((JSONObject)result.getData(), cls));
+			 }else{
+				 result.setData(setObjectProperty(JSON.toJavaObject((JSONObject)result.getData(), cls),types));
+			 }
+		}else if(result.getData() instanceof JSONArray){
+			 if(CollectionUtils.isEmpty(types)){
+				 List<?> datas = JSON.parseArray(((JSONArray)result.getData()).toJSONString(), cls);
+				 result.setData(datas);
+			 }else{
+				 List<?> datas = JSON.parseArray(((JSONArray)result.getData()).toJSONString(), cls);
+				 datas.forEach((data)->{
+					 result.setData(setObjectProperty(data,types));
+				 });
+			 }
+		  }
+		}
+	  return result;
+	}
 	/**   
 	 * @Title: callMicService   
 	 * @Description: 调用微服务  

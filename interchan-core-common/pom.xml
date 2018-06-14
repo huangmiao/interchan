@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.19</version>
+    <version>0.0.3.3.20</version>
   </parent>
   <artifactId>interchan-core-common</artifactId>
   <name>interchan-core-common</name>
@@ -30,7 +30,7 @@
 	<dependency>
      	<groupId>com.petecat</groupId>
      	<artifactId>interchan-protocol-common</artifactId>
-     	<version>0.0.3.3.19</version>
+     	<version>0.0.3.3.20</version>
      </dependency>
 	<dependency>
 		<groupId>ch.qos.logback</groupId>
