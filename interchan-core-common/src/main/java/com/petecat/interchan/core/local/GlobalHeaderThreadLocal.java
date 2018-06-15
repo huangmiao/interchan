@@ -24,7 +24,7 @@ public class GlobalHeaderThreadLocal {
 	public static GlobalHeader getOrException(){
 		GlobalHeader globalHeader = get();
 		if(globalHeader == null || StringUtils.isBlank(globalHeader.getUserId())){
-			throw new BusinessException(Result.SYS_FAILD, "用户不存在");
+			throw new BusinessException(Result.TOKEN_IS_VALID, Result.TOKEN_IS_VALID_MSG);
 		}
 		return globalHeader;
 	}
