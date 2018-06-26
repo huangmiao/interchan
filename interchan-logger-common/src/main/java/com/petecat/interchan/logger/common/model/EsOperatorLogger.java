@@ -58,6 +58,9 @@ public class EsOperatorLogger {
 	
 	private Integer status = 0;//状态(0 代表执行中，1代表成功，2代表异常）
 	
+	private String startDateFormatter; //开始时间的格式化
+	
+	private String endDateFormatter; //开始时间的格式化
 	public EsOperatorLogger(){
 		this.setSystemType(LoggerGlobal.getSystemType());
 	}

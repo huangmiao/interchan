@@ -1,6 +1,7 @@
 package com.petecat.interchan.logger.common;
 
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,9 +10,11 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.elasticsearch.search.DocValueFormat.DateTime;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mhuang.common.util.DateTimeUtils;
 import com.mhuang.common.util.IpUtils;
 import com.petecat.interchan.logger.common.annotation.LogLogger;
 import com.petecat.interchan.logger.common.model.EsOperatorLogger;
@@ -35,11 +38,13 @@ public class LoggerUtils {
 	public static EsOperatorLogger getEsLogger(HttpServletRequest request,JoinPoint jPoint){
 		EsOperatorLogger esLogger = new EsOperatorLogger();
 		
+		LocalDateTime now = LocalDateTime.now();
 		//基础配置
 		esLogger.setIp(IpUtils.getIp(request));
 		esLogger.setType(request.getMethod());
 		esLogger.setUrl(request.getRequestURL().toString());
-		esLogger.setStartDate(new Date());
+		esLogger.setStartDate(DateTimeUtils.localDateTimeToDate(now));
+		esLogger.setStartDateFormatter(now.toString()+"+08:00");
 		//auth
 		packAuthData(request,esLogger);
 		
@@ -69,9 +74,10 @@ public class LoggerUtils {
 	
 	public static EsOperatorLogger getEsLogger(JoinPoint jPoint){
 		EsOperatorLogger esLogger = new EsOperatorLogger();
-		
+		LocalDateTime now = LocalDateTime.now();
 		//基础配置
-		esLogger.setStartDate(new Date());
+		esLogger.setStartDate(DateTimeUtils.localDateTimeToDate(now));
+		esLogger.setStartDateFormatter(now.toString()+"+08:00");
 		//auth
 		Object[] args = jPoint.getArgs();
 		//组装传输对象数组

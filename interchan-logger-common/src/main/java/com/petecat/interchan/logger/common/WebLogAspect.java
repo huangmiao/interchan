@@ -1,5 +1,6 @@
 package com.petecat.interchan.logger.common;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
+import com.mhuang.common.util.DateTimeUtils;
 import com.petecat.interchan.logger.common.dao.EsLoggerDao;
 import com.petecat.interchan.logger.common.model.EsOperatorLogger;
 
@@ -90,7 +92,9 @@ public class WebLogAspect {
 		if(esLogger == null) {
 			return;
 		}
-		esLogger.setEndDate(new Date());
+		LocalDateTime now = LocalDateTime.now();
+		esLogger.setEndDate(DateTimeUtils.localDateTimeToDate(now));
+		esLogger.setEndDateFormatter(now.toString()+"+08:00");
 		esLogger.setStatus(2);
 		
 		esLogger.setEMsg(ex.toString());
@@ -112,7 +116,9 @@ public class WebLogAspect {
     public void doAfterReturning(Object ret) throws Throwable {
 		//logger.debug("===es日志====正在写入返回数据===");
 		EsOperatorLogger esLogger = tLocal.get();
-		esLogger.setEndDate(new Date());
+		LocalDateTime now = LocalDateTime.now();
+		esLogger.setEndDate(DateTimeUtils.localDateTimeToDate(now));
+		esLogger.setEndDateFormatter(now.toString()+"+08:00");
 		esLogger.setStatus(1);
 		esLogger.setRestData(JSON.toJSONString(ret));
 		esLoggerDao.updateAsync(esLogger,application,application);
