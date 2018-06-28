@@ -11,13 +11,21 @@ public interface ISingleDymanicTask {
 
     Boolean startJob(String jobName,Runnable run,String conn);
 
+    Boolean startJob(String jobName,Runnable run,Long secord);
+
     Boolean stopJob(String jobName);
 
     Boolean updateCronLazy(String jobName,String cron);
 
+    Boolean updateSecordsLazy(String jobName,Long secord);
+
     Boolean updateJob(String jobName,String cron);
+
+    Boolean updateJob(String jobName,Long secord);
 
     Boolean updateJob(String jobName,Runnable run);
 
     Boolean updateJob(String jobName,Runnable run,String conn);
+
+    Boolean updateJob(String jobName,Runnable run,Long secord);
 }
