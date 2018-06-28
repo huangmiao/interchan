@@ -23,4 +23,6 @@ public class SingleInterjob {
 	private Runnable runnable;
 	
 	private String cron;
+
+	private Long secords;
 }
