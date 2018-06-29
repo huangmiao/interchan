@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.petecat.interchan.redis.commands.sets.sorted.RedisSortedSetDTO;
 
 
 /**
@@ -176,7 +177,4 @@ public class RedisExtCommands extends AbstractBaseRedisCommands{
 				val -> JSON.parseObject(val,clazz)
 			).collect(Collectors.toList());
 	}
-
-	
-	
 }

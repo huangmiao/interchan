@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SingleDymanicTask implements ISingleDymanicTask{
 
+	@Qualifier(SingleJobTaskConst.TASK_POOL_BEAN_NAME)
 	@Autowired(required = false)
     private ThreadPoolTaskScheduler threadPoolTaskScheduler;
  

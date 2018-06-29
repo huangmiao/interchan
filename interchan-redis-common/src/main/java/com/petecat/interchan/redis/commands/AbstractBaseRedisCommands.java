@@ -1,9 +1,15 @@
 package com.petecat.interchan.redis.commands;
 
 import com.alibaba.fastjson.JSON;
+import com.petecat.interchan.redis.commands.sets.sorted.RedisSortedSetDTO;
+
 import lombok.Setter;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisZSetCommands.Tuple;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.util.CollectionUtils;
@@ -463,6 +469,17 @@ public abstract class AbstractBaseRedisCommands implements IRedisExtCommands{
 			return list;
 		});
 	}
-	 
+	@Override
+	public Long zadd(String key, List<RedisSortedSetDTO> list) {
+		return zadd(defaultDbIndex,key,list);
+	}
 	
+	@Override
+	public Long zadd(int index,String key, List<RedisSortedSetDTO> list) {
+		return baseTempalte.execute((RedisConnection connection)->{
+			connection.select(index);
+			RedisSerializer<String> serializer = baseTempalte.getStringSerializer();
+			return connection.zAdd(serializer.serialize(key), list.stream().collect(Collectors.toSet()));
+		});
+	}
 }

@@ -26,6 +26,9 @@ public interface IRedisSortedSetCommands {
 	 */
 	boolean zadd(String key,double score,Object value);
 	
+	Long zadd(String key,List<RedisSortedSetDTO> list);
+	
+	
 	///////////////////////////操作其他库/////////////////////
 	/**
 	 * 
@@ -66,6 +69,6 @@ public interface IRedisSortedSetCommands {
 	 */
 	<T>List<T> zRevRange(int index, String key, long start, long end, Class<T> clz);
 	
-	
+	Long zadd(int index,String key, List<RedisSortedSetDTO> list);
 	
 }
