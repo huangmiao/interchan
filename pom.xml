@@ -5,7 +5,7 @@
 
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.24</version>
+    <version>0.0.3.3.25</version>
     <packaging>pom</packaging>
     <name>interchan</name>
     <url>http://maven.apache.org</url>
@@ -191,6 +191,7 @@
         <module>interchan-wechat-common</module>
         <module>interchan-pay-common</module>
         <module>interchan-jackson-common</module>
+        <module>interchan-swagger-common</module>
     </modules>
     <distributionManagement>
         <repository>
