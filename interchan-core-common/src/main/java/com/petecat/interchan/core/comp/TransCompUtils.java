@@ -5,8 +5,8 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
@@ -53,7 +53,7 @@ public class TransCompUtils {
 		  return this.callSimpleService(model,false);
 	 }
 	
-	
+
 	
 
 	/**
@@ -163,7 +163,7 @@ public class TransCompUtils {
 			return result;
 		}
 		if(result.getData() != null ){
-			List<PropertyType> types = typeArrays==null?null:Arrays.asList(typeArrays);
+			List<PropertyType> types = typeArrays==null?null: Arrays.asList(typeArrays);
 			if(result.getData() instanceof JSONObject){
 				if(CollectionUtils.isEmpty(types)){
 					result.setData(JSON.toJavaObject((JSONObject)result.getData(), cls));
@@ -176,6 +176,26 @@ public class TransCompUtils {
 					result.setData(datas);
 				}else{
 					List<?> datas = JSON.parseArray(((JSONArray)result.getData()).toJSONString(), cls);
+					for(Object data : datas){
+						result.setData(setObjectProperty(data,types));
+					}
+				}
+			}else if(result.getData() instanceof  Map){
+				JSONObject obj = new JSONObject();
+				obj.putAll((Map<? extends String, ? extends Object>) result.getData());
+				if(CollectionUtils.isEmpty(types)){
+					result.setData(JSON.toJavaObject((JSONObject)result.getData(), cls));
+				}else{
+					result.setData(setObjectProperty(JSON.toJavaObject((JSONObject)result.getData(), cls),types));
+				}
+			}else if(result.getData() instanceof Collection){
+				JSONArray jsonArray = new JSONArray();
+				jsonArray.addAll((Collection<? extends Object>) result.getData());
+				if(CollectionUtils.isEmpty(types)){
+					List<?> datas = JSON.parseArray(jsonArray.toJSONString(), cls);
+					result.setData(datas);
+				}else{
+					List<?> datas = JSON.parseArray(jsonArray.toJSONString(), cls);
 					for(Object data : datas){
 						result.setData(setObjectProperty(data,types));
 					}
