@@ -164,7 +164,6 @@ public class TransCompUtils {
 		}
 		if(result.getData() != null ){
 			List<PropertyType> types = typeArrays==null?null:Arrays.asList(typeArrays);
-			result = JSON.parseObject(JSON.toJSONString(result), Result.class);
 			if(result.getData() instanceof JSONObject){
 				if(CollectionUtils.isEmpty(types)){
 					result.setData(JSON.toJavaObject((JSONObject)result.getData(), cls));

@@ -5,7 +5,7 @@
 
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.25</version>
+    <version>0.0.3.3.26</version>
     <packaging>pom</packaging>
     <name>interchan</name>
     <url>http://maven.apache.org</url>
@@ -58,7 +58,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.38</version>
+                <version>1.2.47</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
