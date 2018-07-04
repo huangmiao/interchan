@@ -166,9 +166,9 @@ public class TransCompUtils {
 			List<PropertyType> types = typeArrays==null?null: Arrays.asList(typeArrays);
 			if(result.getData() instanceof JSONObject){
 				if(CollectionUtils.isEmpty(types)){
-					result.setData(JSON.toJavaObject((JSONObject)result.getData(), cls));
+					result.setData(JSON.parseObject(((JSONObject)result.getData()).toJSONString(), cls));
 				}else{
-					result.setData(setObjectProperty(JSON.toJavaObject((JSONObject)result.getData(), cls),types));
+					result.setData(setObjectProperty(JSON.parseObject(((JSONObject)result.getData()).toJSONString(), cls),types));
 				}
 			}else if(result.getData() instanceof JSONArray){
 				if(CollectionUtils.isEmpty(types)){
@@ -184,9 +184,9 @@ public class TransCompUtils {
 				JSONObject obj = new JSONObject();
 				obj.putAll((Map<? extends String, ? extends Object>) result.getData());
 				if(CollectionUtils.isEmpty(types)){
-					result.setData(JSON.toJavaObject((JSONObject)result.getData(), cls));
+					result.setData(JSON.parseObject(obj.toString(), cls));
 				}else{
-					result.setData(setObjectProperty(JSON.toJavaObject((JSONObject)result.getData(), cls),types));
+					result.setData(setObjectProperty(JSON.parseObject(obj.toJSONString(), cls),types));
 				}
 			}else if(result.getData() instanceof Collection){
 				JSONArray jsonArray = new JSONArray();
@@ -263,10 +263,10 @@ public class TransCompUtils {
 			return obj;
 		}else{
 			if(obj instanceof JSONObject){
-				temp = setObjectProperty(JSON.toJavaObject((JSONObject)obj, propertyType.getCls()),
+				temp = setObjectProperty(JSON.parseObject(((JSONObject)obj).toJSONString(), propertyType.getCls()),
 						propertyType.getTypes());
 			}else if(obj instanceof JSONArray){
-				List<Object> datas = (List<Object>) JSONArray.toJavaObject((JSONArray)obj, propertyType.getCls());
+				List<Object> datas = (List<Object>) JSONArray.parseArray(((JSONArray)obj).toJSONString(), propertyType.getCls());
 				datas.forEach((data)->{
 					setObjectProperty(data,propertyType.getTypes());
 				});
@@ -297,7 +297,6 @@ public class TransCompUtils {
 				try{
 					BeanInfo info = Introspector.getBeanInfo(obj.getClass());
 					Optional<PropertyDescriptor> propertyDes = Arrays.stream(info.getPropertyDescriptors()).filter((data)->{
-						System.out.println(data.getName());
 						if(data.getName().equals(propertyType.getPropertyName())
 								&& data.getWriteMethod()!=null){
 							return true;

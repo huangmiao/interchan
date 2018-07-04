@@ -78,7 +78,6 @@ public class TransComp implements InitializingBean{
 		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 		MultiValueMap<String, Object> form = new LinkedMultiValueMap<>();  
 		
-//		ByteArrayResource[] resources = new ByteArrayResource[files.length];
 		for(int i = 0;i<files.length; i++){
 			ByteArrayResource contentsAsResource = new ByteArrayResource(FileCopyUtils.copyToByteArray(files[0])){
 	            @Override
@@ -86,7 +85,6 @@ public class TransComp implements InitializingBean{
 	                return files[0].getName();
 	            }
 	        };
-//	        resources[i] = contentsAsResource;
 	        form.add(fieldName, contentsAsResource);
 		}
 		
