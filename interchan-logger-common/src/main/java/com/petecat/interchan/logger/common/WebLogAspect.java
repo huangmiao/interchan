@@ -1,7 +1,7 @@
 package com.petecat.interchan.logger.common;
 
+import java.lang.reflect.Proxy;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,6 +57,7 @@ public class WebLogAspect {
 		//TODO 改为异步处理
 		EsOperatorLogger eslogger = null;
 		 // 接收到请求，记录请求内容
+
 		try {
 			try{
 				if (Class.forName("org.springframework.web.context.request.RequestContextHolder") != null){

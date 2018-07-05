@@ -3,11 +3,7 @@ package com.petecat.interchan.core.comp;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,9 +172,11 @@ public class TransCompUtils {
 					result.setData(datas);
 				}else{
 					List<?> datas = JSON.parseArray(((JSONArray)result.getData()).toJSONString(), cls);
+					List<Object> resultDataList = new ArrayList<>(datas.size());
 					for(Object data : datas){
-						result.setData(setObjectProperty(data,types));
+						resultDataList.add(setObjectProperty(data,types));
 					}
+					result.setData(resultDataList);
 				}
 			}else if(result.getData() instanceof  Map){
 				JSONObject obj = new JSONObject();
@@ -196,9 +194,11 @@ public class TransCompUtils {
 					result.setData(datas);
 				}else{
 					List<?> datas = JSON.parseArray(jsonArray.toJSONString(), cls);
+					List<Object> resultDataList = new ArrayList<>(datas.size());
 					for(Object data : datas){
-						result.setData(setObjectProperty(data,types));
+						resultDataList.add(setObjectProperty(data,types));
 					}
+					result.setData(resultDataList);
 				}
 			}
 		}

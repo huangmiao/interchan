@@ -29,7 +29,7 @@ public class Swagger2 {
 	@Bean
     public Docket createRestApi() {
 		ParameterBuilder tokenPar = new ParameterBuilder();  
-    	List<Parameter> pars = new ArrayList<Parameter>();  
+    	List<Parameter> pars = new ArrayList<>();
     	tokenPar.name("Authorization").description("Bearer 开头加上登录的时候令牌,填写时表示带用户凭证进行访问").modelRef(new ModelRef("string")).parameterType("header").required(false).build();  
         pars.add(tokenPar.build());
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
