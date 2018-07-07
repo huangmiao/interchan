@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.29</version>
+    <version>0.0.3.3.31</version>
   </parent>
   <artifactId>interchan-auth-common</artifactId>
   <name>interchan-auth-common</name>
@@ -15,6 +15,10 @@
 	    <groupId>org.apache.commons</groupId>
 	    <artifactId>commons-lang3</artifactId>
      </dependency>
+      <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-web</artifactId>
