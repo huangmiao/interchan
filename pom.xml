@@ -4,7 +4,7 @@
 
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.32</version>
+    <version>0.0.3.3.33</version>
     <packaging>pom</packaging>
     <name>interchan</name>
     <url>http://maven.apache.org</url>
@@ -204,7 +204,8 @@
         <module>interchan-jackson-common</module>
         <module>interchan-swagger-common</module>
     	<module>interchan-filter-common</module>
-  </modules>
+        <module>interchan-interceptor-common</module>
+    </modules>
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
