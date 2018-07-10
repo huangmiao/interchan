@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.petecat</groupId>
+    <artifactId>interchan</artifactId>
+    <version>0.0.3.3.32</version>
+  </parent>
+  <artifactId>interchan-filter-common</artifactId>
+  <name>interchan-filter-common</name>
+  <dependencies>
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>com.petecat</groupId>
+          <artifactId>interchan-auth-common</artifactId>
+          <version>${project.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <scope>compile</scope>
+      </dependency>
+  </dependencies>
+</project>

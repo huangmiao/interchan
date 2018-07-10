@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.31</version>
+    <version>0.0.3.3.32</version>
     <packaging>pom</packaging>
     <name>interchan</name>
     <url>http://maven.apache.org</url>
@@ -119,7 +118,7 @@
             <dependency>
                 <groupId>com.mhuang.common</groupId>
                 <artifactId>kafka</artifactId>
-                <version>0.0.3.3.2</version>
+                <version>0.0.3.3.3</version>
             </dependency>
             <dependency>
                 <groupId>com.google.zxing</groupId>
@@ -204,7 +203,8 @@
         <module>interchan-pay-common</module>
         <module>interchan-jackson-common</module>
         <module>interchan-swagger-common</module>
-    </modules>
+    	<module>interchan-filter-common</module>
+  </modules>
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>

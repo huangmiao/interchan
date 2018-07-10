@@ -42,7 +42,6 @@ public class Swagger2 {
     	 return new ApiInfoBuilder()
                  .title(env.getProperty("swagger.title"))
                  .description(env.getProperty("swagger.description"))
-                 .contact(env.getProperty("swagger.contact"))
                  .version(env.getProperty("swagger.version"))
                  .build();
     }
