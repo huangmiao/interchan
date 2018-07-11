@@ -1,17 +1,8 @@
 package com.petecat.interchan.wechat.common.utils.network;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.Set;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -26,9 +17,12 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.Set;
 
 /**
  * @Package: com.petecat.interchan.wechat.common.utils.network
@@ -94,7 +88,7 @@ public class NetWorkUtils {
 	public static String readStream(InputStream inStream) throws Exception {  
 	    ByteArrayOutputStream outSteam = new ByteArrayOutputStream();  
 	    byte[] buffer = new byte[1024];  
-	    int len = -1;  
+	    int len;
 	    while ((len = inStream.read(buffer)) != -1) {  
 	        outSteam.write(buffer, 0, len);  
 	    }  
@@ -146,18 +140,7 @@ public class NetWorkUtils {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(responses != null){
-                    responses.close();
-                    responses = null;
-                }
-                if (httpclient != null){
-                    httpclient.close();
-                    httpclient = null;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+          HttpTookit.resume(httpclient,responses);
             logger.info("endTime："+System.currentTimeMillis());
             logger.debug("执行完毕！！");
         }
@@ -178,8 +161,7 @@ public class NetWorkUtils {
             for(String headerKey:headerKeys){
             	 httpGet.setHeader(headerKey, header.getString(headerKey));
             }
-           
-            responses = httpclient.execute(httpGet); 
+            responses = httpclient.execute(httpGet);
             HttpEntity entity = responses.getEntity();
             response = EntityUtils.toString(entity);
             EntityUtils.consume(entity);  
@@ -190,18 +172,7 @@ public class NetWorkUtils {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(responses != null){
-                    responses.close();
-                    responses = null;
-                }
-                if (httpclient != null){
-                    httpclient.close();
-                    httpclient = null;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            HttpTookit.resume(httpclient,responses);
             logger.info("endTime："+System.currentTimeMillis());
             logger.debug("执行完毕！！");
         }
@@ -230,18 +201,7 @@ public class NetWorkUtils {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(responses != null){
-                    responses.close();
-                    responses = null;
-                }
-                if (httpclient != null){
-                    httpclient.close();
-                    httpclient = null;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            HttpTookit.resume(httpclient,responses);
             logger.info("endTime："+System.currentTimeMillis());
             logger.debug("执行完毕！！");
         }
@@ -275,24 +235,13 @@ public class NetWorkUtils {
 	        EntityUtils.consume(entity);  
 	        
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			logger.error("malformed异常",e);
 		} catch (IOException e) {
-			e.printStackTrace();
+            logger.error("io异常",e);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("异常",e);
 		} finally {
-			try {
-				if(responses != null){
-					responses.close();
-					responses = null;
-				}
-				if (httpclient != null){
-					httpclient.close();
-					httpclient = null;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		    HttpTookit.resume(httpclient,responses);
 			logger.info("endTime："+System.currentTimeMillis());
 			logger.debug("执行完毕！！");
 		}
@@ -321,11 +270,10 @@ public class NetWorkUtils {
     }
 
 	public static String sync(String url, byte[] PostData) {
-		URL u = null;
 		HttpURLConnection connection = null;
 		//尝试发送请求
 		try {
-			u = new URL(url);
+            URL u = new URL(url);
 			connection = (HttpURLConnection) u.openConnection();
 			setRequest(connection, POST);
 			connection.setRequestProperty("Content-Type", "binary/octet-stream");
@@ -341,7 +289,7 @@ public class NetWorkUtils {
             	return result;
             }
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("请求异常",e);
 		} finally {
 			if (connection != null) {
 				connection.disconnect();
@@ -362,16 +310,9 @@ public class NetWorkUtils {
             connection.setRequestProperty("Accept-Charset", "UTF-8");
             connection.setRequestProperty("Connection", "Keep-Alive");
             connection.setRequestProperty("accept-language", "zh-CN");
-            
-            if(StringUtils.isNotBlank(data)){
-            	 OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-                 // 发送请求参数
-                 out.write(data);
-                 out.flush();
-                 out.close();
-            }
-            
-            
+
+            sendData(connection,data);
+
             //得到访问页面的返回值
             int response_code = connection.getResponseCode();
             if (response_code == HttpURLConnection.HTTP_OK) {
@@ -379,7 +320,7 @@ public class NetWorkUtils {
             	logger.info("HTTP获取的数据是："+result);
             	return result;
             }else{
-            	logger.error("HTTP请求错误："+IOUtils.toString(connection.getErrorStream()));
+            	logger.error("HTTP请求错误："+IOUtils.toString(connection.getErrorStream(),"UTF-8"));
             }
         } catch (MalformedURLException e) {
         	logger.error("mal：",e);
@@ -415,13 +356,7 @@ public class NetWorkUtils {
             System.setProperty("sun.net.client.defaultReadTimeout", "30000");
 
             //设置参数
-            if(StringUtils.isNotBlank(data)){
-            	OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-                // 发送请求参数
-                out.write(data);
-                out.flush();
-                out.close();
-            }
+            sendData(connection,data);
             
             //得到访问页面的返回值
             int response_code = connection.getResponseCode();
@@ -430,9 +365,9 @@ public class NetWorkUtils {
                 return IOUtils.toByteArray(in);
             }
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error("malformedUrl异常",e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IO请求异常",e);
         } finally {
             if(connection !=null){
                 connection.disconnect();
@@ -442,5 +377,15 @@ public class NetWorkUtils {
             }
         }
         return null;
+    }
+
+    private static void sendData(HttpURLConnection connection,String data) throws IOException{
+        if(StringUtils.isNotBlank(data)){
+            OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+            // 发送请求参数
+            out.write(data);
+            out.flush();
+            out.close();
+        }
     }
 }

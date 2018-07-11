@@ -26,6 +26,8 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HttpTookit {
 
@@ -33,43 +35,29 @@ private static final String APPLICATION_JSON = "application/json";
     
     private static final String CONTENT_TYPE_TEXT_JSON = "text/json";
 
+    private static Logger logger = LoggerFactory.getLogger(HttpTookit.class);
+
     public static String postFile(String url, File f) throws IOException {
     	CloseableHttpClient httpclient = null;
 		CloseableHttpResponse responses = null;
 		String response = null;
     	if (url == null || f == null) {
-	    	System.out.println("URL或者文件为NULL");
+			logger.error("URL或者文件为NULL");
 	    	return response;
     	}
-    	httpclient = HttpClients.createDefault();  
-    	HttpPost httpPost = new HttpPost(url);
     	try {
-	    	FileEntity entity = new FileEntity(f, "binary/octet-stream");
+			httpclient = HttpClients.createDefault();
+			HttpPost httpPost = new HttpPost(url);
+			FileEntity entity = new FileEntity(f,ContentType.APPLICATION_OCTET_STREAM);
 	    	httpPost.setEntity(entity);
 	    	responses = httpclient.execute(httpPost);
 	    	HttpEntity responseEntity = responses.getEntity();
 	        response = EntityUtils.toString(responseEntity);
 	        EntityUtils.consume(responseEntity);  
     	} catch (Exception e) {
-    		System.out.println(e.toString());
+    		logger.error("上传文件失败，发生异常",e);
     	} finally {
-    		if (responses != null && responses.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-    			// 打印调试信息,上传的url和上传的文件大小
-				System.out.println(MessageFormat.format(
-					"upload picture success! url = [{0}],file size = [{1}]", url,
-				f.length()));
-					return response;
-			}else{
-				System.out.println(responses.getStatusLine().getStatusCode());
-			}
-    		if(responses != null){
-				responses.close();
-				responses = null;
-			}
-			if (httpclient != null){
-				httpclient.close();
-				httpclient = null;
-			}
+			resume(httpclient,responses);
     	}
 		return response;
     }
@@ -94,18 +82,7 @@ private static final String APPLICATION_JSON = "application/json";
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if(responses != null){
-					responses.close();
-					responses = null;
-				}
-				if (httpclient != null){
-					httpclient.close();
-					httpclient = null;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			resume(httpclient,responses);
 		}
         
         return response;
@@ -113,25 +90,17 @@ private static final String APPLICATION_JSON = "application/json";
     
     public static String httpPostMultipartWithJSON(String url, JSONObject json) throws Exception {
         // 将JSON进行UTF-8编码,以便传输中文
-//        String encoderJson = URLEncoder.encode(json, HTTP.UTF_8);
-        
         CloseableHttpClient httpclient = null;
 		CloseableHttpResponse responses = null;
 		String response = null;
 		try{
-			httpclient = HttpClients.createDefault();  
+			httpclient = HttpClients.createDefault();
 	        HttpPost httpPost = new HttpPost(url);
 	        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 	        Set<String> keys = json.keySet();
 	        builder.setContentType(ContentType.MULTIPART_FORM_DATA);
 	        for(String key:keys){
-//	        	if(key.contains("file")){
-//	        		builder.addPart(key, contentBody)
-//	        		builder.addBinaryBody(key, json.getString(key), ContentType.MULTIPART_FORM_DATA, "a.png");
-//	        	}else{
-	        		builder.addPart(key, new StringBody(json.getString(key)));
-//	        	}
-        		
+				builder.addPart(key, new StringBody(json.getString(key),ContentType.TEXT_PLAIN));
 	        }
 	       
 	        httpPost.setEntity(builder.build());
@@ -146,18 +115,7 @@ private static final String APPLICATION_JSON = "application/json";
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if(responses != null){
-					responses.close();
-					responses = null;
-				}
-				if (httpclient != null){
-					httpclient.close();
-					httpclient = null;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			resume(httpclient,responses);
 		}
         
         return response;
@@ -178,7 +136,6 @@ private static final String APPLICATION_JSON = "application/json";
 	        StringEntity se = new StringEntity(json,"UTF-8");
 	        se.setContentType(CONTENT_TYPE_TEXT_JSON);
 	        se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON));
-//	        se.setContentEncoding("UTF-8");
 	        httpPost.setEntity(se);
 	        responses = httpclient.execute(httpPost);
 	        HttpEntity entity = responses.getEntity();
@@ -191,18 +148,7 @@ private static final String APPLICATION_JSON = "application/json";
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if(responses != null){
-					responses.close();
-					responses = null;
-				}
-				if (httpclient != null){
-					httpclient.close();
-					httpclient = null;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			resume(httpclient,responses);
 		}
         
         return response;
@@ -230,20 +176,22 @@ private static final String APPLICATION_JSON = "application/json";
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if(responses != null){
-					responses.close();
-					responses = null;
-				}
-				if (httpclient != null){
-					httpclient.close();
-					httpclient = null;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			resume(httpclient,responses);
 		}
         
         return response;
     }
+
+    public static void resume(CloseableHttpClient httpclient,CloseableHttpResponse responses){
+		try{
+			if(responses != null){
+				responses.close();
+			}
+			if (httpclient != null){
+				httpclient.close();
+			}
+		} catch (IOException e) {
+			logger.error("连接回收出现异常",e);
+		}
+	}
 }

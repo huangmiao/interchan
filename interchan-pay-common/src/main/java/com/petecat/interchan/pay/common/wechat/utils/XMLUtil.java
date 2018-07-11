@@ -30,7 +30,7 @@ public class XMLUtil {
 		while (it.hasNext()) {
 			Element e = (Element) it.next();
 			String k = e.getName();
-			String v = "";
+			String v;
 			List children = e.getChildren();
 			if (children.isEmpty()) {
 				v = e.getTextNormalize();

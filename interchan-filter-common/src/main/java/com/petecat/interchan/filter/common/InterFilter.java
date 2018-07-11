@@ -4,8 +4,8 @@ import com.petecat.interchan.auth.common.AuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -14,13 +14,14 @@ import java.util.stream.Stream;
 /**
  * 互联网通用拦截器-只支持boot
  */
-@Component
+@Configuration
 public class InterFilter {
 
     @Autowired
     private Environment env;
 
     @Bean
+    @SuppressWarnings("unchecked")
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new AuthFilter());
