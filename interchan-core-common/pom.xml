@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.33</version>
+    <version>0.0.3.3.34</version>
   </parent>
   <artifactId>interchan-core-common</artifactId>
   <name>interchan-core-common</name>
@@ -55,6 +55,10 @@
 	  <dependency>
 		  <groupId>org.springframework</groupId>
 		  <artifactId>spring-webmvc</artifactId>
+	  </dependency>
+	  <dependency>
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-annotations</artifactId>
 	  </dependency>
   </dependencies>
 </project>
