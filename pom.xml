@@ -4,7 +4,7 @@
 
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.37</version>
+    <version>0.0.3.3.38</version>
     <packaging>pom</packaging>
     <name>interchan</name>
     <url>http://maven.apache.org</url>
@@ -34,6 +34,7 @@
         <kafka.clients.version>0.11.0.0</kafka.clients.version>
         <alipay.sdk.java.version>3.0.0</alipay.sdk.java.version>
         <zxing.core.version>3.3.1</zxing.core.version>
+        <lcn.last.version>4.1.0</lcn.last.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -48,6 +49,29 @@
                 <version>Edgware.SR4</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.codingapi</groupId>
+                <artifactId>transaction-springcloud</artifactId>
+                <version>${lcn.last.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.codingapi</groupId>
+                <artifactId>tx-plugins-db</artifactId>
+                <version>${lcn.last.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>commons-logging</groupId>
