@@ -118,10 +118,12 @@ public class SingleDymanicTask implements ISingleDymanicTask{
     	logger.debug("正在执行修改任务时间,定时任务:{}，表达式时间是:{}",jobName,cron);
     	Boolean result =  false;
     	if(interJobMap.containsKey(jobName)){
-    		interJobMap.get(jobName);
-    		logger.debug("找到任务：{}，执行时间覆盖覆盖，旧的时间为：{}",jobName,interJobMap.get(jobName).getCron());
-    		interJobMap.get(jobName).setCron(cron);
+			SingleInterjob interJob = interJobMap.get(jobName);
+    		logger.debug("找到任务：{}，执行时间覆盖覆盖，旧的时间为：{}",jobName,interJob.getCron());
+			interJob.setCron(cron);
+			interJobMap.put(jobName,interJob);
     		result = true;
+    		logger.info("task update cron success,cron:{}",cron);
     	}
     	logger.debug("执行修改任务时间,定时任务:{}，表达式时间是:{}成功",jobName,cron);
     	return result;
@@ -140,10 +142,12 @@ public class SingleDymanicTask implements ISingleDymanicTask{
 		logger.debug("正在执行修改任务时间,定时任务:{}，下次执行的秒数是:{}",jobName,secord);
 		Boolean result =  false;
 		if(interJobMap.containsKey(jobName)){
-			interJobMap.get(jobName);
-			logger.debug("找到任务：{}，执行时间覆盖覆盖，旧的时间为：{}",jobName,interJobMap.get(jobName).getSecords());
-			interJobMap.get(jobName).setSecords(secord);
+			SingleInterjob interJob = interJobMap.get(jobName);
+			logger.debug("找到任务：{}，执行时间覆盖覆盖，旧的时间为：{}",jobName,interJob.getSecords());
+			interJob.setSecords(secord);
+			interJobMap.put(jobName,interJob);
 			result = true;
+			logger.info("task update secord success,secord:{}",secord);
 		}
 		logger.debug("执行修改任务时间,定时任务:{}，表达式时间是:{}成功",jobName,secord);
 		return result;
