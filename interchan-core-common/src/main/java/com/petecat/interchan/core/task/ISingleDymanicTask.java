@@ -1,5 +1,7 @@
 package com.petecat.interchan.core.task;
 
+import java.util.Date;
+
 /**
  * @author mhuang
  * @Title: ISingleDymanicTask
@@ -22,16 +24,71 @@ public interface ISingleDymanicTask {
     Boolean startJob(String jobName,Runnable run,String conn);
 
     /**
+     * @Ttitle:startJobOnly
+     * @Description: 启动任务（只执行一次、执行后记得将任务删除）
+     * @param jobName 启动任务
+     * @param run     启动执行的线程
+     * @param date    启动任务的时间
+     * @return
+     */
+    Boolean startJobOnly(String jobName, Runnable run, Date date);
+
+    /**
+     * @Ttitle:startJobOnly
+     * @Description: 启动任务（只执行一次、执行后记得将任务删除）
+     * @param jobName 启动任务
+     * @param run     启动执行的线程
+     * @param cron    启动任务的时间表达式
+     * @return
+     */
+    Boolean startJobOnly(String jobName,Runnable run,String cron);
+
+    /**
+     * @Ttitle:startJobOnly
+     * @Description: 启动任务（只执行一次、执行后记得将任务删除）
+     * @param jobName 启动任务
+     * @param run     启动执行的线程
+     * @param peroid    启动任务的毫秒数
+     * @return
+     */
+    Boolean startJobOnly(String jobName,Runnable run,Long peroid);
+
+    /**
+     *
+     * @Title: startJob
+     * @Description: 启动任务（启动后会等待到下一次的时间进行执行）
+     * @param jobName 任务名
+     * @param run 启动执行的线程
+     * @param conn cron表达式
+     * @param real 为true时跟startJob一致、为false时代表开启任务后等待时间到达后执行、创建则不执行
+     * @return
+     * @return Boolean
+     */
+    Boolean startJob(String jobName,Runnable run,String conn,Boolean real);
+
+    /**
+     *
+     * @Title: startJob
+     * @Description: 启动任务（启动后会等待到下一次的时间进行执行）
+     * @param jobName 任务名
+     * @param run 启动执行的线程
+     * @param period 执行的毫秒间隔
+     * @param real 为true时跟startJob一致、为false时代表开启任务后等待时间到达后执行、创建则不执行
+     * @return
+     * @return Boolean
+     */
+    Boolean startJob(String jobName,Runnable run,Long period,Boolean real);
+    /**
      * 
      * @Title: startJob   
      * @Description: 启动任务
      * @param jobName 任务名
      * @param run     启动执行的线程
-     * @param secord  执行的毫秒间隔
+     * @param period  执行的毫秒间隔
      * @return
      * @return Boolean
      */
-    Boolean startJob(String jobName,Runnable run,Long secord);
+    Boolean startJob(String jobName,Runnable run,Long period);
 
     /**
      * 
@@ -59,11 +116,11 @@ public interface ISingleDymanicTask {
      * @Title: updateCronLazy   
      * @Description: 修改时间间隔任务，不会影响当前执行的任务。等执行完毕后会计算下次的时间戳
      * @param jobName 任务名
-     * @param secord 修改后的毫秒间隔
+     * @param peroid 修改后的毫秒间隔
      * @return
      * @return Boolean
      */
-    Boolean updateSecordsLazy(String jobName,Long secord);
+    Boolean updateSecordsLazy(String jobName,Long peroid);
 
     /**
      * 执行逻辑线删除在创建任务。创建后会根据时间立刻执行任务
@@ -81,11 +138,11 @@ public interface ISingleDymanicTask {
      * @Title: updateJob   
      * @Description: 修改毫秒间隔任务 ，
      * @param jobName  任务名
-     * @param secord 修改后的毫秒间隔
+     * @param peroid 修改后的毫秒间隔
      * @return
      * @return Boolean
      */
-    Boolean updateJob(String jobName,Long secord);
+    Boolean updateJob(String jobName,Long peroid);
 
     /**
      * 执行逻辑线删除在创建任务。创建后会根据时间立刻执行任务
@@ -115,9 +172,9 @@ public interface ISingleDymanicTask {
      * @Description: 修改毫秒间隔任务
      * @param jobName 任务名
      * @param run	修改后的启动的线程
-     * @param secord 修改后的间隔的毫秒数
+     * @param peroid 修改后的间隔的毫秒数
      * @return
      * @return Boolean
      */
-    Boolean updateJob(String jobName,Runnable run,Long secord);
+    Boolean updateJob(String jobName,Runnable run,Long peroid);
 }

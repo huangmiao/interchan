@@ -24,5 +24,5 @@ public class SingleInterjob {
 	
 	private String cron;
 
-	private Long secords;
+	private Long period;
 }
