@@ -123,7 +123,7 @@ public interface ISingleDymanicTask {
     Boolean updateSecordsLazy(String jobName,Long peroid);
 
     /**
-     * 执行逻辑线删除在创建任务。创建后会根据时间立刻执行任务
+     * 执行逻辑线删除在创建任务
      * @Title: updateJob   
      * @Description: 修改CRON任务 ，
      * @param jobName 任务名
@@ -134,7 +134,7 @@ public interface ISingleDymanicTask {
     Boolean updateJob(String jobName,String cron);
 
     /**
-     * 执行逻辑线删除在创建任务。创建后会根据时间立刻执行任务
+     * 执行逻辑线删除在创建任务。
      * @Title: updateJob   
      * @Description: 修改毫秒间隔任务 ，
      * @param jobName  任务名
@@ -145,7 +145,7 @@ public interface ISingleDymanicTask {
     Boolean updateJob(String jobName,Long peroid);
 
     /**
-     * 执行逻辑线删除在创建任务。创建后会根据时间立刻执行任务
+     * 执行逻辑线删除在创建任务。
      * @Title: updateJob   
      * @Description: 修改任务的启动线程
      * @param jobName  任务名
@@ -156,7 +156,7 @@ public interface ISingleDymanicTask {
     Boolean updateJob(String jobName,Runnable run);
 
     /**
-     * 会先停止任务在创建任务，  创建后会立即执行任务
+     * 会先停止任务在创建任务，
      * @Title: updateJob   
      * @Description: 修改CRON任务。
      * @param jobName  任务名
@@ -167,7 +167,7 @@ public interface ISingleDymanicTask {
     Boolean updateJob(String jobName,Runnable run,String conn);
 
     /**
-     * 会先停止任务在创建任务，  创建后会立即执行任务
+     * 会先停止任务在创建任务，
      * @Title: updateJob   
      * @Description: 修改毫秒间隔任务
      * @param jobName 任务名
