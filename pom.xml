@@ -4,7 +4,7 @@
 
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.43</version>
+    <version>0.0.3.3.44</version>
     <packaging>pom</packaging>
     <name>interchan</name>
     <url>http://maven.apache.org</url>

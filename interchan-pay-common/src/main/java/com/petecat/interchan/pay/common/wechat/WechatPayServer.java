@@ -25,13 +25,15 @@ import com.petecat.interchan.pay.common.wechat.utils.XMLUtil;
 public class WechatPayServer {
 
 	private final static String APP_MODE = "APP";
-	
-	private final static List<String> SUPPORT_MODE_LIST = Stream.of(APP_MODE).collect(Collectors.toList());
+	private final static String JSAPI_MODE = "JSAPI"; //小程序、微信H5
+	private final static List<String> SUPPORT_MODE_LIST = Stream.of(APP_MODE,JSAPI_MODE).collect(Collectors.toList());
 	public static Map<?, ?> payment(WechatPayDTO dto) throws Exception {
 		SortedMap<Object, Object> packageParams = createCommonParmas(dto.getAppId(),dto.getMchId());
 		if(SUPPORT_MODE_LIST.contains(dto.getMode().toUpperCase())){
 			if(APP_MODE.equals(dto.getMode().toUpperCase())){
 				return createAppPay(packageParams, dto.getTradeNo(), dto.getSubject(), dto.getAmount(), dto.getApiKey(), dto.getIp(), dto.getNotifyUrl(),dto.getProxyIp(),dto.getProxyPort());
+			}else if(JSAPI_MODE.equalsIgnoreCase(dto.getMode().toUpperCase())){
+				return createJsApiPay(packageParams, dto.getTradeNo(), dto.getSubject(), dto.getAmount(), dto.getApiKey(), dto.getIp(), dto.getNotifyUrl(),dto.getProxyIp(),dto.getProxyPort(),dto.getOpenId());
 			}
 		}
 		throw new InterchanPayException(500,"暂不支持支付"+dto.getMode()+"方式");
@@ -52,7 +54,26 @@ public class WechatPayServer {
 	public static Map<?, ?> createAppPay(SortedMap<Object, Object> packageParams,
 		String tradeNo,String subject,String totalFee,String apiKey,
 		String ip,String notifyUrl,String proxyIp,int proxyPort) throws Exception{
+		return createBasePay(packageParams, tradeNo, subject, totalFee, apiKey, ip, notifyUrl, proxyIp, proxyPort,APP_MODE,null);
+	}
+
+	public static Map<?, ?> createJsApiPay(SortedMap<Object, Object> packageParams,
+										 String tradeNo,String subject,String totalFee,String apiKey,
+										 String ip,String notifyUrl,String openid) throws Exception{
+		return createJsApiPay(packageParams, tradeNo, subject, totalFee, apiKey, ip, notifyUrl, null, 0,openid);
+	}
+
+	public static Map<?, ?> createJsApiPay(SortedMap<Object, Object> packageParams,
+										 String tradeNo,String subject,String totalFee,String apiKey,
+										 String ip,String notifyUrl,String proxyIp,int proxyPort,String openid) throws Exception{
 		// 账号信息
+
+		return createBasePay(packageParams, tradeNo, subject, totalFee, apiKey, ip, notifyUrl, proxyIp, proxyPort,JSAPI_MODE,openid);
+	}
+
+	public static Map<?, ?> createBasePay(SortedMap<Object, Object> packageParams,
+										   String tradeNo,String subject,String totalFee,String apiKey,
+										   String ip,String notifyUrl,String proxyIp,int proxyPort,String appMode,String openid) throws Exception{
 		packageParams.put("body", subject);// 商品描述
 		packageParams.put("out_trade_no", tradeNo);// 商户订单号
 		totalFee =  CommonUtil.subZeroAndDot(totalFee);
@@ -60,8 +81,11 @@ public class WechatPayServer {
 		//H5支付要求商户在统一下单接口中上传用户真实ip地址 spbill_create_ip
 		packageParams.put("spbill_create_ip", ip);// 发起人IP地址
 		packageParams.put("notify_url", notifyUrl);// 回调地址
-		packageParams.put("trade_type", APP_MODE);// 交易类型
+		packageParams.put("trade_type", appMode);// 交易类型
 		packageParams.put("nonce_str", PayCommonUtil.CreateNoncestr());
+		if(JSAPI_MODE.equalsIgnoreCase(appMode)){
+            packageParams.put("openid",openid);
+        }
 		String sign = PayCommonUtil.createSign("UTF-8", packageParams, apiKey); //密匙
 		packageParams.put("sign", sign);// 签名
 		String requestXML = PayCommonUtil.getRequestXml(packageParams);

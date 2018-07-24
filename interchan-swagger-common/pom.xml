@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.43</version>
+    <version>0.0.3.3.44</version>
   </parent>
   <artifactId>interchan-swagger-common</artifactId>
   <name>swagger2-config</name>

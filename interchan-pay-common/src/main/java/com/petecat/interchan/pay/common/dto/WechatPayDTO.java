@@ -13,6 +13,6 @@ public class WechatPayDTO extends BasePayDTO{
 
 	private String ip;//支付得ip地址
 	
-	
+	private String openId;//jsapi 支付的时候使用
 	
 }

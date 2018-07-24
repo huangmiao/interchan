@@ -22,11 +22,10 @@ public class HttpUtil {
 		BufferedReader reader = null;
 		try {
 			URL url = new URL(urlStr);
-			URLConnection conn = null;
+			URLConnection conn;
 			if(StringUtils.isNotEmpty(ip)){
-				InetSocketAddress addr = new InetSocketAddress(ip,port);  
-				Proxy proxy = new Proxy(Proxy.Type.HTTP, addr); // http 代理  
-                conn = url.openConnection(proxy);  
+				Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ip,port)); // http 代理
+                conn = url.openConnection(proxy);
 			}else{
 				conn = url.openConnection();
 			}
@@ -44,7 +43,7 @@ public class HttpUtil {
 
 			reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), DEFAULT_ENCODING));
 			StringBuilder sb = new StringBuilder();
-			String line = null;
+			String line;
 			while ((line = reader.readLine()) != null) {
 				sb.append(line);
 				sb.append("\r\n");
