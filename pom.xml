@@ -4,7 +4,7 @@
 
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.45</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>interchan</name>
     <url>http://maven.apache.org</url>
@@ -15,18 +15,17 @@
         <jackson.version>2.9.5</jackson.version>
         <springfox.swagger.version>2.9.2</springfox.swagger.version>
         <elasticsearch.version>5.5.1</elasticsearch.version>
-        <guave.version>25.1-jre</guave.version>
         <lombok.version>1.18.0</lombok.version>
         <common.logging.version>1.2</common.logging.version>
         <jjwt.version>0.7.0</jjwt.version>
         <fastjson.version>1.2.47</fastjson.version>
         <jdom.version>1.1</jdom.version>
-        <mybatis.spring.boot.starter.version>1.3.1</mybatis.spring.boot.starter.version>
-        <logstash.logback.encoder.version>4.7</logstash.logback.encoder.version>
+        <mybatis.spring.boot.starter.version>1.3.2</mybatis.spring.boot.starter.version>
+        <logstash.logback.encoder.version>5.1</logstash.logback.encoder.version>
         <commons.io.version>2.5</commons.io.version>
         <commons.lang3.version>3.5</commons.lang3.version>
-        <log4j.to.slf4j.version>2.8.2</log4j.to.slf4j.version>
-        <slf4j.api.version>1.7.24</slf4j.api.version>
+        <log4j.to.slf4j.version>2.11.0</log4j.to.slf4j.version>
+        <slf4j.api.version>1.7.25</slf4j.api.version>
         <elk.version>0.0.3.3.1</elk.version>
         <util.version>0.0.1.3.2</util.version>
         <kafka.version>0.0.3.3.3</kafka.version>
@@ -35,18 +34,19 @@
         <alipay.sdk.java.version>3.0.0</alipay.sdk.java.version>
         <zxing.core.version>3.3.1</zxing.core.version>
         <lcn.last.version>4.1.0</lcn.last.version>
+        <!--<guava.version>25.1-jre</guava.version>-->
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.13.RELEASE</version>
+        <version>2.0.1.RELEASE</version>
     </parent>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Edgware.SR4</version>
+                <version>Finchley.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -265,11 +265,11 @@
                 <version>${springfox.swagger.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-            <dependency>
+           <!--<dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>${guave.version}</version>
-            </dependency>
+                <version>${guava.version}</version>
+            </dependency>-->
         </dependencies>
     </dependencyManagement>
     <modules>

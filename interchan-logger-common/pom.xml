@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.45</version>
+    <version>1.0.0</version>
   </parent>
   <artifactId>interchan-logger-common</artifactId>
   <name>interchan-logger-common</name>
@@ -24,6 +24,10 @@
         <groupId>org.springframework</groupId>
         <artifactId>spring-core</artifactId>
     </dependency>
+	  <dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-context</artifactId>
+	  </dependency>
 	<!-- https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch -->
 	<dependency>
 	    <groupId>org.elasticsearch.client</groupId>

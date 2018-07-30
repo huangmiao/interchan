@@ -66,10 +66,9 @@ public class EsLoggerDao extends EsFactoryImpl<EsOperatorLogger, String> impleme
 	 * 异步更新
 	 * @Title: updateAsync
 	 * @param esLogger
-	 * @param application
-	 * @param application2
-	 * @param id
-	 * @return void     
+	 * @param index
+	 * @param type
+	 * @return void
 	 */
 	public void updateAsync(EsOperatorLogger esLogger, String index, String type) {
 		if(esLogger!=null) {
