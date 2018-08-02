@@ -60,7 +60,13 @@ public interface BaseMapper<T extends Serializable,Id>{
 	 * 		修改个数
 	 */
 	int update(T t);
-	
+
+	/**
+	 * 修改单个实例所有字段
+	 * @param t
+	 * @return
+	 */
+	int updateAll(T t);
 	/**
 	 * @Title: remove   
 	 * @Description: 删除单个实例   

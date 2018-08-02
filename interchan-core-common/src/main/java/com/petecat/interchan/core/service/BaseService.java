@@ -63,7 +63,14 @@ public interface BaseService <T extends Serializable,Id>{
 	 * 		修改个数
 	 */
 	int update(T t);
-	
+
+	/**
+	 * 修改单个实例所有的字段
+	 * @param t
+	 * @return
+	 */
+	int updateAll(T t);
+
 	int delete(Id id);
 	/**
 	 * @Title: remove   

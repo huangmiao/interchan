@@ -84,7 +84,12 @@ public abstract class BaseServiceImpl<T extends Serializable,Id> implements Base
 	public int update(T t){
 		return baseMapper.update(t);
 	}
-	
+
+	@Override
+	public int updateAll(T t) {
+		return baseMapper.updateAll(t);
+	}
+
 	/**
 	 * @Title: remove   
 	 * @Description: 删除单个实例   
