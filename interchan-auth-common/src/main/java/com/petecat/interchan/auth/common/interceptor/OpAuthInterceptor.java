@@ -35,7 +35,8 @@ import com.petecat.interchan.redis.commands.IRedisExtCommands;
 public class OpAuthInterceptor implements HandlerInterceptor{
 
 	private Logger logger  = LoggerFactory.getLogger(getClass());
-	
+
+	private final int AUTH_INDEX = 1;
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -163,7 +164,7 @@ public class OpAuthInterceptor implements HandlerInterceptor{
 		if(repository!=null){
 			String cacheExcludeKey = AuthConstant.EXCLUDE_VIST_URLS_CACHEKEY;
 			List<AuthExcludeUrl> vos =
-					repository.hgetList(AuthConstant.AUTH_DICT_KEY,cacheExcludeKey,AuthExcludeUrl.class);
+					repository.hgetList(AUTH_INDEX,AuthConstant.AUTH_DICT_KEY,cacheExcludeKey,AuthExcludeUrl.class);
 			if(!CollectionUtils.isEmpty(vos)){
 				filterFlag =
 						vos.parallelStream().filter(vo ->
@@ -172,7 +173,7 @@ public class OpAuthInterceptor implements HandlerInterceptor{
 			}
 			if(!filterFlag){
 				String cacheKey = AuthConstant.USER_VIST_URL_CACHEKEY;
-				AuthUrl authUrl = repository.hget(cacheKey, userId.concat("-").concat(url),AuthUrl.class);
+				AuthUrl authUrl = repository.hget(AUTH_INDEX,cacheKey, userId.concat("-").concat(url),AuthUrl.class);
 			    if(authUrl!=null) {
 			    	filterFlag = true;
 			    }
