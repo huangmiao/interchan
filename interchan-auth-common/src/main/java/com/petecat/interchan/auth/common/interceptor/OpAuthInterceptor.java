@@ -95,7 +95,7 @@ public class OpAuthInterceptor implements HandlerInterceptor{
 		 if(repository!=null) {
 			   String cacheExcludeKey = AuthConstant.NOT_LOGIN_VIST_URLS_CACHEKEY;
 				List<AuthExcludeUrl> vos =
-						repository.hgetList(AuthConstant.AUTH_DICT_KEY,cacheExcludeKey,AuthExcludeUrl.class);
+						repository.hgetList(AUTH_INDEX,AuthConstant.AUTH_DICT_KEY,cacheExcludeKey,AuthExcludeUrl.class);
 				if(!CollectionUtils.isEmpty(vos)){
 					filterFlag =
 							vos.parallelStream().filter(vo ->
