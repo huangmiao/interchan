@@ -25,7 +25,10 @@ import com.petecat.interchan.pay.common.wechat.utils.XMLUtil;
 public class WechatPayServer {
 
 	private final static String APP_MODE = "APP";
-	private final static String JSAPI_MODE = "JSAPI"; //小程序、微信H5
+	/**
+	 * 小程序、微信H5
+	 */
+	private final static String JSAPI_MODE = "JSAPI";
 	private final static List<String> SUPPORT_MODE_LIST = Stream.of(APP_MODE,JSAPI_MODE).collect(Collectors.toList());
 	public static Map<?, ?> payment(WechatPayDTO dto) throws Exception {
 		SortedMap<Object, Object> packageParams = createCommonParmas(dto.getAppId(),dto.getMchId());
