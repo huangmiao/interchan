@@ -23,6 +23,7 @@ public class SnakeToCamelRequestDataBinder extends ExtendedServletRequestDataBin
         super(target, objectName);
     }
 
+    @Override
     protected void addBindValues(MutablePropertyValues mpvs, ServletRequest request) {
         super.addBindValues(mpvs, request);
 
@@ -38,7 +39,7 @@ public class SnakeToCamelRequestDataBinder extends ExtendedServletRequestDataBin
             }
         }
 
-        List<PropertyValue> covertValues = new ArrayList<PropertyValue>();
+        List<PropertyValue> covertValues = new ArrayList<>();
         for (PropertyValue propertyValue : mpvs.getPropertyValueList()) {
             if(propertyValue.getName().contains("_")) {
                 String camelName = SnakeToCamelRequestParameterUtil.convertSnakeToCamel(propertyValue.getName());
