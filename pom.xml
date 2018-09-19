@@ -4,7 +4,7 @@
 
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.47</version>
+    <version>0.0.3.3.48</version>
     <packaging>pom</packaging>
     <name>interchan</name>
     <url>http://maven.apache.org</url>
@@ -28,7 +28,7 @@
         <log4j.to.slf4j.version>2.8.2</log4j.to.slf4j.version>
         <slf4j.api.version>1.7.24</slf4j.api.version>
         <elk.version>0.0.3.3.1</elk.version>
-        <util.version>0.0.1.3.2</util.version>
+        <util.version>0.0.1.3.4</util.version>
         <kafka.version>0.0.3.3.3</kafka.version>
         <jackson.mapper.asl.version>1.9.13</jackson.mapper.asl.version>
         <kafka.clients.version>0.11.0.0</kafka.clients.version>

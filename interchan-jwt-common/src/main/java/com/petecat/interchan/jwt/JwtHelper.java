@@ -2,6 +2,8 @@ package com.petecat.interchan.jwt;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -42,52 +44,24 @@ public class JwtHelper {
 	 * @return
 	 */
 	public static String refreshJWT(Claims claims,String audience,String issuer,long TTLMills, String base64Security){
-		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
-        long nowMills = System.currentTimeMillis();
-        Date now = new Date(nowMills);
-        //生成签名密匙
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(base64Security);
-        Key signingKey = new SecretKeySpec(apiKeySecretBytes,signatureAlgorithm.getJcaName());
-        JwtBuilder builder = Jwts.builder().setHeaderParam("type","JWT")
-                .setClaims(claims)
-        		.setIssuer(issuer)
-                .setAudience(audience)
-                .signWith(signatureAlgorithm,signingKey);
-        //添加token过期时间
-        if (TTLMills >=0 ){
-            long expMills = nowMills + TTLMills;
-            Date exp = new Date(expMills);
-            builder.setExpiration(exp).setNotBefore(now);
-        }
-        //生成JWT
-        return builder.compact();
+		return createJWT(claims,audience,issuer,TTLMills,base64Security);
 	}
 	
     public static String createJWT( String userId,String type, String audience, String issuer, long TTLMills, String base64Security){
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
-        long nowMills = System.currentTimeMillis();
-        Date now = new Date(nowMills);
-        //生成签名密匙
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(base64Security);
-        Key signingKey = new SecretKeySpec(apiKeySecretBytes,signatureAlgorithm.getJcaName());
-        //添加构成JWT的参数
-        JwtBuilder builder = Jwts.builder().setHeaderParam("type","JWT")
-        		.claim("type",type)
-                .claim("userId",userId)
-                .setIssuer(issuer)
-                .setAudience(audience)
-                .signWith(signatureAlgorithm,signingKey);
-        //添加token过期时间
-        if (TTLMills >= 0){
-            long expMills = nowMills + TTLMills;
-            Date exp = new Date(expMills);
-            builder.setExpiration(exp).setNotBefore(now);
-        }
-        //生成JWT
-        return builder.compact();
+        Map<String,Object> claimMap = new HashMap<>();
+        claimMap.put("type",type);
+        claimMap.put("userId",userId);
+        return createJWT(claimMap,audience,issuer,TTLMills,base64Security);
     }
     
-    public static String createJWT(String userId,String type,String companyid, String audience, String issuer, long TTLMills, String base64Security){
+    public static String createJWT(String userId,String type,String companyId, String audience, String issuer, long TTLMills, String base64Security){
+	    Map<String,Object> claimMap = new HashMap<>();
+	    claimMap.put("type",type);
+	    claimMap.put("userId",userId);
+	    claimMap.put("companyId",companyId);
+	    return createJWT(claimMap,audience,issuer,TTLMills,base64Security);
+    }
+    public static String createJWT(Map<String,Object> claimMap, String audience, String issuer, long TTLMills, String base64Security){
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
         long nowMills = System.currentTimeMillis();
         Date now = new Date(nowMills);
@@ -96,9 +70,7 @@ public class JwtHelper {
         Key signingKey = new SecretKeySpec(apiKeySecretBytes,signatureAlgorithm.getJcaName());
         //添加构成JWT的参数
         JwtBuilder builder = Jwts.builder().setHeaderParam("type","JWT")
-        		.claim("type",type)
-                .claim("userId",userId)
-                .claim("companyId",companyid)
+                .setClaims(claimMap)
                 .setIssuer(issuer)
                 .setAudience(audience)
                 .signWith(signatureAlgorithm,signingKey);
@@ -111,4 +83,6 @@ public class JwtHelper {
         //生成JWT
         return builder.compact();
     }
+
+
 }

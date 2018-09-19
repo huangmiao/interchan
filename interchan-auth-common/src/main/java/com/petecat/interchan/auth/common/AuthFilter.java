@@ -3,6 +3,7 @@ package com.petecat.interchan.auth.common;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -50,6 +51,8 @@ public class AuthFilter implements Filter{
 	private List<String> excludeUrl = new ArrayList<>();
 
 	private final int TOKEN_HEADER_LENGTH = 7;
+
+	private final String SOURCE_FIELD = "source";
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 	}
@@ -65,6 +68,7 @@ public class AuthFilter implements Filter{
 				logger.info("请求的URL:{},请求类型:{}",request.getRequestURL().toString(),request.getMethod());
 				GlobalHeader globalHeader = new GlobalHeader();
 				globalHeader.setIp(IpUtils.getIp(request));
+				globalHeader.setSource(request.getHeader("source"));
 				Jwt jwt = getMapper(Jwt.class, request);
 				String auth = request.getHeader(jwt.getType());
 
@@ -78,12 +82,12 @@ public class AuthFilter implements Filter{
 					logger.debug("当前调用的token:{}",auth);
 					String token = StringUtils.substringAfter(auth, jwt.getHeaderName());
 					try {
-						Claims claims = JwtHelper.parseJWT(token, jwt.getBase64Secret());
-						if(claims != null){
+						Map<String,Object> claimMap = JwtHelper.parseJWT(token, jwt.getBase64Secret());
+						if(claimMap != null){
 							globalHeader.setToken(token.trim());
-							globalHeader.setType((String)claims.get("type"));
-							globalHeader.setCompanyId((String)claims.get(Global.COMPANY_ID));
-							globalHeader.setUserId((String) claims.get(Global.USERID));
+							globalHeader.setType((String) claimMap.get("type"));
+							globalHeader.setCompanyId((String)claimMap.get(Global.COMPANY_ID));
+							globalHeader.setUserId((String) claimMap.get(Global.USERID));
 							GlobalHeaderThreadLocal.set(globalHeader);
 							httpRequest.putHeader(Global.GLOBAL_HEADER, JSON.toJSONString(globalHeader));
 						}else{

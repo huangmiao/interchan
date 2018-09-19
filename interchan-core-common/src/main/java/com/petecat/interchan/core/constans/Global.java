@@ -18,7 +18,7 @@ public class Global {
 	public static final String GLOBAL_AUTHORIZATION = "Authorization";
 	public static final int COMMON_DB_INDEX = 0;
 	public static final int COMMON_MEMBER_DB_INDEX = 12;
-	public static final int COMMON_KAFKA_DB_INDEX = 12;
+	public static final int COMMON_KAFKA_DB_INDEX = 15;
 	/**
 	 * 30分钟过期
 	 */
