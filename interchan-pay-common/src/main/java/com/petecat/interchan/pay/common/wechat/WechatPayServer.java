@@ -8,12 +8,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.petecat.interchan.pay.common.dto.WechatPayDTO;
+import com.petecat.interchan.pay.common.dto.WechatRefundDTO;
 import com.petecat.interchan.pay.common.exception.InterchanPayException;
 import com.petecat.interchan.pay.common.wechat.utils.CommonUtil;
 import com.petecat.interchan.pay.common.wechat.utils.HttpUtil;
 import com.petecat.interchan.pay.common.wechat.utils.PayCommonUtil;
 import com.petecat.interchan.pay.common.wechat.utils.WechatConfigUtil;
 import com.petecat.interchan.pay.common.wechat.utils.XMLUtil;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 
@@ -41,10 +43,31 @@ public class WechatPayServer {
 		}
 		throw new InterchanPayException(500,"暂不支持支付"+dto.getMode()+"方式");
 	}
+
+	public static Map<?, ?> refundOrder(WechatRefundDTO dto) throws Exception {
+		SortedMap<Object, Object> packageParams = createCommonParmas(dto.getAppId(),dto.getMchId());
+		packageParams.put("out_trade_no", dto.getTradeNo());// 商户订单号
+		packageParams.put("out_refund_no", dto.getOutRefundNo());// 商户退款单号
+		packageParams.put("total_fee", dto.getTotalFee());// 订单金额
+		packageParams.put("refund_fee", dto.getRefundFee());// 退款金额
+		if(!StringUtils.isBlank(dto.getFeeType()))
+			packageParams.put("refund_fee_type", dto.getFeeType());// 退款币种
+		if(!StringUtils.isBlank(dto.getRefundDesc()))
+			packageParams.put("refund_desc", dto.getRefundDesc());// 退款原因
+		if(!StringUtils.isBlank(dto.getNotifyUrl()))
+			packageParams.put("notify_url", dto.getNotifyUrl());// 退款结果通知url
+		String sign = PayCommonUtil.createSign("UTF-8", packageParams, dto.getApiKey()); //密匙
+		packageParams.put("sign", sign);// 签名
+		String requestXML = PayCommonUtil.getRequestXml(packageParams);
+		String resXml = HttpUtil.postData(WechatConfigUtil.REFUND_URL, requestXML,null,dto.getProxyIp()
+				,dto.getProxyPort());
+		return XMLUtil.doXMLParse(resXml);
+	}
 	
 	public static SortedMap<Object, Object> createCommonParmas(String appId,String mchId){
 		SortedMap<Object, Object> packageParams = new TreeMap<Object, Object>();
 		WechatConfigUtil.commonParams(packageParams,appId,mchId);
+
 		return packageParams;
 	}
 	
