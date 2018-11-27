@@ -171,7 +171,7 @@ public class EsLoggerDao extends EsFactoryImpl<EsOperatorLogger, String> impleme
   }
 	  
   enum EsAsysLogOpType{
-	  MOD,INSERT;
+	  MOD,INSERT
   }
   
 

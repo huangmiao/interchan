@@ -1,29 +1,31 @@
 package com.petecat.interchan.wechat.wechat.common.utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.dom4j.Document;
 import org.dom4j.Element;
 
+import java.util.*;
+
+/**
+ * @author mhuang
+ */
 public class XmlUtils {
 
     public static Map<String, Object> Dom2Map(Document doc){  
-        Map<String, Object> map = new HashMap<String, Object>();  
-        if(doc == null)  
-            return map;  
+        Map<String, Object> map = new HashMap<>();
+        if(doc == null)  {
+            return map;
+        }
+
         Element root = doc.getRootElement();  
         for (Iterator iterator = root.elementIterator(); iterator.hasNext();) {  
             Element e = (Element) iterator.next();  
-            //System.out.println(e.getName());  
-            List list = e.elements();  
+            List list = e.elements();
             if(list.size() > 0){  
                 map.put(e.getName(), Dom2Map(e));  
-            }else  
-                map.put(e.getName(), e.getText());  
+            }else{
+                map.put(e.getName(), e.getText());
+            }
+
         }  
         return map;  
     }  
@@ -51,9 +53,10 @@ public class XmlUtils {
                             mapList.add(m);  
                         }  
                         map.put(iter.getName(), mapList);  
-                    }else  
-                        map.put(iter.getName(), m);  
-                }  
+                    }else{
+                        map.put(iter.getName(), m);
+                    }
+                }
                 else{  
                     if(map.get(iter.getName()) != null){  
                         Object obj = map.get(iter.getName());  
@@ -67,12 +70,15 @@ public class XmlUtils {
                             mapList.add(iter.getText());  
                         }  
                         map.put(iter.getName(), mapList);  
-                    }else  
-                        map.put(iter.getName(), iter.getText());  
-                }  
+                    }else{
+                        map.put(iter.getName(), iter.getText());
+                    }
+                }
             }  
-        }else  
-            map.put(e.getName(), e.getText());  
+        }else{
+            map.put(e.getName(), e.getText());
+        }
+
         return map;  
     }  
 }

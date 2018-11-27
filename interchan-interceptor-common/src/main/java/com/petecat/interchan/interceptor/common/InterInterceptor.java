@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * 拦截器配置
+ * @author mhuang
  */
 @Configuration
 public class InterInterceptor extends WebMvcConfigurerAdapter {

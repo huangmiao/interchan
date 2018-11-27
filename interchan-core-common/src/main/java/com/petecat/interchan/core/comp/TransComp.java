@@ -197,7 +197,7 @@ public class TransComp implements InitializingBean{
 	 * @Title: analizeObjectProperty   
 	 * @Description: 设置对象属性值
 	 * @param obj 对象
-	 * @param type 属性类型 
+	 * @param propertyType 属性类型
 	 * @return void     
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 

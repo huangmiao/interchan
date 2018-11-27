@@ -4,7 +4,7 @@
 
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.48</version>
+    <version>0.0.3.3.49</version>
     <packaging>pom</packaging>
     <name>interchan</name>
     <url>http://maven.apache.org</url>
@@ -14,7 +14,7 @@
         <project.repository.url>http://192.168.1.210:8181</project.repository.url>
         <jackson.version>2.9.5</jackson.version>
         <springfox.swagger.version>2.9.2</springfox.swagger.version>
-        <elasticsearch.version>5.5.1</elasticsearch.version>
+        <elasticsearch.version>6.5.1</elasticsearch.version>
         <guave.version>25.1-jre</guave.version>
         <lombok.version>1.18.0</lombok.version>
         <common.logging.version>1.2</common.logging.version>
@@ -27,7 +27,7 @@
         <commons.lang3.version>3.5</commons.lang3.version>
         <log4j.to.slf4j.version>2.8.2</log4j.to.slf4j.version>
         <slf4j.api.version>1.7.24</slf4j.api.version>
-        <elk.version>0.0.3.3.1</elk.version>
+        <elk.version>0.0.3.3.2</elk.version>
         <util.version>0.0.1.3.4</util.version>
         <kafka.version>0.0.3.3.3</kafka.version>
         <jackson.mapper.asl.version>1.9.13</jackson.mapper.asl.version>
@@ -137,13 +137,7 @@
             </dependency>
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
-                <artifactId>transport</artifactId>
-                <version>${elasticsearch.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch -->
-            <dependency>
-                <groupId>org.elasticsearch</groupId>
-                <artifactId>elasticsearch</artifactId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
                 <version>${elasticsearch.version}</version>
             </dependency>
             <dependency>
