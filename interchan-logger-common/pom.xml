@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.49</version>
+    <version>0.0.3.3.50</version>
   </parent>
   <artifactId>interchan-logger-common</artifactId>
   <name>interchan-logger-common</name>
@@ -32,10 +32,6 @@
 	 <dependency>
 	    <groupId>org.apache.commons</groupId>
 	    <artifactId>commons-lang3</artifactId>
-	</dependency>
-    <dependency>
-	    <groupId>org.apache.commons</groupId>
-	    <artifactId>commons-pool2</artifactId>
 	</dependency>
 	<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
 	<dependency>

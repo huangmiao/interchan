@@ -4,7 +4,7 @@
 
     <groupId>com.petecat</groupId>
     <artifactId>interchan</artifactId>
-    <version>0.0.3.3.49</version>
+    <version>0.0.3.3.50</version>
     <packaging>pom</packaging>
     <name>interchan</name>
     <url>http://maven.apache.org</url>
@@ -29,9 +29,9 @@
         <slf4j.api.version>1.7.24</slf4j.api.version>
         <elk.version>0.0.3.3.2</elk.version>
         <util.version>0.0.1.3.4</util.version>
-        <kafka.version>0.0.3.3.3</kafka.version>
+        <kafka.version>0.1.1.0.1</kafka.version>
         <jackson.mapper.asl.version>1.9.13</jackson.mapper.asl.version>
-        <kafka.clients.version>0.11.0.0</kafka.clients.version>
+        <kafka.clients.version>1.1.0</kafka.clients.version>
         <alipay.sdk.java.version>3.0.0</alipay.sdk.java.version>
         <zxing.core.version>3.3.1</zxing.core.version>
         <lcn.last.version>4.1.0</lcn.last.version>
