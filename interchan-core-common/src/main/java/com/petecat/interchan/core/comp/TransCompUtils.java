@@ -173,9 +173,10 @@ public class TransCompUtils {
 				}else{
 					List<?> datas = JSON.parseArray(((JSONArray)result.getData()).toJSONString(), cls);
 					List<Object> resultDataList = new ArrayList<>(datas.size());
-					for(Object data : datas){
+					datas.stream().forEach(data->{
 						resultDataList.add(setObjectProperty(data,types));
-					}
+					});
+
 					result.setData(resultDataList);
 				}
 			}else if(result.getData() instanceof  Map){
@@ -195,9 +196,7 @@ public class TransCompUtils {
 				}else{
 					List<?> datas = JSON.parseArray(jsonArray.toJSONString(), cls);
 					List<Object> resultDataList = new ArrayList<>(datas.size());
-					for(Object data : datas){
-						resultDataList.add(setObjectProperty(data,types));
-					}
+					datas.stream().forEach(data->resultDataList.add(setObjectProperty(data,types)));
 					result.setData(resultDataList);
 				}
 			}

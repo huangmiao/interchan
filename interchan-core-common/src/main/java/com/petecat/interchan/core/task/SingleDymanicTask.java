@@ -44,7 +44,8 @@ public class SingleDymanicTask implements ISingleDymanicTask{
      * @return
      * @return Boolean
      */
-    public Boolean startJob(String jobName,Runnable run,String conn) {
+    @Override
+    public Boolean startJob(String jobName, Runnable run, String conn) {
         return startJob(jobName,run,conn,true);
     }
 
