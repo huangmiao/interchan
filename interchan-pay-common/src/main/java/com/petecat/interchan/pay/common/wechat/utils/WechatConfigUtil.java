@@ -12,6 +12,8 @@ import java.util.SortedMap;
 public class WechatConfigUtil {
 
 	public final static String UNIFIED_ORDER_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+
+	public final static String REFUND_URL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 	
 	/**
 	 * 基础参数

@@ -145,11 +145,13 @@ public class SingleDymanicTask implements ISingleDymanicTask{
 	 * @param period
 	 * @return
 	 */
-	public Boolean startJob(String jobName,Runnable run,Long period) {
+	@Override
+    public Boolean startJob(String jobName, Runnable run, Long period) {
         return startJob(jobName,run,period,true);
 	}
 
-	public Boolean stopJob(String jobName) {
+	@Override
+    public Boolean stopJob(String jobName) {
     	logger.debug("正在停止定时任务:{}",jobName);
     	Boolean result =  false;
     	if(interJobMap.containsKey(jobName)){
@@ -172,7 +174,8 @@ public class SingleDymanicTask implements ISingleDymanicTask{
      * @return
      * @return Boolean
      */
-    public Boolean updateCronLazy(String jobName,String cron){
+    @Override
+    public Boolean updateCronLazy(String jobName, String cron){
     	logger.debug("正在执行修改任务时间,定时任务:{}，表达式时间是:{}",jobName,cron);
     	Boolean result =  false;
     	if(interJobMap.containsKey(jobName)){
@@ -196,7 +199,8 @@ public class SingleDymanicTask implements ISingleDymanicTask{
 	 * @return Boolean
 	 */
 
-	public Boolean updateSecordsLazy(String jobName,Long period){
+	@Override
+    public Boolean updateSecordsLazy(String jobName, Long period){
 		logger.debug("正在执行修改任务时间,定时任务:{}，下次执行的秒数是:{}",jobName,period);
 		Boolean result =  false;
 		if(interJobMap.containsKey(jobName)){
@@ -211,21 +215,24 @@ public class SingleDymanicTask implements ISingleDymanicTask{
 		return result;
 	}
 
-    public Boolean updateJob(String jobName,String cron){
+    @Override
+    public Boolean updateJob(String jobName, String cron){
     	Boolean result = false;
     	if(interJobMap.containsKey(jobName)){
     		result = updateJob(jobName,interJobMap.get(jobName).getRunnable(),cron);
     	}
     	return result;
     }
-	public Boolean updateJob(String jobName,Long secord){
+	@Override
+    public Boolean updateJob(String jobName, Long secord){
 		Boolean result = false;
 		if(interJobMap.containsKey(jobName)){
 			result = updateJob(jobName,interJobMap.get(jobName).getRunnable(),secord);
 		}
 		return result;
 	}
-    public Boolean updateJob(String jobName,Runnable run){
+    @Override
+    public Boolean updateJob(String jobName, Runnable run){
     	Boolean result = false;
     	if(interJobMap.containsKey(jobName)){
     		result = updateJob(jobName, run,interJobMap.get(jobName).getCron());
@@ -244,7 +251,8 @@ public class SingleDymanicTask implements ISingleDymanicTask{
      * @return
      * @return Boolean
      */
-    public Boolean updateJob(String jobName,Runnable run,String conn) {
+    @Override
+    public Boolean updateJob(String jobName, Runnable run, String conn) {
        logger.debug("正在执行修改定时任务:{}，表达式时间是:{}",jobName,conn);
        Boolean result = stopJob(jobName);// 先停止，在开启.
        if(result){
@@ -266,7 +274,8 @@ public class SingleDymanicTask implements ISingleDymanicTask{
 	 * @return
 	 * @return Boolean
 	 */
-	public Boolean updateJob(String jobName,Runnable run,Long secord) {
+	@Override
+    public Boolean updateJob(String jobName, Runnable run, Long secord) {
 		logger.debug("正在执行修改定时任务:{}，下次执行的秒数是:{}",jobName,secord);
 		Boolean result = stopJob(jobName);// 先停止，在开启.
 		if(result){

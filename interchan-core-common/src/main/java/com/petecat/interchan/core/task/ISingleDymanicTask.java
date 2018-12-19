@@ -101,9 +101,8 @@ public interface ISingleDymanicTask {
     Boolean stopJob(String jobName);
 
     /**
-     * 
+     * 修改Cron任务，不会影响当前执行的任务。等执行完毕后会计算下次的时间戳
      * @Title: updateCronLazy   
-     * @Description: 修改Cron任务，不会影响当前执行的任务。等执行完毕后会计算下次的时间戳
      * @param jobName 任务名
      * @param cron 修改后的cron表达式
      * @return
@@ -112,9 +111,9 @@ public interface ISingleDymanicTask {
     Boolean updateCronLazy(String jobName,String cron);
     
     /**
-     * 
+     *
+     * 修改时间间隔任务，不会影响当前执行的任务。等执行完毕后会计算下次的时间戳
      * @Title: updateCronLazy   
-     * @Description: 修改时间间隔任务，不会影响当前执行的任务。等执行完毕后会计算下次的时间戳
      * @param jobName 任务名
      * @param peroid 修改后的毫秒间隔
      * @return
