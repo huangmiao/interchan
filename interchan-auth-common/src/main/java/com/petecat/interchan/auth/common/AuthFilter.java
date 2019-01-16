@@ -52,9 +52,8 @@ public class AuthFilter implements Filter{
 
 	private final int TOKEN_HEADER_LENGTH = 7;
 
-	private final String SOURCE_FIELD = "source";
 	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
+	public void init(FilterConfig filterConfig)   {
 	}
 
 	@Override
@@ -68,10 +67,9 @@ public class AuthFilter implements Filter{
 				logger.info("请求的URL:{},请求类型:{}",request.getRequestURL().toString(),request.getMethod());
 				GlobalHeader globalHeader = new GlobalHeader();
 				globalHeader.setIp(IpUtils.getIp(request));
-				globalHeader.setSource(request.getHeader("source"));
+				globalHeader.setSource(request.getHeader(Global.SOURCE));
 				Jwt jwt = getMapper(Jwt.class, request);
 				String auth = request.getHeader(jwt.getType());
-
 				if(StringUtils.isBlank(auth)){
 					GlobalHeaderThreadLocal.set(globalHeader);
 					httpRequest.putHeader(Global.GLOBAL_HEADER, JSON.toJSONString(globalHeader));
@@ -85,7 +83,7 @@ public class AuthFilter implements Filter{
 						Map<String,Object> claimMap = JwtHelper.parseJWT(token, jwt.getBase64Secret());
 						if(claimMap != null){
 							globalHeader.setToken(token.trim());
-							globalHeader.setType((String) claimMap.get("type"));
+							globalHeader.setType((String) claimMap.get(Global.TYPE));
 							globalHeader.setCompanyId((String)claimMap.get(Global.COMPANY_ID));
 							globalHeader.setUserId((String) claimMap.get(Global.USERID));
 							GlobalHeaderThreadLocal.set(globalHeader);

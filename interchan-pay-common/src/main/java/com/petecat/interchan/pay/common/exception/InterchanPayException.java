@@ -9,11 +9,11 @@ public class InterchanPayException extends Exception {
 
     @Setter
     @Getter
-    private int            code;
-    
+    private int code;
+
     @Setter
     @Getter
-    private String            message;
+    private String message;
 
     public InterchanPayException() {
         super();
@@ -32,7 +32,7 @@ public class InterchanPayException extends Exception {
     }
 
     public InterchanPayException(int errCode, String errMsg) {
-        super(errCode + ":" + errMsg);
+        super(String.format("%d:%s", errCode, errMsg));
         this.code = errCode;
         this.message = errMsg;
     }

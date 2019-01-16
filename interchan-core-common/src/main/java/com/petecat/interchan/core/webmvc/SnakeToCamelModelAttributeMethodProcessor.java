@@ -1,7 +1,5 @@
 package com.petecat.interchan.core.webmvc;
 
-import javax.servlet.ServletRequest;
-
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -10,14 +8,15 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.ServletModelAttributeMethodProcessor;
 
+import javax.servlet.ServletRequest;
+
 /**
- * 
- * @ClassName:  SnakeToCamelModelAttributeMethodProcessor   
+ * @ClassName: SnakeToCamelModelAttributeMethodProcessor
  * @Description:下划线转驼峰的方法处理
  * @author: mhuang
- * @date:   2018年4月27日 下午2:59:18
+ * @date: 2018年4月27日 下午2:59:18
  */
-public class SnakeToCamelModelAttributeMethodProcessor extends ServletModelAttributeMethodProcessor implements ApplicationContextAware{
+public class SnakeToCamelModelAttributeMethodProcessor extends ServletModelAttributeMethodProcessor implements ApplicationContextAware {
 
     ApplicationContext applicationContext;
 

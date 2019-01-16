@@ -6,24 +6,22 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 /**
- * 
- * @ClassName:  LogLogger   
+ * @ClassName: LogLogger
  * @Description:日志
  * @author: mhuang
- * @date:   2017年8月15日 下午12:29:50
+ * @date: 2017年8月15日 下午12:29:50
  */
 @Documented
 @Retention(RUNTIME)
 @Target(METHOD)
 public @interface LogLogger {
 
-	/**
-	 * 
-	 * @Title: value   
-	 * @Description: 注解备注   
-	 * @return
-	 * @return String
-	 */
-	 String remark() default "";
+    /**
+     * @return String
+     * @Title: value
+     * @Description: 注解备注
+     */
+    String remark() default "";
 }

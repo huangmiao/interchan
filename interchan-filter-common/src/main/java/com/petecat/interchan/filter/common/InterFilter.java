@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 /**
  * 互联网通用拦截器-只支持boot
+ * @author mhuang
  */
 @Configuration
 public class InterFilter {
@@ -25,7 +26,7 @@ public class InterFilter {
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new AuthFilter());
-        registrationBean.setUrlPatterns(env.getProperty("filter.includeUrls",Collection.class, Stream.of("/*").collect(Collectors.toList())));
+        registrationBean.setUrlPatterns(env.getProperty("filter.includeUrls", Collection.class, Stream.of("/*").collect(Collectors.toList())));
         return registrationBean;
     }
 }

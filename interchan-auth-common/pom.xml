@@ -14,38 +14,46 @@
     <dependency>
 	    <groupId>org.apache.commons</groupId>
 	    <artifactId>commons-lang3</artifactId>
+        <scope>compile</scope>
      </dependency>
       <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-web</artifactId>
+        <scope>compile</scope>
     </dependency>
      <dependency>
      	<groupId>com.petecat</groupId>
      	<artifactId>interchan-jwt-common</artifactId>
      	<version>${project.version}</version>
+        <scope>compile</scope>
      </dependency>
      <dependency>
      	<groupId>com.petecat</groupId>
      	<artifactId>interchan-protocol-common</artifactId>
      	<version>${project.version}</version>
+        <scope>compile</scope>
      </dependency>
      <dependency>
      	<groupId>com.petecat</groupId>
      	<artifactId>interchan-core-common</artifactId>
      	<version>${project.version}</version>
+        <scope>compile</scope>
      </dependency>
      <dependency>
 	 	<groupId>com.mhuang.common</groupId>
 	  	<artifactId>util</artifactId>
-	</dependency>
+        <scope>compile</scope>
+     </dependency>
 	<dependency>
 	 	<groupId>com.petecat</groupId>
 	  	<artifactId>interchan-redis-common</artifactId>
 	  	<version>${project.version}</version>
+        <scope>compile</scope>
 	</dependency>
   </dependencies>
 </project>

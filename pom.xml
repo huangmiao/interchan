@@ -12,30 +12,23 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.repository.url>http://192.168.1.210:8181</project.repository.url>
-        <jackson.version>2.9.5</jackson.version>
         <springfox.swagger.version>2.9.2</springfox.swagger.version>
+        <bootstrap.swagger.version>1.8.8</bootstrap.swagger.version>
         <elasticsearch.version>6.5.1</elasticsearch.version>
-        <guave.version>25.1-jre</guave.version>
         <lombok.version>1.18.4</lombok.version>
-        <common.logging.version>1.2</common.logging.version>
-        <jjwt.version>0.7.0</jjwt.version>
+        <jjwt.version>0.9.1</jjwt.version>
         <fastjson.version>1.2.47</fastjson.version>
         <jdom.version>1.1</jdom.version>
         <mybatis.spring.boot.starter.version>1.3.2</mybatis.spring.boot.starter.version>
         <logstash.logback.encoder.version>5.1</logstash.logback.encoder.version>
-        <commons.io.version>2.5</commons.io.version>
-        <commons.lang3.version>3.5</commons.lang3.version>
-        <log4j.to.slf4j.version>2.11.0</log4j.to.slf4j.version>
-        <slf4j.api.version>1.7.25</slf4j.api.version>
+        <commons.io.version>2.6</commons.io.version>
+        <commons.lang3.version>3.8.1</commons.lang3.version>
         <elk.version>0.0.3.3.2</elk.version>
         <util.version>0.0.1.3.4</util.version>
         <kafka.version>0.2.1.0.1</kafka.version>
-        <jackson.mapper.asl.version>1.9.13</jackson.mapper.asl.version>
         <kafka.clients.version>2.1.0</kafka.clients.version>
-        <alipay.sdk.java.version>3.0.0</alipay.sdk.java.version>
-        <zxing.core.version>3.3.1</zxing.core.version>
-        <lcn.last.version>4.1.0</lcn.last.version>
-        <!--<guava.version>25.1-jre</guava.version>-->
+        <alipay.sdk.java.version>3.4.49.ALL</alipay.sdk.java.version>
+        <zxing.core.version>3.3.3</zxing.core.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -47,16 +40,11 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Greenwich.RC1</version>
+                <version>Greenwich.RC2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>${common.logging.version}</version>
-            </dependency>
             <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-redis -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
@@ -96,17 +84,6 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons.lang3.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-to-slf4j</artifactId>
-                <version>${log4j.to.slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
@@ -148,79 +125,6 @@
                 <artifactId>jdom</artifactId>
                 <version>${jdom.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson</groupId>
-                <artifactId>jackson-bom</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl -->
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-mapper-asl</artifactId>
-                <version>${jackson.mapper.asl.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jdk8</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-yaml</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-xml</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-smile</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-cbor</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-afterburner</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-parameter-names</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-jaxb-annotations</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
@@ -231,8 +135,50 @@
                 <artifactId>springfox-swagger2</artifactId>
                 <version>${springfox.swagger.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-common</artifactId>
+                <version>${springfox.swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${bootstrap.swagger.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.woff</exclude>
+                    <exclude>**/*.ttf</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.woff</include>
+                    <include>**/*.ttf</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <modules>
         <module>interchan-redis-common</module>
         <module>interchan-protocol-common</module>
@@ -248,6 +194,9 @@
     	<module>interchan-filter-common</module>
         <module>interchan-interceptor-common</module>
         <module>interchan-security-common</module>
+        <module>interchan-autoconfiguation-common</module>
+        <module>interchan-starter-common</module>
+        <module>interchan-gateway-common</module>
     </modules>
     <distributionManagement>
         <repository>

@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class Content {
 
-	String content;
+    String content;
 
-	public Content(){
-		
-	}
+    public Content() {
+
+    }
 }

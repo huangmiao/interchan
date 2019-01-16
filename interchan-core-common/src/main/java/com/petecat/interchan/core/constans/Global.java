@@ -11,9 +11,11 @@ public class Global {
 	public static final String APP_USER = "appUser";
 	public static final String WEB_USER = "webUser";
 	public static final String TOKEN = "token";
+	public static final String TYPE = "type";
 	public static final String USERID = "userId";
 	public static final String COMPANY_ID = "companyId";
 	public static final String USER = "user";
+	public static final String SOURCE = "source";
 	public static final String GLOBAL_HEADER = "global_header";
 	public static final String GLOBAL_AUTHORIZATION = "Authorization";
 	public static final int COMMON_DB_INDEX = 0;

@@ -3,15 +3,14 @@ package com.petecat.interchan.core.webmvc;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 
- * @ClassName:  SnakeToCamelRequestParameterUtil   
+ * @ClassName: SnakeToCamelRequestParameterUtil
  * @Description:下划线转驼峰的参数工具类
  * @author: mhuang
- * @date:   2018年4月27日 下午2:58:32
+ * @date: 2018年4月27日 下午2:58:32
  */
 public class SnakeToCamelRequestParameterUtil {
 
-	public static String convertSnakeToCamel(String snake) {
+    public static String convertSnakeToCamel(String snake) {
 
         if (snake == null) {
             return null;
@@ -21,20 +20,20 @@ public class SnakeToCamelRequestParameterUtil {
             return snake;
         }
 
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
         String[] split = StringUtils.split(snake, "_");
         int index = 0;
         for (String s : split) {
             if (index == 0) {
-                result += s.toLowerCase();
+                result.append(s.toLowerCase());
             } else {
-                result += capitalize(s);
+                result.append(capitalize(s));
             }
             index++;
         }
 
-        return result;
+        return result.toString();
     }
 
     private static String capitalize(String s) {

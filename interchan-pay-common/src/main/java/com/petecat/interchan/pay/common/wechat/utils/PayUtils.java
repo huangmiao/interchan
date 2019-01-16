@@ -22,7 +22,7 @@ public class PayUtils {
 	}
 	
 	public static Map<String, String> parseXml(String request){
-		Map<String, String> map = new HashMap<String, String>();  
+		Map<String, String> map = new HashMap<>();
 		try{
 		    // 读取输入流  
 		    Document document = DocumentHelper.parseText(request);  

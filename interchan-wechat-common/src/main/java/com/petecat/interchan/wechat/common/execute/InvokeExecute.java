@@ -11,27 +11,39 @@ import java.util.TreeMap;
 
 /**
  * 反射调用抽象
- * @author mHuang
  *
+ * @author mHuang
  */
 public abstract class InvokeExecute {
 
-	private final static Map<Class<?>, Class<?>> CONST_TYPES = new LinkedHashMap<Class<?>, Class<?>>(){
-		private static final long serialVersionUID = 1L;
-	{
-		put(HashMap.class, Map.class);
-		put(LinkedHashMap.class,Map.class);
-		put(TreeMap.class,Map.class);
-		put(Hashtable.class,Map.class);
-		put(ArrayList.class,List.class);
-		put(LinkedList.class,List.class);
-	}};
-	
-	static Class<?> checkType(Object obj){
-		if(CONST_TYPES.containsKey(obj.getClass())){
-			return CONST_TYPES.get(obj.getClass());
-		}else{
-			return obj.getClass();
-		}
-	}
+    private final static Map<Class<?>, Class<?>> CONST_TYPES = new LinkedHashMap<Class<?>, Class<?>>() {
+        private static final long serialVersionUID = 1L;
+
+        {
+            put(HashMap.class, Map.class);
+            put(LinkedHashMap.class, Map.class);
+            put(TreeMap.class, Map.class);
+            put(Hashtable.class, Map.class);
+            put(ArrayList.class, List.class);
+            put(LinkedList.class, List.class);
+        }
+    };
+
+    static Class<?> checkType(Object obj) {
+        if (CONST_TYPES.containsKey(obj.getClass())) {
+            return CONST_TYPES.get(obj.getClass());
+        } else {
+            return obj.getClass();
+        }
+    }
+
+    static Class<?>[] getClasses(Object[] params) {
+        Class<?>[] clazzes = new Class[params.length];
+        int index = 0;
+        for (Object obj : params) {
+            clazzes[index++] = checkType(obj);
+        }
+        return clazzes;
+    }
+
 }

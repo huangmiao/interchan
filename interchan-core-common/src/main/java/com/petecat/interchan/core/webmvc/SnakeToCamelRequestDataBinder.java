@@ -11,11 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
- * @ClassName:  SnakeToCamelRequestDataBinder   
+ * @ClassName: SnakeToCamelRequestDataBinder
  * @Description: 下划线转驼峰数据处理
  * @author: mhuang
- * @date:   2018年4月27日 下午2:57:50
+ * @date: 2018年4月27日 下午2:57:50
  */
 public class SnakeToCamelRequestDataBinder extends ExtendedServletRequestDataBinder {
 
@@ -41,7 +40,7 @@ public class SnakeToCamelRequestDataBinder extends ExtendedServletRequestDataBin
 
         List<PropertyValue> covertValues = new ArrayList<>();
         for (PropertyValue propertyValue : mpvs.getPropertyValueList()) {
-            if(propertyValue.getName().contains("_")) {
+            if (propertyValue.getName().contains("_")) {
                 String camelName = SnakeToCamelRequestParameterUtil.convertSnakeToCamel(propertyValue.getName());
                 if (!mpvs.contains(camelName)) {
                     covertValues.add(new PropertyValue(camelName, propertyValue.getValue()));

@@ -1,9 +1,5 @@
 package com.petecat.interchan.core.webmvc;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -12,12 +8,15 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
- * 
- * @ClassName:  SnakeToCamelProcessorRegistry   
+ * @ClassName: SnakeToCamelProcessorRegistry
  * @Description:下划线转驼峰注册器
  * @author: mhuang
- * @date:   2018年4月27日 下午2:58:16
+ * @date: 2018年4月27日 下午2:58:16
  */
 public class SnakeToCamelProcessorRegistry implements ApplicationContextAware, BeanFactoryPostProcessor {
 

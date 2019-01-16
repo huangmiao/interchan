@@ -7,31 +7,33 @@ import org.springframework.core.env.Environment;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
 
 /**
  * 拦截器配置
+ *
  * @author mhuang
  */
 @Configuration
-public class InterInterceptor extends WebMvcConfigurerAdapter {
+public class InterInterceptor implements WebMvcConfigurer {
 
     @Autowired
     private Environment env;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        List<String> includeUrls =  env.getProperty("intercptor.includeUrls",List.class);
-        List<String> excludeUrls = env.getProperty("intercptor.excludeUrls",List.class);
+        List<String> includeUrls = env.getProperty("intercptor.includeUrls", List.class);
+        List<String> excludeUrls = env.getProperty("intercptor.excludeUrls", List.class);
         InterceptorRegistration interceptorRegistration = registry.addInterceptor(new OpAuthInterceptor());
-;        if(!CollectionUtils.isEmpty(excludeUrls)){
+        ;
+        if (!CollectionUtils.isEmpty(excludeUrls)) {
             interceptorRegistration.excludePathPatterns(excludeUrls.toArray(new String[excludeUrls.size()]));
         }
-        if(!CollectionUtils.isEmpty(includeUrls)){
+        if (!CollectionUtils.isEmpty(includeUrls)) {
             interceptorRegistration.addPathPatterns(includeUrls.toArray(new String[includeUrls.size()]));
         }
-        super.addInterceptors(registry);
     }
 }

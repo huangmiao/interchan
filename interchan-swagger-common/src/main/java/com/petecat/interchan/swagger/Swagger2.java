@@ -18,20 +18,23 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author mhuang
+ */
 @Configuration
 @EnableSwagger2
 public class Swagger2 {
 
-	@Autowired
-	private Environment env;
-	
-	@Bean
+    @Autowired
+    private Environment env;
+
+    @Bean
     public Docket createRestApi() {
-		List<Parameter> pars = new ArrayList<>();
-		ParameterBuilder sourcePar = new ParameterBuilder();
-		ParameterBuilder tokenPar = new ParameterBuilder();
-    	tokenPar.name("Authorization").description(env.getProperty("swagger.authorization.description","Bearer 开头加上登录的时候令牌,填写时表示带用户凭证进行访问")).modelRef(new ModelRef("string")).parameterType("header").required(false).build();
-    	sourcePar.name("source").description(env.getProperty("swagger.source.description","用户来源")).modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        List<Parameter> pars = new ArrayList<>();
+        ParameterBuilder sourcePar = new ParameterBuilder();
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        tokenPar.name("Authorization").description(env.getProperty("swagger.authorization.description", "Bearer 开头加上登录的时候令牌,填写时表示带用户凭证进行访问")).modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        sourcePar.name("source").description(env.getProperty("swagger.source.description", "用户来源")).modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(tokenPar.build());
         pars.add(sourcePar.build());
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
@@ -41,10 +44,10 @@ public class Swagger2 {
     }
 
     private ApiInfo apiInfo() {
-    	 return new ApiInfoBuilder()
-                 .title(env.getProperty("swagger.title"))
-                 .description(env.getProperty("swagger.description"))
-                 .version(env.getProperty("swagger.version"))
-                 .build();
+        return new ApiInfoBuilder()
+                .title(env.getProperty("swagger.title"))
+                .description(env.getProperty("swagger.description"))
+                .version(env.getProperty("swagger.version"))
+                .build();
     }
 }

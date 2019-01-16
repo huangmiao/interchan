@@ -13,11 +13,14 @@ public class AliTransDTO {
 
 
     private String mchId;
-    private String rsaPublicKey;//公匙
+    private String rsaPublicKey;
+    //公匙
 
-    private String rsaPrivateKey;//私匙
+    private String rsaPrivateKey;
+    //私匙
 
-    private String tradeNo;//订单号
+    private String tradeNo;
+    //订单号
 
     /**
      * 收款方账户类型。可取值：
