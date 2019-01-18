@@ -23,20 +23,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <scope>compile</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.petecat</groupId>
-            <artifactId>interchan-jwt-common</artifactId>
-            <version>${project.version}</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.petecat</groupId>
-            <artifactId>interchan-auth-common</artifactId>
-            <version>${project.version}</version>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>
