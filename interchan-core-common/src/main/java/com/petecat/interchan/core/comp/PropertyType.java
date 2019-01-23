@@ -1,15 +1,4 @@
-/**
- * All rights Reserved, Designed By http://www.pete-cat.com/
- *
- * @Title: TransComp.java
- * @Package com.petecat.interchan.core.comp
- * @Description:TODO(用一句话描述该文件做什么)
- * @author: 成都皮特猫科技
- * @date:2017年7月28日 下午10:42:21
- * @version V1.0
- * @Copyright: 2017 www.pete-cat.com Inc. All rights reserved.
- * 注意：本内容仅限于成都皮特猫信息技术有限公司内部传阅，禁止外泄以及用于其他的商业目
- */
+
 package com.petecat.interchan.core.comp;
 
 import java.util.List;
